@@ -1,0 +1,29 @@
+:root {
+  --spacing-8xl: 192px;
+  --spacing-7xl: 160px;
+  --spacing-6xl: 144px;
+  --spacing-5xl: 128px;
+  --spacing-4xl: 96px;
+  --spacing-xxl: 80px;
+  --spacing-xl: 64px;
+  --spacing-lg: 40px;
+  --spacing-md: 24px;
+  --spacing-sm: 16px;
+  --spacing-xs: 8px;
+
+  --sidebar-max-width: 420px;
+  --sidebar-min-width: 360px;
+
+  --font-size-lg: 3.5rem;
+  --font-size-md: 1.5rem;
+  --font-size-base: 1rem;
+  --font-size-small: 0.8rem;
+  --font-size-xs: 0.8125rem;
+  --font-weight-normal: 400;
+  --font-weight-bold: 600;
+  --font-weight-bolder: 700;
+  --font-weight-boldest: 900;
+
+  --border-radius-round: 50%;
+  --border-radius-md: 8px;
+}
