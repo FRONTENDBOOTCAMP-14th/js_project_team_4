@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="감성적인 배경화면과 할 일을 함께 관리할 수 있는 대시보드 앱입니다(실습용)"
+    />
+    <link rel="stylesheet" href="../style.css" />
+    <title>Weather card</title>
+  </head>
+  <body>
+    <div class="weather-container">
+      <div class="weather-wrapper">
+        <div class="weather-inner">
+          <p class="weather-temp">30°</p>
+          <div class="weather-info">
+            <div class="weather-location-date">
+              <h1 class="weather-location">서울</h1>
+              <p class="weather-date">10:40 - 2025년 7월 22일 화요일</p>
+            </div>
+            <img
+              class="img-size-500"
+              src="/img/icons/09d.svg"
+              alt="icon current weather"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-blur"></div>
+
+      <aside class="weather-bar">
+        <form class="search-form">
+          <input
+            autofocus
+            name="location"
+            class="search-input capitalize fs-400 clr-neutral-000"
+            type="text"
+            autocomplete="off"
+            required
+            minlength="1"
+            placeholder="Search Location..."
+          />
+          <img
+            aria-hidden="true"
+            id="clear-btn"
+            class="img-size-search"
+            src="/img/icons/close.svg"
+            alt=""
+          />
+          <img
+            aria-hidden="false"
+            id="search-img"
+            class="img-size-search"
+            src="/img/icons/search.svg"
+            alt=""
+          />
+        </form>
+
+        <div class="weather-details">
+          <div>
+            <h2 class="fs-300 fw-default">Weather Details</h2>
+          </div>
+          <div class="cards flow">
+            <div class="weather-desc">
+              <p class="uppercase fw-medium">OVERCAST CLOUDS</p>
+            </div>
+            <div>
+              <p class="clr-neutral-300">Temp max</p>
+              <p>19°</p>
+              <img
+                class="img-size-200"
+                src="/img/icons/temp-max.svg"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="clr-neutral-300">Temp min</p>
+              <p>15°</p>
+              <img
+                class="img-size-200"
+                src="/img/icons/temp-min.svg"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="clr-neutral-300">Humidity</p>
+              <p>58%</p>
+              <img
+                class="img-size-200"
+                src="/img/icons/humadity.svg"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="clr-neutral-300">Cloudy</p>
+              <p>86%</p>
+              <img
+                class="img-size-200"
+                src="/img/icons/cloudy.svg"
+                alt=""
+              />
+            </div>
+            <div>
+              <p class="clr-neutral-300">Wind</p>
+              <p>5km/h</p>
+              <img
+                class="img-size-200"
+                src="/img/icons/wind.svg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="weather-forecast">
+          <div>
+            <h2 class="fs-300 fw-default">Weather Forecast</h2>
+          </div>
+          <div class="cards cards-forecast">
+            <!-- 5 sample cards -->
+            <div>
+              <img
+                class="img-size-300"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="forecast-desc">
+                <p>09:00</p>
+                <p class="clr-neutral-300">Clouds</p>
+              </div>
+              <p class="fs-500 clr-neutral-300">19°</p>
+            </div>
+            <div>
+              <img
+                class="img-size-300"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="forecast-desc">
+                <p>12:00</p>
+                <p class="clr-neutral-300">Clouds</p>
+              </div>
+              <p class="fs-500 clr-neutral-300">20°</p>
+            </div>
+            <div>
+              <img
+                class="img-size-300"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="forecast-desc">
+                <p>15:00</p>
+                <p class="clr-neutral-300">Clouds</p>
+              </div>
+              <p class="fs-500 clr-neutral-300">17°</p>
+            </div>
+            <div>
+              <img
+                class="img-size-300"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="forecast-desc">
+                <p>18:00</p>
+                <p class="clr-neutral-300">Clouds</p>
+              </div>
+              <p class="fs-500 clr-neutral-300">16°</p>
+            </div>
+            <div>
+              <img
+                class="img-size-300"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="forecast-desc">
+                <p>21:00</p>
+                <p class="clr-neutral-300">Clouds</p>
+              </div>
+              <p class="fs-500 clr-neutral-300">15°</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <script>
+      const blur = document.querySelector(".bg-blur");
+      const panel = document.querySelector(".weather-bar");
+      const toggleTarget = document.querySelector(".weather-container");
+      const searchForm = document.querySelector(".search-form");
+
+      toggleTarget.addEventListener("click", (e) => {
+        if (searchForm.contains(e.target)) return;
+
+        const isVisible = blur.style.display === "block";
+
+        if (isVisible) {
+          blur.style.display = "none";
+          panel.style.display = "none";
+        } else {
+          blur.style.display = "block";
+          panel.style.display = "flex";
+        }
+      });
+
+      const searchInput = document.querySelector(".search-input");
+      const clearBtn = document.getElementById("clear-btn");
+      const searchIcon = document.getElementById("search-img");
+
+      clearBtn.style.display = "none";
+
+      searchInput.addEventListener("input", () => {
+        const value = searchInput.value.trim();
+
+        if (value !== "") {
+          clearBtn.style.display = "block";
+          searchIcon.style.display = "none";
+        } else {
+          clearBtn.style.display = "none";
+          searchIcon.style.display = "block";
+        }
+      });
+
+      clearBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        clearBtn.style.display = "none";
+        searchIcon.style.display = "block";
+        searchInput.focus();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,248 @@
+:root {
+  --blur-bg: rgba(255, 255, 255, 0.1);
+  --border-radius: 1.5rem;
+  --gap: 2rem;
+  --clr-bg: #818181;
+  --clr-white: #ffffff;
+  --clr-black: #111111;
+  --clr-gray: #999999;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.weather-container {
+  position: relative;
+  width: 100%;
+  background-color: var(--clr-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  aspect-ratio: 1654 / 402.5;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding: 2rem;
+  background-image: var(--background-image, url("/img/bg/default.jpg"));
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.weather-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  z-index: 1;
+}
+
+.weather-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+.weather-temp {
+  font-size: 6rem;
+  font-weight: bold;
+  margin: 0;
+  color: white;
+  white-space: nowrap;
+}
+
+.weather-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+
+.weather-location-date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.weather-location {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: white;
+}
+
+.weather-date {
+  font-size: 1rem;
+  font-weight: 300;
+  margin: 0;
+  color: white;
+}
+
+.img-size-500 {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid white;
+  background: transparent;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 1rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  font-weight: 300;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.img-size-search {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.bg-blur {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  background-color: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+  display: none;
+}
+
+.weather-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 45%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  color: white;
+  padding: 2rem;
+  display: none;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem;
+  z-index: 2;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.weather-bar {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.weather-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.weather-details,
+.weather-forecast {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+.cards.flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+}
+
+.weather-desc {
+  grid-column: 1 / -1;
+  margin-bottom: 1rem;
+}
+
+.cards-forecast {
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+}
+
+.img-size-300 {
+  width: 48px;
+  height: 48px;
+}
+
+.img-size-200 {
+  width: 24px;
+  height: 24px;
+}
+
+.forecast-desc p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: white;
+}
+
+.weather-bar .clr-neutral-300,
+.weather-bar p,
+.weather-bar h2 {
+  color: white;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .weather-container {
+    flex-direction: column;
+    aspect-ratio: auto;
+  }
+
+  .search-form {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .weather-wrapper {
+    align-items: flex-start;
+    justify-content: flex-end;
+    margin-top: auto;
+  }
+
+  .weather-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .weather-bar {
+    position: static;
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    display: none;
+    overflow-y: auto;
+    max-height: 60vh;
+  }
+
+  .bg-blur {
+    display: none;
+  }
+}
