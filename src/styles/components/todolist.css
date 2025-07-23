@@ -1,0 +1,149 @@
+:root {
+  --font: 16px;
+  --size: 24px;
+}
+
+button{
+  border: 0;
+  background-color: transparent;
+}
+
+input{
+  border: 0;
+  background: transparent;
+  list-style: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+
+/* TODO 리스트 박스 */
+.todo-list__warpper {
+  border-radius: 16px;
+  box-shadow: 8px 8px 16px 4px rgba(18, 18, 18, 0.06);
+  inline-size: 250px;
+  block-size: 400px;
+  padding: 25px 20px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 16px;
+  flex-shrink: 0;
+
+  position: relative;
+  
+}
+
+/* TODO- 오늘 */
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 8px;
+  top: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2D2D2D;
+  background: #fff;
+}
+
+/* 새 TODO 입력창 */
+.new-todo {
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+  font-size: var(--font);
+  font-weight: 300;
+  color: #888;
+  padding: 8px;
+
+  box-sizing: border-box;
+  
+}
+
+/* TODO-List 아이템 */
+.todo-list__item {
+  display: flex;
+  flex-flow: column;
+  gap: 16px;
+  overflow: auto;
+  font-size: var(--font);
+
+  .task {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px 0 8px;
+
+  }
+}
+
+input[type="checkbox"]:checked + label .task-text {
+  text-decoration: line-through;
+}
+
+.task-text.done {
+  color: #888;
+  text-decoration: line-through;
+}
+
+
+/* 설정 팝업 */
+.popover {
+  box-shadow: 8px 8px 16px 4px rgba(18, 18, 18, 0.06);
+  border-radius: 6px;
+  inline-size: 118px;
+  block-size: 96px;
+  padding: 16px;
+  
+  display: inline-flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  position: absolute;
+  background: #fff;
+  top: 50px;
+  left: 40px;
+  z-index: 1;
+
+  button {
+    display: inline-flex;
+    flex-flow: column nowrap;
+    font-size: var(--font);
+    gap: 4px;
+  }
+}
+
+/* 체크박스 */
+.form-checkbox_bg-icon {
+  position: relative;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  input {
+    position: absolute;
+    inline-size: var(--size);
+    block-size: var(--size);
+    margin: 0;
+    appearance: none;
+  }
+
+  input:checked + label {
+    background-image: url(../../../public/img/icons/checkbox/checked.png);
+    inline-size: 24px;
+    block-size: 24px;
+  }
+
+  label {
+    inline-size: 24px;
+    block-size: 24px;
+    align-content: center;
+    background: url(../../../public/img/icons/checkbox/checkbox-basic.png) no-repeat;
+    background-size: 24px;
+  }
+}
+
