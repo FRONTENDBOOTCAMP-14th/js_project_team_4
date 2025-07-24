@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="감성적인 배경화면과 할 일을 함께 관리할 수 있는 대시보드 앱입니다(실습용)"
+    />
+    <link rel="stylesheet" href="../styles/common/reset.css" />
+    <link rel="stylesheet" href="../styles/components/weather-tab.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <title>Weather card</title>
+    <script type="module" src="../scripts/weather-tab.js"></script>
+  </head>
+  <body>
+    <div class="weather-tab">
+      <div class="weather-tab__wrapper">
+        <div class="weather-tab__inner">
+          <p class="weather-tab__temp">30°</p>
+          <div class="weather-tab__info">
+            <div class="weather-tab__location-date">
+              <h1 class="weather-tab__location">서울</h1>
+              <p class="weather-tab__date">10:40 - 2025년 7월 22일 화요일</p>
+            </div>
+            <img
+              class="weather-tab__icon"
+              src="/img/icons/09d.svg"
+              alt="icon current weather"
+            />
+          </div>
+        </div>
+      </div>
+
+      <aside class="weather-tab__panel">
+        <form class="weather-tab__search-form">
+          <input
+            autofocus
+            name="location"
+            class="weather-tab__search-input"
+            type="text"
+            autocomplete="off"
+            required
+            minlength="1"
+            placeholder="위치 검색..."
+          />
+          <img
+            aria-hidden="true"
+            id="clear-btn"
+            class="weather-tab__search-icon"
+            src="/img/icons/close.svg"
+            alt=""
+          />
+          <img
+            aria-hidden="false"
+            id="search-img"
+            class="weather-tab__search-icon"
+            src="/img/icons/search.svg"
+            alt=""
+          />
+        </form>
+
+        <div class="weather-tab__details">
+          <div>
+            <h2 class="weather-tab__title">날씨 상세 정보</h2>
+          </div>
+          <div class="weather-tab__cards">
+            <div class="weather-tab__desc">
+              <p class="weather-tab__desc-text">OVERCAST CLOUDS</p>
+            </div>
+            <div class="weather-tab__card">
+              <p>최고 온도</p>
+              <p>19°</p>
+              <img
+                class="weather-tab__icon-small"
+                src="/img/icons/temp-max.svg"
+                alt=""
+              />
+            </div>
+            <div class="weather-tab__card">
+              <p>최저 온도</p>
+              <p>15°</p>
+              <img
+                class="weather-tab__icon-small"
+                src="/img/icons/temp-min.svg"
+                alt=""
+              />
+            </div>
+            <div class="weather-tab__card">
+              <p>습도</p>
+              <p>58%</p>
+              <img
+                class="weather-tab__icon-small"
+                src="/img/icons/humadity.svg"
+                alt=""
+              />
+            </div>
+            <div class="weather-tab__card">
+              <p>구름</p>
+              <p>86%</p>
+              <img
+                class="weather-tab__icon-small"
+                src="/img/icons/cloudy.svg"
+                alt=""
+              />
+            </div>
+            <div class="weather-tab__card">
+              <p>바람</p>
+              <p>5km/h</p>
+              <img
+                class="weather-tab__icon-small"
+                src="/img/icons/wind.svg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="weather-tab__forecast">
+          <div>
+            <h2 class="weather-tab__title">일기 예보</h2>
+          </div>
+          <div class="weather-tab__cards-forecast">
+            <div class="weather-tab__forecast-card">
+              <img
+                class="weather-tab__icon-medium"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="weather-tab__forecast-desc">
+                <p>09:00</p>
+                <p>Clouds</p>
+              </div>
+              <p class="weather-tab__forecast-temp">19°</p>
+            </div>
+            <div class="weather-tab__forecast-card">
+              <img
+                class="weather-tab__icon-medium"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="weather-tab__forecast-desc">
+                <p>12:00</p>
+                <p>Clouds</p>
+              </div>
+              <p class="weather-tab__forecast-temp">20°</p>
+            </div>
+            <div class="weather-tab__forecast-card">
+              <img
+                class="weather-tab__icon-medium"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="weather-tab__forecast-desc">
+                <p>15:00</p>
+                <p>Clouds</p>
+              </div>
+              <p class="weather-tab__forecast-temp">17°</p>
+            </div>
+            <div class="weather-tab__forecast-card">
+              <img
+                class="weather-tab__icon-medium"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="weather-tab__forecast-desc">
+                <p>18:00</p>
+                <p>Clouds</p>
+              </div>
+              <p class="weather-tab__forecast-temp">16°</p>
+            </div>
+            <div class="weather-tab__forecast-card">
+              <img
+                class="weather-tab__icon-medium"
+                src="/img/icons/03d.svg"
+                alt="forecast"
+              />
+              <div class="weather-tab__forecast-desc">
+                <p>21:00</p>
+                <p>Clouds</p>
+              </div>
+              <p class="weather-tab__forecast-temp">15°</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </body>
+</html>
