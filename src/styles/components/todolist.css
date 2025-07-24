@@ -52,6 +52,7 @@ input{
 /* 새 TODO 입력창 */
 .new-todo {
   position: absolute;
+  inline-size: 10px;
   bottom: 0;
   background: #fff;
   font-size: var(--font);
@@ -101,6 +102,7 @@ input[type="checkbox"]:checked + label .task-text {
   flex-flow: column nowrap;
   justify-content: center;
   align-items: flex-start;
+  gap: 16px;
 
   position: absolute;
   background: #fff;
@@ -109,10 +111,8 @@ input[type="checkbox"]:checked + label .task-text {
   z-index: 1;
 
   button {
-    display: inline-flex;
-    flex-flow: column nowrap;
     font-size: var(--font);
-    gap: 4px;
+    
   }
 }
 
