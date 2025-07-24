@@ -134,6 +134,7 @@ button,
 input,
 label {
   line-height: 1.1;
+  border: none;
 }
 
 /* Balance text wrapping on headings */
