@@ -1,107 +1,146 @@
 /* global DOMPurify */
 
-const todoListForm = document.querySelector('.todo-list');
-const todoList = document.querySelector('.todo-list__item');
-
-
-todoListForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  const form = e.currentTarget;
-
-  const input = form.querySelector('[name="new-task"]')
-  const taskContent = input.value.trim()
-
-  if(!taskContent) return
-
-  const newTask = createTask(taskContent)
-  todoList.append(newTask)
-  form.reset()
-
-
-})
-
-
-function createTask(content) {
-  const taskElement = document.createElement('li')
-  taskElement.classList.add('task')
-
-  const uniqueId = generateUniqueId(10)
-
-  taskElement.innerHTML = DOMPurify.sanitize(/* html */`
-    <span class="task-text">${content}</span>
-    <div class="form-checkbox_bg-icon">
-      <input type="checkbox" id="${uniqueId}" name="${uniqueId}" />
-      <label for="${uniqueId}"></label>
-    </div>
-  `)
-
-  return taskElement
-}
-
-
-  function generateUniqueId(length = 5) {
-    return Math.random().toString(36).substring(2, length + 2)
-  }
-
-// 할 일 달성 체크(체크박스)시, 비활성화 (새로 추가되는 항목도 적용되도록 위임사용)
-todoListForm.addEventListener('change', (e) => {
-  if (e.target.matches('input[type="checkbox"]')) {
-    const task = e.target.closest('.task');
-    const text = task.querySelector('.task-text');
-
-    if (e.target.checked) {
-      text.classList.add('done')
-    } else {
-      text.classList.remove('done')
-    }
-  }
-})
-
-// 초기화 (전체삭제)
+const todoListForm = document.querySelector('.todo-list')
+const todoList = document.querySelector('.todo-list__item')
 const resetBtn = document.querySelector('.todo-list__reset')
 const removeSelectedBtn = document.querySelector('.todo-list__remove')
 
-resetBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  const tasks = todoList.querySelectorAll('.task');
-  tasks.forEach(task => task.remove());
-});
+let db
 
-// 할 일 삭제 - checked 된 항목만
-removeSelectedBtn.addEventListener('click', () => {
-  const tasks = todoList.querySelectorAll('.task');
-  tasks.forEach((task) => {
-    const checkbox = task.querySelector('input[type="checkbox"]');
-    if (checkbox && checkbox.checked) {
-      task.remove();
-    }
-  })
+// DB 연결
+const request = indexedDB.open('todoDB', 1)
+
+request.onupgradeneeded = (e) => {
+  db = e.target.result
+  db.createObjectStore('todos', { keyPath: 'id', autoIncrement: true })
+};
+
+request.onsuccess = (e) => {
+  db = e.target.result
+  console.log('DB 연결 성공')
+  loadTodos()
+}
+
+request.onerror = () => {
+  console.error('DB 연결 실패')
+}
+
+// 할 일 추가
+todoListForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const input = e.currentTarget.querySelector('[name="new-task"]')
+  const taskContent = input.value.trim()
+  if (!taskContent) return
+
+  addTodo(taskContent)
+  e.currentTarget.reset()
 })
 
+function addTodo(content) {
+  const tx = db.transaction('todos', 'readwrite')
+  const store = tx.objectStore('todos')
+  const todo = { content, isDone: false }
+  store.add(todo)
+
+  tx.oncomplete = () => loadTodos()
+}
+
+//  할 일 리스트 불러오기
+function loadTodos() {
+  const tx = db.transaction('todos', 'readonly')
+  const store = tx.objectStore('todos')
+  const request = store.getAll()
+
+  request.onsuccess = () => {
+    renderTodos(request.result)
+  };
+}
+
+//  렌더링
+function renderTodos(todos) {
+  todoList.innerHTML = ''
+  todos.forEach(todo => {
+    const li = document.createElement('li')
+    li.className = 'task'
+
+    const uniqueId = `task-${todo.id}`
+
+    li.innerHTML = DOMPurify.sanitize(`
+      <span class="task-text ${todo.isDone ? 'done' : ''}">${todo.content}</span>
+      <div class="form-checkbox_bg-icon">
+        <input type="checkbox" id="${uniqueId}" ${todo.isDone ? 'checked' : ''} data-id="${todo.id}" />
+        <label for="${uniqueId}"></label>
+      </div>
+    `)
+
+    todoList.appendChild(li)
+  })
+}
 
 
-// ------------------------------------------------------------------------------
-// 팝오버 창
+// 체크박스 토글 (isDone 업데이트)
+todoList.addEventListener('change', (e) => {
+  if (e.target.matches('input[type="checkbox"]')) {
+    const id = Number(e.target.dataset.id)
+    const isDone = e.target.checked
 
-// 설정 버튼 클릭시 팝오버 나오게 구현
+    const tx = db.transaction('todos', 'readwrite')
+    const store = tx.objectStore('todos')
+    const getReq = store.get(id)
+
+    getReq.onsuccess = () => {
+      const todo = getReq.result
+      todo.isDone = isDone
+      store.put(todo)
+      loadTodos()
+    }
+  }
+})
+
+function deleteTodo(id) {
+  const tx = db.transaction('todos', 'readwrite')
+  const store = tx.objectStore('todos')
+  store.delete(id);
+  tx.oncomplete = () => loadTodos()
+}
+
+//  전체 삭제
+resetBtn.addEventListener('click', () => {
+  const tx = db.transaction('todos', 'readwrite')
+  const store = tx.objectStore('todos')
+  const clearReq = store.clear()
+
+  clearReq.onsuccess = () => loadTodos()
+})
+
+// 체크된 항목만 삭제
+removeSelectedBtn.addEventListener('click', () => {
+  const checkboxes = todoList.querySelectorAll('input[type="checkbox"]:checked')
+  const tx = db.transaction('todos', 'readwrite')
+  const store = tx.objectStore('todos')
+
+  checkboxes.forEach((checkbox) => {
+    const id = Number(checkbox.dataset.id)
+    store.delete(id)
+  })
+
+  tx.oncomplete = () => loadTodos()
+})
+
+//  팝오버 열고 닫기
 const popoverTrigger = document.querySelector('.todo-list__popover-trigger')
 const popover = document.querySelector('.todo-list__popover')
 
+popover.setAttribute('hidden', 'true')
 
-
-popover.setAttribute('hidden', 'true'); 
-
-// 클릭시 팝오버 on/off
 popoverTrigger.addEventListener('click', () => {
   if (popover.hasAttribute('hidden')) {
-    popover.removeAttribute('hidden');
+    popover.removeAttribute('hidden')
   } else {
     popover.setAttribute('hidden', 'true')
   }
 })
 
-// 팝오버 외부 클릭 시 닫기
 document.addEventListener('click', (e) => {
   if (!popover.contains(e.target) && !popoverTrigger.contains(e.target)) {
     popover.setAttribute('hidden', 'true')
