@@ -19,7 +19,7 @@ input {
 }
 
 /* TODO 리스트 박스 */
-.todo-list__warpper {
+.todo-list {
   border-radius: var(--card-radius, 16px);
   background: var(--primary-color, #fff);
   box-shadow: 0 0 24px 4px var(--shadow-color, rgba(18, 18, 18, 0.1));
@@ -36,7 +36,7 @@ input {
 }
 
 /* TODO- 오늘 */
-.header {
+.todo-list__header {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -53,10 +53,12 @@ input {
   display: flex;
   flex-flow: column;
   gap: 16px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-size: var(--font);
   padding-top: 2%;
   padding-bottom: 20px;
+  height: 100%;
 
   .task {
     display: flex;
@@ -72,9 +74,6 @@ input {
 
 /* 새 TODO 입력창 */
 .new-todo {
-  position: absolute;
-  left: 0;
-  bottom: 0;
   background: #fff;
   font-size: var(--font);
   font-weight: 300;
@@ -83,8 +82,8 @@ input {
 }
 
 /* 설정 팝업 */
-.popover {
-  box-shadow: 8px 8px 16px 4px rgba(18, 18, 18, 0.06);
+.todo-list__popover {
+  box-shadow: 0 0 24px 4px var(--shadow-color, rgba(18, 18, 18, 0.1));
   border-radius: 6px;
   inline-size: 118px;
   block-size: 96px;
