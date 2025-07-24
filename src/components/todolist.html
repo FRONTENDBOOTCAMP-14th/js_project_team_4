@@ -6,15 +6,15 @@
     <link rel="stylesheet" href="../styles/common/reset.css" />
     <link rel="stylesheet" href="../styles/components/todolist.css" />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
-    <script type="module" src="./js/popup.js"></script>
-    <script type="module" src="./js/todo-list.js"></script>
+    <script type="module" src="../scripts/popover.js"></script>
+    <script type="module" src="../scripts/todolist.js"></script>
     <title>투두리스트</title>
    
   </head>
   <body>
     <form class="todo-list__warpper">
       <div class="header">
-        <p class="todo-title">Todo- 오늘</p>
+        <p class="todo-list__title">Todo- 오늘</p>
         <button type="button" class="popover-trigger">
           <svg width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M2 16.7083C3.10457 16.7083 4 15.8128 4 14.7083C4 13.6037 3.10457 12.7083 2 12.7083C0.895429 12.7083 0 13.6037 0 14.7083C0 15.8128 0.895429 16.7083 2 16.7083Z" fill="#2D2D2D"/>
@@ -37,24 +37,20 @@
           </div>
         </li>
         <li class="task">
-          <span class="task-text">시안 정하기</span>
+          <span class="task-text">디자인 작업</span>
           <div class="form-checkbox_bg-icon">
             <input type="checkbox" id="list-2" name="list-2" />
             <label for="list-2"></label>
           </div>
         </li>
-        <li class="task">
-          <span class="task-text">시안 정하기</span>
-          <div class="form-checkbox_bg-icon">
-            <input type="checkbox" id="list-3" name="list-3" />
-            <label for="list-3"></label>
-          </div>
-        </li>
+        
+        
   
         <li class="new-todo">
           <input type="text" id="new-task" name="new-task" placeholder="새 TODO"/>
         </li>
       </ul>
     </form>    
+     
   </body>
 </html>
