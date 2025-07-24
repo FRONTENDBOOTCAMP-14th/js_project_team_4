@@ -1,9 +1,3 @@
-:root {
-  --font: 16px;
-  --size: 24px;
-}
-
-
 .todo-list button {
   border: 0;
   background-color: transparent;
@@ -19,18 +13,18 @@
   display: none !important;
 }
 
+
 /* TODO 리스트 박스 */
 .todo-list {
-  border-radius: var(--card-radius, 16px);
-  background: var(--primary-color, #fff);
-  box-shadow: 0 0 24px 4px var(--shadow-color, rgba(18, 18, 18, 0.1));
-  inline-size: 250px;
-  block-size: 400px;
-  padding: 25px 20px;
+  border-radius: var(--card-radius);
+  background: var(--primary-color);
+  box-shadow: 0 0 24px 4px var(--shadow-color);
+  inline-size: 100%;
+  block-size: 100%;
+  padding: var(--spacing-md);
 
   display: flex;
   flex-flow: column nowrap;
-  gap: 16px;
   flex-shrink: 0;
 
   position: relative;
@@ -41,69 +35,76 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  padding: 8px;
+  padding: var(--spacing-sm);
   top: 0;
   font-size: 20px;
   font-weight: 700;
-  color: #2d2d2d;
-  background: #fff;
+  color: var(--third-color);
+  background: var(--primary-color);
 }
 
 /* TODO-List 아이템 */
 .todo-list__item {
   display: flex;
   flex-flow: column;
-  gap: 16px;
-  overflow-x: hidden;
+  gap: var(--spacing-sm);
   overflow-y: auto;
-  font-size: var(--font);
-  padding-top: 2%;
-  padding-bottom: 20px;
+  font-size: var(--font-sm);
+  padding-top: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
   height: 100%;
 
   .task {
     display: flex;
     justify-content: space-between;
-    padding: 0 8px 0 8px;
+    padding: 0 var(--spacing-sm);
   }
 }
 
+.task-text {
+  color: var(--third-color);
+  overflow-x: hidden;
+}
+
 .task-text.done {
-  color: #888;
+  color: var(--secondary-color);
   text-decoration: line-through;
 }
 
 /* 새 TODO 입력창 */
 .new-todo {
-  background: #fff;
-  font-size: var(--font);
+  background: var(--primary-color);
+  font-size: var(--font-sm);
   font-weight: 300;
-  color: #888;
-  padding: 8px;
+  color: var(--secondary-color);
+  padding: var(--spacing-xs);
+  width: 100%;
+
+  input {
+    width: inherit;
+  }
 }
 
 /* 설정 팝업 */
 .todo-list__popover {
-  box-shadow: 0 0 24px 4px var(--shadow-color, rgba(18, 18, 18, 0.1));
-  border-radius: 6px;
-  inline-size: 118px;
-  block-size: 96px;
-  padding: 16px;
+  box-shadow: 0 0 24px 4px var(--shadow-color);
+  border-radius: var(--inner-card-radius);
+  block-size: fit-content;
+  padding: var(--spacing-sm);
 
   display: inline-flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: flex-start;
-  gap: 16px;
 
   position: absolute;
-  background: #fff;
+  background: var(--primary-color);
   top: 70px;
   right: 20px;
   z-index: 1;
 
   button {
-    font-size: var(--font);
+    font-size: var(--font-sm);
   }
 }
 
@@ -117,24 +118,23 @@
 
   input {
     position: absolute;
-    inline-size: var(--size);
-    block-size: var(--size);
+    inline-size: var(--icon-sm);
+    block-size: var(--icon-sm);
     margin: 0;
     appearance: none;
   }
 
   input:checked + label {
     background-image: url(/img/icons/checkbox/checked.png);
-    inline-size: 24px;
-    block-size: 24px;
+    inline-size: var(--icon-sm);
+    block-size: var(--icon-sm);
   }
 
   label {
-    inline-size: 24px;
-    block-size: 24px;
+    inline-size: var(--icon-sm);
+    block-size: var(--icon-sm);
     align-content: center;
-    background: url(/img/icons/checkbox/checkbox-basic.png)
-      no-repeat;
-    background-size: 24px;
+    background: url(/img/icons/checkbox/checkbox-basic.png) no-repeat;
+    background-size: var(--icon-sm);
   }
 }

@@ -2,11 +2,11 @@
   display: grid;
   /* width: 100%; */
   height: 100vh;
-  min-width: 1024px;
+  min-width: var(--app-min-width);
   aspect-ratio: 16/9;
-  padding: 16px;
-  row-gap: 32px;
-  column-gap: 16px;
+  padding: var(--spacing-sm);
+  row-gap: var(--spacing-sm);
+  column-gap: var(--spacing-sm);
   grid-template-rows: repeat(7, minmax(0, 1fr));
   grid-template-columns: repeat(6, minmax(0, 1fr));
   grid-template-areas: 

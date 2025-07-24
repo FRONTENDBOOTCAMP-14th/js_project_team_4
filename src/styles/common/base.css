@@ -3,3 +3,32 @@
 body {
   font-family: var(--font-family);
 }
+
+.bg-primary {
+  background: var(--primary-color);
+  color: var(--third-color);
+}
+
+.bg-secondary {
+  background: var(--secondary-color);
+  color: var(--third-color);
+}
+
+.bg-third {
+  background: var(--third-color);
+  color: var(--primary-color);
+}
+
+.bg-fourth {
+  background: var(--fourth-color);
+  color: var(--third-color);
+}
+
+.bg-accent {
+  background: var(--accent-color);
+  color: var(--lifecord-white);
+}
+
+.font-bold {
+  font-weight: 700;
+}

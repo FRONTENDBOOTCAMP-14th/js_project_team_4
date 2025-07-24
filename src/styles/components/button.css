@@ -1,47 +1,44 @@
-.btn-primary {
-  display: inline-flex;
-  padding: var(--spacing-xs);
+.btn-base {
+  display: flex;
+  padding: var(--spacing-sm);
   justify-content: center;
   align-items: center;
-  gap: var(--inner-card-radius);
+  gap: var(--spacing-sm);
+  font-size: var(--font-sm);
   border-radius: var(--inner-card-radius);
-  background: var(--primary-color);
-  color: var(--third-color);
+  cursor: pointer;
+  height: fit-content;
+  width: fit-content;
+
 }
 
-.btn-secondary {
-  display: inline-flex;
-  padding: var(--spacing-xs);
-  justify-content: center;
+.btn-rounded {
+  border-radius: var(--full-radius);
+}
+
+.btn-base__icon {
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  flex-shrink: 0;
+}
+
+.btn-base__icon--large {
+  width: var(--icon-lg);
+  height: var(--icon-lg);
+  flex-shrink: 0;
+}
+
+.list-button {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.link-button {
+  display: flex;
+  padding: var(--spacing-sm, 16px);
   align-items: center;
-  gap: var(--inner-card-radius);
-  border-radius: var(--inner-card-radius);
-  background: var(--secondary-color);
-  color: var(--third-color);
-}
-
-.btn-third {
-  display: inline-flex;
-  padding: var(--spacing-xs);
-  justify-content: center;
-  align-items: center;
-  gap: var(--inner-card-radius);
-  border-radius: var(--inner-card-radius);
-  background: var(--third-color);
-  color: var(--primary-color);
-}
-
-.btn-fourth {
-  display: inline-flex;
-  padding: var(--spacing-xs);
-  justify-content: center;
-  align-items: center;
-  gap: var(--inner-card-radius);
-  border-radius: var(--inner-card-radius);
-  background: var(--fourth-color);
-  color: var(--third-color);
-}
-
-.btn-bold {
-  font-weight: 700;
+  gap: var(--spacing-sm, 16px);
+  justify-content: left;
+  align-self: stretch;
+  inline-size: 100%;
 }
