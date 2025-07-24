@@ -3,28 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../src/style.css">
+    <link rel="stylesheet" href="../../src/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
     <title>버튼</title>
     <style>
       body {
-        margin: 32px;
+        margin: var(--spacing-lg);
         display: flex;
         flex-flow: column nowrap;
-        gap: 16px;
+        gap: var(--spacing-sm);
+        background-color: var(--primary-color);
       }
 
       h1 {
-        font-size: 24px;
+        font-size: var(--font-md);
         font-weight: 700;
-        color: #2d2d2d;
+        color: var(--third-color);
+      }
+
+      .btn-container {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 16px;
+        max-width: 512px;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--third-color);
       }
     </style>
-   
   </head>
   <body>
-    <a href="../../index.html">메인페이지로 돌아가기</a>
+    <a class="btn-primary" href="../../index.html">메인페이지로 돌아가기</a>
     <h1>버튼</h1>
-    <button type="button" class="button">버튼</button>
+
+    <h2>일반버튼</h2>
+    <div class="btn-container">
+      <button type="button" class="btn-primary">버튼</button>
+      <button type="button" class="btn-secondary">버튼</button>
+      <button type="button" class="btn-third">버튼</button>
+      <button type="button" class="btn-fourth">버튼</button>
+    </div>
+    <h2>bold 버튼</h2>
+    <div class="btn-container">
+      <button type="button" class="btn-primary btn-bold">버튼</button>
+      <button type="button" class="btn-secondary btn-bold">버튼</button>
+      <button type="button" class="btn-third btn-bold">버튼</button>
+      <button type="button" class="btn-fourth btn-bold">버튼</button>
+    </div>
+
+
   </body>
 </html>

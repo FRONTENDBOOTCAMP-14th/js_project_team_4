@@ -1,0 +1,47 @@
+.btn-primary {
+  display: inline-flex;
+  padding: var(--spacing-xs);
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-card-radius);
+  border-radius: var(--inner-card-radius);
+  background: var(--primary-color);
+  color: var(--third-color);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  padding: var(--spacing-xs);
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-card-radius);
+  border-radius: var(--inner-card-radius);
+  background: var(--secondary-color);
+  color: var(--third-color);
+}
+
+.btn-third {
+  display: inline-flex;
+  padding: var(--spacing-xs);
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-card-radius);
+  border-radius: var(--inner-card-radius);
+  background: var(--third-color);
+  color: var(--primary-color);
+}
+
+.btn-fourth {
+  display: inline-flex;
+  padding: var(--spacing-xs);
+  justify-content: center;
+  align-items: center;
+  gap: var(--inner-card-radius);
+  border-radius: var(--inner-card-radius);
+  background: var(--fourth-color);
+  color: var(--third-color);
+}
+
+.btn-bold {
+  font-weight: 700;
+}
