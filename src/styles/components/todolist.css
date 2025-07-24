@@ -3,12 +3,13 @@
   --size: 24px;
 }
 
-button {
+
+.todo-list button {
   border: 0;
   background-color: transparent;
 }
 
-input {
+.todo-list input {
   border: 0;
   background: transparent;
   list-style: none;
@@ -97,8 +98,8 @@ input {
 
   position: absolute;
   background: #fff;
-  top: 50px;
-  left: 40px;
+  top: 70px;
+  right: 20px;
   z-index: 1;
 
   button {

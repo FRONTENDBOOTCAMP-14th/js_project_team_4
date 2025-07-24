@@ -84,25 +84,11 @@ removeSelectedBtn.addEventListener('click', () => {
 // ------------------------------------------------------------------------------
 // 팝오버 창
 
-const button = document.querySelector('.todo-list__popover-trigger')
-const todoInput = document.querySelector('.input')
-const checkbox = document.querySelector('input[type="checkbox"]')
-
 // 설정 버튼 클릭시 팝오버 나오게 구현
 const popoverTrigger = document.querySelector('.todo-list__popover-trigger')
 const popover = document.querySelector('.todo-list__popover')
 
-const triggerRect = popoverTrigger.getBoundingClientRect()
-const triggerCenterPosition = (triggerRect.left + triggerRect.right) / 2
 
-const popoverRect = popover.getBoundingClientRect();
-const popoverLeftPosition = triggerCenterPosition - popoverRect.width / 1.5
-
-const POPOVER_SPACE = 0;
-const popoverTopPosition = triggerRect.bottom + POPOVER_SPACE;
-
-popover.style.setProperty('top', `${popoverTopPosition}px`);
-popover.style.setProperty('left', `${popoverLeftPosition}px`);
 
 popover.setAttribute('hidden', 'true'); 
 
@@ -121,9 +107,3 @@ document.addEventListener('click', (e) => {
     popover.setAttribute('hidden', 'true')
   }
 })
-
-
-
-
-
-
