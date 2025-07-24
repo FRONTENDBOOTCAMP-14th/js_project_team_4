@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../src/style.css">
+    <link rel="stylesheet" href="../../src/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
     <script type="module" src="../scripts/todolist.js"></script>
     <title>투두리스트</title>
@@ -20,51 +20,88 @@
         font-weight: 700;
         color: #2d2d2d;
       }
+
+      .todo-example-container {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: var(--spacing-sm);
+        width: 250px; /* 최소 너비: 220 */
+        height: 400px; /* 최소 높이: 200 */
+      }
     </style>
-   
   </head>
   <body>
     <a href="../../index.html">메인페이지로 돌아가기</a>
     <h1>투두리스트</h1>
-    <form class="todo-list">
-      <div class="todo-list__header">
-        <p class="todo-list__title">Todo- 오늘</p>
-        <button type="button" class="todo-list__popover-trigger">
-          <svg width="20" height="30" viewBox="0 0 20 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 16.7083C3.10457 16.7083 4 15.8128 4 14.7083C4 13.6037 3.10457 12.7083 2 12.7083C0.895429 12.7083 0 13.6037 0 14.7083C0 15.8128 0.895429 16.7083 2 16.7083Z" fill="#2D2D2D"/>
-          <path d="M10 16.7083C11.1046 16.7083 12 15.8128 12 14.7083C12 13.6037 11.1046 12.7083 10 12.7083C8.89543 12.7083 8 13.6037 8 14.7083C8 15.8128 8.89543 16.7083 10 16.7083Z" fill="#2D2D2D"/>
-          <path d="M18 16.7083C19.1046 16.7083 20 15.8128 20 14.7083C20 13.6037 19.1046 12.7083 18 12.7083C16.8954 12.7083 16 13.6037 16 14.7083C16 15.8128 16.8954 16.7083 18 16.7083Z" fill="#2D2D2D"/>
-          </svg>
-      </button>
+    <div class="todo-example-container">
+      <form class="todo-list">
+        <div class="todo-list__header">
+          <p class="todo-list__title">Todo- 오늘</p>
+          <button type="button" class="todo-list__popover-trigger">
+            <svg
+              width="20"
+              height="30"
+              viewBox="0 0 20 30"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 16.7083C3.10457 16.7083 4 15.8128 4 14.7083C4 13.6037 3.10457 12.7083 2 12.7083C0.895429 12.7083 0 13.6037 0 14.7083C0 15.8128 0.895429 16.7083 2 16.7083Z"
+                fill="#2D2D2D"
+              />
+              <path
+                d="M10 16.7083C11.1046 16.7083 12 15.8128 12 14.7083C12 13.6037 11.1046 12.7083 10 12.7083C8.89543 12.7083 8 13.6037 8 14.7083C8 15.8128 8.89543 16.7083 10 16.7083Z"
+                fill="#2D2D2D"
+              />
+              <path
+                d="M18 16.7083C19.1046 16.7083 20 15.8128 20 14.7083C20 13.6037 19.1046 12.7083 18 12.7083C16.8954 12.7083 16 13.6037 16 14.7083C16 15.8128 16.8954 16.7083 18 16.7083Z"
+                fill="#2D2D2D"
+              />
+            </svg>
+          </button>
           <div class="todo-list__popover">
-          <button type="button" class="todo-list__reset" aria-label="초기화">초기화</button>
-          <button type="button" class="todo-list__remove" aria-label="할 일 삭제">할 일 삭제</button>
+            <button
+              type="button"
+              class="todo-list__reset btn-base bg-primary list-button"
+              aria-label="초기화"
+            >
+              초기화
+            </button>
+            <button
+              type="button"
+              class="todo-list__remove btn-base bg-primary list-button"
+              aria-label="할 일 삭제"
+            >
+              할 일 삭제
+            </button>
+          </div>
         </div>
-      </div>
 
-      <ul class="todo-list__item">
-        <li class="task">
-          <span class="task-text">시안 정하기</span>
-          <div class="form-checkbox_bg-icon">
-            <input type="checkbox" id="list-1" name="list-1" />
-            <label for="list-1"></label>
-          </div>
-        </li>
-        <li class="task">
-          <span class="task-text">디자인 작업</span>
-          <div class="form-checkbox_bg-icon">
-            <input type="checkbox" id="list-2" name="list-2" />
-            <label for="list-2"></label>
-          </div>
-        </li>
-        
-        
-  
-      </ul>
-      <div class="new-todo">
-        <input type="text" id="new-task" name="new-task" placeholder="새 TODO"/>
-      </div>
-    </form>    
-     
+        <ul class="todo-list__item">
+          <li class="task">
+            <span class="task-text">시안 정하기</span>
+            <div class="form-checkbox_bg-icon">
+              <input type="checkbox" id="list-1" name="list-1" />
+              <label for="list-1"></label>
+            </div>
+          </li>
+          <li class="task">
+            <span class="task-text">디자인 작업</span>
+            <div class="form-checkbox_bg-icon">
+              <input type="checkbox" id="list-2" name="list-2" />
+              <label for="list-2"></label>
+            </div>
+          </li>
+        </ul>
+        <div class="new-todo">
+          <input
+            type="text"
+            id="new-task"
+            name="new-task"
+            placeholder="새 TODO"
+          />
+        </div>
+      </form>
+    </div>
   </body>
 </html>
