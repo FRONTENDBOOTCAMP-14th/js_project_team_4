@@ -1,6 +1,6 @@
 /* global DOMPurify */
 
-const todoListForm = document.querySelector('.todo-list__warpper');
+const todoListForm = document.querySelector('.todo-list');
 const todoList = document.querySelector('.todo-list__item');
 
 
@@ -59,8 +59,8 @@ todoListForm.addEventListener('change', (e) => {
 })
 
 // 초기화 (전체삭제)
-const resetBtn = document.querySelector('.reset')
-const removeSelectedBtn = document.querySelector('.remove')
+const resetBtn = document.querySelector('.todo-list__reset')
+const removeSelectedBtn = document.querySelector('.todo-list__remove')
 
 resetBtn.addEventListener('click', (e) => {
   e.preventDefault();
@@ -84,25 +84,10 @@ removeSelectedBtn.addEventListener('click', () => {
 // ------------------------------------------------------------------------------
 // 팝오버 창
 
-const button = document.querySelector('button')
-const todoInput = document.querySelector('.input')
-const checkbox = document.querySelector('input[type="checkbox"]')
-
 // 설정 버튼 클릭시 팝오버 나오게 구현
-const popoverTrigger = document.querySelector('.popover-trigger')
-const popover = document.querySelector('.popover')
+const popoverTrigger = document.querySelector('.todo-list__popover-trigger')
+const popover = document.querySelector('.todo-list__popover')
 
-const triggerRect = popoverTrigger.getBoundingClientRect()
-const triggerCenterPosition = (triggerRect.left + triggerRect.right) / 2
-
-const popoverRect = popover.getBoundingClientRect();
-const popoverLeftPosition = triggerCenterPosition - popoverRect.width / 1.5
-
-const POPOVER_SPACE = 0;
-const popoverTopPosition = triggerRect.bottom + POPOVER_SPACE;
-
-popover.style.setProperty('top', `${popoverTopPosition}px`);
-popover.style.setProperty('left', `${popoverLeftPosition}px`);
 
 popover.setAttribute('hidden', 'true'); 
 
@@ -121,9 +106,3 @@ document.addEventListener('click', (e) => {
     popover.setAttribute('hidden', 'true')
   }
 })
-
-
-
-
-
-
