@@ -89,6 +89,7 @@ const popoverTrigger = document.querySelector('.todo-list__popover-trigger')
 const popover = document.querySelector('.todo-list__popover')
 
 
+
 popover.setAttribute('hidden', 'true'); 
 
 // 클릭시 팝오버 on/off
