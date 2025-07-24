@@ -15,7 +15,7 @@
   --full-radius: 9999px;
   --card-radius: 16px;
   --inner-card-radius: 8px;
-  
+
   --spacing-xs: 8px;
   --spacing-sm: 16px;
   --spacing-md: 24px;
@@ -23,8 +23,8 @@
   --spacing-xl: 48px;
 
   --app-min-width: 1024px;
-  
-  --font-family: 'Pretendard Variable', sans-serif;
+
+  --font-family: "Pretendard Variable", sans-serif;
   --font-xs: 0.75rem;
   --font-sm: 1rem;
   --font-md: 1.25rem;
@@ -37,7 +37,6 @@
   --icon-md: 36px;
   --icon-lg: 48px;
   --icon-xl: 64px;
-
 }
 
 /* CSS Variables - Dark Mode */

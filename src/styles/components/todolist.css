@@ -13,7 +13,6 @@
   display: none !important;
 }
 
-
 /* TODO 리스트 박스 */
 .todo-list {
   border-radius: var(--card-radius);
