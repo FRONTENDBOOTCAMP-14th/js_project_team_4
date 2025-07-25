@@ -27,8 +27,8 @@
   flex-flow: row nowrap;
   flex: 1 0 0;
 
-  width: 498px; /* 최소 너비: 287px */
-  height: 48px; 
+  width: 498px; /* 최소 너비: 330px */
+  height: var(--spacing-xl);
   position: relative;
 }
 
@@ -36,13 +36,11 @@
   display: flex;
   flex-flow: row nowrap;
   column-gap: 10px;
-  flex: 1 0 0;
   align-items: center;
-  
 }
 
 .search-bar input {
-  width: 400px;
+  width: 400px;  /* 최소 너비: 240px*/
 }
 
 .search-bar__popover {
@@ -52,28 +50,28 @@
   width: 150px;
   height: 216px;
 
-  padding: 32px;
+  padding: var(--spacing-lg);
 
   display: flex;
   flex-flow: column nowrap;
-  row-gap: 32px;
+  row-gap: var(--spacing-lg);
 
   position: absolute;
   left: 0px;
   top: 60px;
 
-  .search-bar__popover__google {
+  .search-bar__popover__google__btn {
     display: flex;
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
   
   }
-  .search-bar__popover__youtube {
+  .search-bar__popover__youtube__btn {
     display: flex;
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
   }
-  .search-bar__popover__naver {
+  .search-bar__popover__naver__btn {
     display: flex;
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
