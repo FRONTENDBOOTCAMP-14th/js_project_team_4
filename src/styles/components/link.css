@@ -25,7 +25,7 @@
   width: 100%;
 }
 
-.link-modal__main__header__name-icon-box {
+.link-modal__header__name-icon-box {
   display: flex;
   align-items: center;
 }
@@ -51,7 +51,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-sm);
   border-radius: var(--card-radius, 16px);
   width: 80%;
   height: 80%;
@@ -84,7 +84,6 @@
 
 .link-modal__main {
   display: flex;
-  padding: var(--spacing-sm);
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-sm);
@@ -92,7 +91,7 @@
   height: 100%;
 }
 
-.link-modal__main__header {
+.link-modal__header {
   display: flex;
   width: 100%;
   padding: var(--spacing-sm, 16px);
@@ -100,7 +99,7 @@
   align-items: center;
 }
 
-.link-modal__main__header__name {
+.link-modal__header__name {
   font-size: var(--font-lg);
 }
 
