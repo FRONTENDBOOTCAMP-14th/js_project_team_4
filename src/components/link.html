@@ -36,7 +36,7 @@
     <h1>링크</h1>
     <div class="link-example-container">
       <section class="link-card">
-        <p class="link-card__title font-bold" aria-label="링크">링크</p>
+        <h2 class="link-card__title font-bold">링크</h2>
         <ul class="link-card__list">
           <li>
             <a
@@ -62,9 +62,9 @@
       </section>
     </div>
     <div class="link-modal-overlay" id="linkModalOverlay">
-      <article class="link-modal">
+      <div class="link-modal">
         <section class="link-modal__sidebar">
-          <p class="link-modal__title font-bold">링크</p>
+          <h2 class="link-modal__title font-bold">링크</h2>
           <ul class="link-modal__list">
             <li>
               <button
@@ -82,7 +82,7 @@
             </li>
           </ul>
         </section>
-        <section class="link-modal__main">
+        <div class="link-modal__main">
           <div class="link-modal__header">
             <div class="link-modal__header__name-icon-box">
               <a href="https://github.com/" class="btn-base bg-primary">
@@ -146,8 +146,8 @@
               </button>
             </div>
           </form>
-        </section>
-      </article>
+        </div>
+      </div>
     </div>
     <script>
       const linkModalOverlay = document.getElementById("linkModalOverlay");
