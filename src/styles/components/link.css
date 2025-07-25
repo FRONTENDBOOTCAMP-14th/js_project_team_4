@@ -1,0 +1,26 @@
+.link-card {
+  display: flex;
+  flex-flow: column nowrap;
+  min-width: 220px;
+  min-height: 200px;
+  align-items: flex-start;
+  padding: var(--spacing-sm);
+  border-radius: var(--card-radius, 16px);
+  background: var(--primary-color, #fff);
+  box-shadow: 0 0 24px 4px var(--shadow-color, rgba(18, 18, 18, 0.1));
+}
+
+.link-card__title {
+  padding: var(--spacing-sm);
+}
+
+.link-card__list {
+  display: flex;
+  flex-flow: column nowrap;
+  block-size: 100%;
+}
+
+.link-card__button--more {
+  text-align: center;
+  width: 100%;
+}

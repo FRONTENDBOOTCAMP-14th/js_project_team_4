@@ -11,6 +11,10 @@
   width: fit-content;
 }
 
+a.btn-base {
+  text-decoration: none;
+}
+
 .btn-rounded {
   border-radius: var(--full-radius);
 }

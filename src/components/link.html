@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../src/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script type="module" src="../main.js"></script>
+    <title>링크</title>
+    <style>
+      body {
+        margin: 32px;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 16px;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2d2d2d;
+      }
+
+      .link-example-container {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: var(--spacing-sm);
+        width: 250px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 브라우저의 북마크와 같이 대시보드에서 북마크를 설정하는 기능입니다. -->
+    <a href="../../index.html">메인페이지로 돌아가기</a>
+    <h1>링크</h1>
+    <div class="link-example-container">
+      <section class="link-card">
+        <p class="link-card__title font-bold" aria-label="링크">링크</p>
+        <ul class="link-card__list">
+          <li>
+            <a
+              href="https://github.com/"
+              class="link-card__link btn-base bg-primary link-button"
+            >
+              <img
+                aria-hidden="true"
+                class="btn-base__icon"
+                src="/img/icons/github-logo-black.svg"
+                alt=""
+              />
+              Github
+            </a>
+          </li>
+        </ul>
+        <button class="link-card__button--more btn-base bg-primary font-bold">
+          모든 링크
+        </button>
+      </section>
+    </div>
+  </body>
+</html>
