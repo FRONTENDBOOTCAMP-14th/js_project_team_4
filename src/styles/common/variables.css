@@ -1,29 +1,59 @@
+/* CSS Variables - Light Mode */
 :root {
-  --spacing-8xl: 192px;
-  --spacing-7xl: 160px;
-  --spacing-6xl: 144px;
-  --spacing-5xl: 128px;
-  --spacing-4xl: 96px;
-  --spacing-xxl: 80px;
-  --spacing-xl: 64px;
-  --spacing-lg: 40px;
-  --spacing-md: 24px;
-  --spacing-sm: 16px;
+  --lifecord-black: rgb(30, 30, 30);
+  --lifecord-white: rgb(255, 255, 255);
+  --lifecord-grey: rgb(157, 157, 157);
+  --lifecord-overlay-white: rgba(255, 255, 255, 0.5);
+  --shadow-color-more: rgba(18, 18, 18, 0.2);
+  --primary-color: rgb(255, 255, 255);
+  --secondary-color: rgb(206, 206, 206);
+  --third-color: rgb(30, 30, 30);
+  --fourth-color: rgb(230, 230, 230);
+  --accent-color: rgb(0, 203, 135);
+  --shadow-color: rgba(18, 18, 18, 0.1);
+
+  --full-radius: 9999px;
+  --card-radius: 16px;
+  --inner-card-radius: 8px;
+
   --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
 
-  --sidebar-max-width: 420px;
-  --sidebar-min-width: 360px;
+  --app-min-width: 1024px;
 
-  --font-size-lg: 3.5rem;
-  --font-size-md: 1.5rem;
-  --font-size-base: 1rem;
-  --font-size-small: 0.8rem;
-  --font-size-xs: 0.8125rem;
-  --font-weight-normal: 400;
-  --font-weight-bold: 600;
-  --font-weight-bolder: 700;
-  --font-weight-boldest: 900;
+  --font-family: "Pretendard Variable", sans-serif;
+  --font-xs: 0.75rem;
+  --font-sm: 1rem;
+  --font-md: 1.25rem;
+  --font-lg: 2rem;
+  --font-xl: 3.5rem;
+  --font-xxl: 5rem;
 
-  --border-radius-round: 50%;
-  --border-radius-md: 8px;
+  --icon-xs: 16px;
+  --icon-sm: 24px;
+  --icon-md: 36px;
+  --icon-lg: 48px;
+  --icon-xl: 64px;
+}
+
+/* CSS Variables - Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lifecord-black: rgb(30, 30, 30);
+    --lifecord-white: rgb(255, 255, 255);
+    --lifecord-grey: rgb(157, 157, 157);
+    --lifecord-overlay-white: rgba(255, 255, 255, 0.5);
+    --primary-color: rgb(30, 30, 30);
+    --secondary-color: rgb(48, 48, 48);
+    --third-color: rgb(255, 255, 255);
+    --accent-color: rgb(0, 203, 135);
+    --shadow-color: rgba(255, 255, 255, 0.1);
+    --fourth-color: rgb(45, 45, 45);
+    --shadow-color-more: rgba(255, 255, 255, 0.2);
+    --spacing-xl: 48px;
+    --icon-xs: 16px;
+  }
 }
