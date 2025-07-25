@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../../src/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
-    <script type="module" src="../main.js"></script>
+    <script src="../scripts/link.js"></script>
     <title>링크</title>
     <style>
       body {
@@ -53,10 +53,108 @@
             </a>
           </li>
         </ul>
-        <button class="link-card__button--more btn-base bg-primary font-bold">
-          모든 링크
+        <button
+          type="button"
+          class="link-card__button--more btn-base bg-primary font-bold"
+        >
+          링크 관리
         </button>
       </section>
     </div>
+    <div class="link-modal-overlay" id="linkModalOverlay">
+      <article class="link-modal">
+        <section class="link-modal__sidebar">
+          <p class="link-modal__title font-bold">링크</p>
+          <ul class="link-modal__list">
+            <li>
+              <button
+                href="https://github.com/"
+                class="link-modal__link btn-base bg-primary link-button"
+                type="button"
+              >
+                <img
+                  aria-hidden="true"
+                  class="btn-base__icon"
+                  src="/img/icons/github-logo-black.svg"
+                  alt=""
+                />
+                Github
+              </button>
+            </li>
+          </ul>
+        </section>
+        <section class="link-modal__main">
+          <div class="link-modal__main__header">
+            <div class="link-modal__main__header__name-icon-box">
+              <a href="https://github.com/" class="btn-base bg-primary">
+                <img
+                  aria-hidden="true"
+                  class="btn-base__icon--large"
+                  src="/img/icons/github-logo-black.svg"
+                  alt=""
+                />
+              </a>
+              <input
+                type="text"
+                value="Github"
+                placeholder="이름 입력"
+                class="link-modal__main__header__name font-bold"
+              />
+            </div>
+            <button
+              type="button"
+              class="link-modal__close btn-base bg-third btn-rounded"
+            >
+              <picture class="btn-base__icon">
+                <source
+                  srcset="/img/icons/close-black.svg"
+                  media="(prefers-color-scheme: dark)"
+                />
+                <img
+                  src="/img/icons/close.svg"
+                  class="btn-base__icon"
+                  alt="닫기 버튼"
+                />
+              </picture>
+            </button>
+          </div>
+          <form class="link-modal__form" action="">
+            <div>
+              <label for="link-modal__form__url">링크 URL</label>
+              <input
+                type="text"
+                name="link-modal__form__url"
+                id="link-modal__form__url"
+                value="https://github.com/"
+                placeholder="링크 URL을 입력해주세요."
+                required
+              />
+            </div>
+            <label for="link-modal__form__description">링크 설명</label>
+            <input
+              type="text"
+              name="link-modal__form__description"
+              id="link-modal__form__description"
+              value="Github"
+              placeholder="링크 설명을 입력해주세요.(선택)"
+            />
+            <div class="link-modal__form__button-box">
+              <button type="button" class="btn-base bg-primary">
+                취소
+              </button>
+              <button type="submit" class="btn-base bg-accent">
+                저장
+              </button>
+            </div>
+          </form>
+        </section>
+      </article>
+    </div>
+    <script>
+      const linkModalOverlay = document.getElementById("linkModalOverlay");
+      const linkCard = document.querySelector(".link-card");
+      initLinkModal(linkModalOverlay);
+      initLinkCard(linkCard, linkModalOverlay);
+    </script>
   </body>
 </html>
