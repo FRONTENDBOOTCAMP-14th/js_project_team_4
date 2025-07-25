@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../src/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script type="module" src="../scripts/searchbar.js"></script>
+    <title>검색바</title>
+  </head>
+  <body>
+    <a href="../../index.html">메인페이지로 돌아가기</a>
+    <h1>검색바</h1>
+    
+    <div class="search-bar">
+      <div class="search-bar__bar">
+        <button type="button" aria-label="검색엔진 교체" class="search-bar__popover__trigger">
+          <figure class="search-bar__bar__change__google">
+            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.11533 7.85129V10.038H13.342C13.182 11.2646 12.7733 12.1626 12.1507 12.7933C11.386 13.558 10.1953 14.3933 8.11533 14.3933C4.89733 14.3933 2.382 11.798 2.382 8.57996C2.382 5.36196 4.89733 2.76662 8.11533 2.76662C9.84867 2.76662 11.12 3.45129 12.0533 4.33129L13.5913 2.79329C12.2933 1.53129 10.5507 0.571289 8.11533 0.571289C3.70667 0.571289 0 4.16262 0 8.57129C0 12.98 3.70667 16.5713 8.11533 16.5713C10.4973 16.5713 12.2933 15.7893 13.6973 14.3313C15.1373 12.8913 15.5907 10.856 15.5907 9.21996C15.5907 8.71329 15.5553 8.24196 15.4753 7.85129H8.11533Z" fill="#1F1F1F"/>
+            </svg>
+            <figcaption id="logo" class="sr-only">검색엔진</figcaption>
+          </figure>
+          <figure class="search-bar__bar__change__youtube">
+            <svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.6653 1.71798C15.5749 1.38575 15.3967 1.08253 15.1484 0.838669C14.9001 0.594813 14.5905 0.418886 14.2507 0.328504C13.0033 7.7546e-08 8 0 8 0C8 0 2.99667 7.7546e-08 1.74867 0.328504C1.40894 0.419045 1.09953 0.595036 0.851385 0.838876C0.603241 1.08272 0.425061 1.38586 0.334667 1.71798C0 2.94352 0 5.5 0 5.5C0 5.5 0 8.05648 0.334667 9.28202C0.425057 9.61425 0.603317 9.91748 0.851594 10.1613C1.09987 10.4052 1.40945 10.5811 1.74933 10.6715C2.99667 11 8 11 8 11C8 11 13.0033 11 14.2513 10.6715C14.5912 10.5812 14.9009 10.4053 15.1491 10.1614C15.3974 9.91754 15.5757 9.61428 15.666 9.28202C16 8.05648 16 5.5 16 5.5C16 5.5 16 2.94352 15.6653 1.71798ZM6.36333 7.82099V3.17901L10.5453 5.5L6.36333 7.82099Z" fill="#1F1F1F"/>
+            </svg>
+
+          </figure>
+          <figure class="search-bar__bar__change__naver">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.8487 8.56333L4.91733 0H0V16H5.15067V7.43733L11.0827 16H16V0H10.8487V8.56333Z" fill="#1F1F1F"/>
+            </svg>
+          </figure>
+        </button>
+    
+          <!-- 구글 검색 (default) -->
+          <form action="https://www.google.com/search" method="get" class="search-bar__search__change__input__google">
+          <input type="text" name="q" placeholder="구글에서 검색" />
+          <button type="submit" class="search-btn" aria-label="검색">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none"><g clip-path="url(#clip0_370_150)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M6.20335 11.7626L2.01521 15.9728C1.55948 16.4307 0.814105 16.4362 0.350657 15.9855C-0.111688 15.5342 -0.117757 14.796 0.337967 14.338L4.58679 10.0666C3.96997 9.10658 3.61135 7.96341 3.61135 6.73583C3.61135 3.32838 6.37272 0.571411 9.76197 0.571411C13.1512 0.571411 15.912 3.32838 15.912 6.73583C15.912 10.1427 13.1512 12.9002 9.76197 12.9002C8.43728 12.9002 7.20859 12.4787 6.20335 11.7626ZM9.76197 2.90079C7.66155 2.90134 5.96555 4.62438 5.96555 6.73583C5.96555 8.84727 7.66155 10.5703 9.76197 10.5703C11.8618 10.5703 13.5578 8.84727 13.5578 6.73583C13.5578 4.62438 11.8618 2.90134 9.76197 2.90079Z" fill="#1F1F1F"/></g>
+              <defs><clipPath id="clip0_370_150"><rect width="16" height="16" fill="white" transform="translate(0 0.571411)"/></clipPath></defs>
+              </svg>
+          </button>
+          </form>
+          <!-- 네이버 검색 -->
+          <form action="https://search.naver.com/search.naver" method="get" class="search-bar__search__change__input__naver" >
+            <input type="text" name="query" placeholder="네이버에서 검색" />
+            <button type="submit" class="search-btn" aria-label="검색">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none"><g clip-path="url(#clip0_370_150)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M6.20335 11.7626L2.01521 15.9728C1.55948 16.4307 0.814105 16.4362 0.350657 15.9855C-0.111688 15.5342 -0.117757 14.796 0.337967 14.338L4.58679 10.0666C3.96997 9.10658 3.61135 7.96341 3.61135 6.73583C3.61135 3.32838 6.37272 0.571411 9.76197 0.571411C13.1512 0.571411 15.912 3.32838 15.912 6.73583C15.912 10.1427 13.1512 12.9002 9.76197 12.9002C8.43728 12.9002 7.20859 12.4787 6.20335 11.7626ZM9.76197 2.90079C7.66155 2.90134 5.96555 4.62438 5.96555 6.73583C5.96555 8.84727 7.66155 10.5703 9.76197 10.5703C11.8618 10.5703 13.5578 8.84727 13.5578 6.73583C13.5578 4.62438 11.8618 2.90134 9.76197 2.90079Z" fill="#1F1F1F"/></g>
+              <defs><clipPath id="clip0_370_150"><rect width="16" height="16" fill="white" transform="translate(0 0.571411)"/></clipPath></defs>
+              </svg>
+            </button>
+          </form>
+      
+          <!-- 유튜브 검색 -->
+          <form action="https://www.youtube.com/results" method="get" class="search-bar__search__change__input__youtube" >
+            <input type="text" name="search_query" placeholder="유튜브에서 검색" />
+            <button type="submit" class="search-btn" aria-label="검색">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none"><g clip-path="url(#clip0_370_150)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M6.20335 11.7626L2.01521 15.9728C1.55948 16.4307 0.814105 16.4362 0.350657 15.9855C-0.111688 15.5342 -0.117757 14.796 0.337967 14.338L4.58679 10.0666C3.96997 9.10658 3.61135 7.96341 3.61135 6.73583C3.61135 3.32838 6.37272 0.571411 9.76197 0.571411C13.1512 0.571411 15.912 3.32838 15.912 6.73583C15.912 10.1427 13.1512 12.9002 9.76197 12.9002C8.43728 12.9002 7.20859 12.4787 6.20335 11.7626ZM9.76197 2.90079C7.66155 2.90134 5.96555 4.62438 5.96555 6.73583C5.96555 8.84727 7.66155 10.5703 9.76197 10.5703C11.8618 10.5703 13.5578 8.84727 13.5578 6.73583C13.5578 4.62438 11.8618 2.90134 9.76197 2.90079Z" fill="#1F1F1F"/></g>
+              <defs><clipPath id="clip0_370_150"><rect width="16" height="16" fill="white" transform="translate(0 0.571411)"/></clipPath></defs>
+              </svg>
+            </button>
+          </form>
+      </div>
+
+  
+
+      <div class="search-bar__popover">
+          <button type="button" class="search-bar__popover__google__btn">
+            <figure class="search-bar__popover__google">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
+              <path d="M12.4926 10.92V14.2H20.5384C20.2921 16.04 19.663 17.387 18.7045 18.333C17.5274 19.48 15.6945 20.733 12.4926 20.733C7.53887 20.733 3.66681 16.84 3.66681 12.013C3.66681 7.186 7.53887 3.293 12.4926 3.293C15.1609 3.293 17.1179 4.32 18.5547 5.64L20.9223 3.333C18.9241 1.44 16.2415 0 12.4926 0C5.70598 0 0 5.387 0 12C0 18.613 5.70598 24 12.4926 24C16.1594 24 18.9241 22.827 21.0854 20.64C23.3021 18.48 24 15.427 24 12.973C24 12.213 23.9456 11.506 23.8225 10.92H12.4926Z" fill="#1F1F1F"/>
+              </svg>
+              <figcaption>구글</figcaption>
+            </figure>
+          </button>
+          <button type="button" class="search-bar__popover__youtube__btn">
+            <figure class="search-bar__popover__youtube">
+              <svg width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23.498 3.18604C23.3624 2.67532 23.095 2.20918 22.7226 1.83431C22.3502 1.45943 21.8858 1.18899 21.376 1.05004C19.505 0.545044 12 0.545044 12 0.545044C12 0.545044 4.495 0.545044 2.623 1.05004C2.11341 1.18923 1.64929 1.45978 1.27708 1.83463C0.904861 2.20947 0.637591 2.67548 0.502 3.18604C0 5.07004 0 9.00004 0 9.00004C0 9.00004 0 12.93 0.502 14.814C0.637586 15.3248 0.904975 15.7909 1.27739 16.1658C1.64981 16.5407 2.11418 16.8111 2.624 16.95C4.495 17.455 12 17.455 12 17.455C12 17.455 19.505 17.455 21.377 16.95C21.8869 16.8112 22.3513 16.5408 22.7237 16.1659C23.0961 15.791 23.3635 15.3248 23.499 14.814C24 12.93 24 9.00004 24 9.00004C24 9.00004 24 5.07004 23.498 3.18604ZM9.545 12.568V5.43204L15.818 9.00004L9.545 12.568Z" fill="#1F1F1F"/>
+              </svg>
+              <figcaption>유튜브</figcaption>
+            </figure>
+          </button>
+          <button type="button" class="search-bar__popover__naver__btn">
+            <figure class="search-bar__popover__naver">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.273 12.845L7.376 0H0V24H7.726V11.156L16.624 24H24V0H16.273V12.845Z" fill="#1F1F1F"/>
+              </svg>
+              <figcaption>네이버</figcaption>
+            </figure>
+          </button>
+
+        </div>
+      <div>
+        
+      </div>
+    </div>
+  </body>
+</html>
