@@ -1,0 +1,80 @@
+[type="search"] {
+  appearance: none;
+}
+
+.search-bar button {
+  all: unset;
+  cursor: pointer;
+}
+
+.search-bar input {
+  border: 0;
+  background: transparent;
+  list-style: none;
+}
+
+.search-bar .hidden {
+  display: none !important;
+}
+
+.search-bar {
+  border-radius: var(--card-radius);
+  background: var(--primary-color);
+  box-shadow: 0 0 16px 4px var(--shadow-color);
+
+  padding: 16px 22px;
+  display: flex;
+  flex-flow: row nowrap;
+  flex: 1 0 0;
+
+  width: 498px; /* 최소 너비: 330px */
+  height: var(--spacing-xl);
+  position: relative;
+}
+
+.search-bar__bar {
+  display: flex;
+  flex-flow: row nowrap;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.search-bar input {
+  width: 400px;  /* 최소 너비: 240px*/
+}
+
+.search-bar__popover {
+  border-radius: var(--card-radius);
+  background: #fff;
+  box-shadow: 0 0 16px 0 var(--shadow-color);
+  width: 150px;
+  height: 216px;
+
+  padding: var(--spacing-lg);
+
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: var(--spacing-lg);
+
+  position: absolute;
+  left: 0px;
+  top: 60px;
+
+  .search-bar__popover__google__btn {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: var(--spacing-sm);
+  
+  }
+  .search-bar__popover__youtube__btn {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: var(--spacing-sm);
+  }
+  .search-bar__popover__naver__btn {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: var(--spacing-sm);
+  }
+}
+
