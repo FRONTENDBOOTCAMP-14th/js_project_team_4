@@ -79,7 +79,7 @@ function createURLValidator() {
   };
 }
 
-function createAppState() {
+function createLinkAppState() {
   let selectedLinkId = null;
   let isFormDirty = false;
   let originalFormData = {};
@@ -373,15 +373,15 @@ function createLinkManager() {
 }
 
 let linkManagerInstance = null;
-let appState = null;
+let linkAppState = null;
 
 async function initLinkManager() {
   if (!linkManagerInstance) {
     linkManagerInstance = createLinkManager();
     await linkManagerInstance.init();
   }
-  if (!appState) {
-    appState = createAppState();
+  if (!linkAppState) {
+    linkAppState = createLinkAppState();
   }
   return linkManagerInstance;
 }
@@ -390,8 +390,8 @@ function getLinkManager() {
   return linkManagerInstance;
 }
 
-function getAppState() {
-  return appState;
+function getLinkAppState() {
+  return linkAppState;
 }
 
 function initLinkCard(linkCardElement, linkModalOverlay) {
@@ -424,14 +424,12 @@ function initLinkModal(linkModalOverlay) {
     CONSTANTS.SELECTORS.REMOVE_BUTTON
   );
 
-  // 즐겨찾기 체크박스 접근성 설정
   const favoriteButton = linkModalOverlay.querySelector(
     CONSTANTS.SELECTORS.FAVORITE_CHECKBOX
   );
   if (favoriteButton) {
     favoriteButton.setAttribute("aria-label", "즐겨찾기 추가");
 
-    // 체크박스 상태 변경 시 ARIA 속성 업데이트
     favoriteButton.addEventListener("change", function () {
       this.setAttribute("aria-checked", this.checked);
       this.setAttribute(
@@ -454,7 +452,7 @@ function initLinkModal(linkModalOverlay) {
 
   if (form) {
     form.addEventListener("submit", handleFormSubmit);
-    form.addEventListener("reset", clearForm);
+    form.addEventListener("reset", handleFormReset);
   }
 
   if (addButton) {
@@ -589,7 +587,7 @@ async function loadLinksToModal() {
 }
 
 function selectLink(link) {
-  const state = getAppState();
+  const state = getLinkAppState();
 
   if (state.isFormDirty && state.selectedLinkId !== link.id) {
     if (
@@ -660,7 +658,6 @@ function setupFormChangeDetection() {
   const nameInput = document.querySelector(CONSTANTS.SELECTORS.NAME_INPUT);
   const urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
   const descInput = document.querySelector(CONSTANTS.SELECTORS.DESC_INPUT);
-  const state = getAppState();
 
   const inputs = [nameInput, urlInput, descInput].filter(Boolean);
   inputs.forEach((input) => {
@@ -669,7 +666,7 @@ function setupFormChangeDetection() {
 }
 
 function handleFormChange() {
-  const state = getAppState();
+  const state = getLinkAppState();
   const nameInput = document.querySelector(CONSTANTS.SELECTORS.NAME_INPUT);
   const urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
   const descInput = document.querySelector(CONSTANTS.SELECTORS.DESC_INPUT);
@@ -693,7 +690,7 @@ function clearForm() {
   const favoriteButton = document.querySelector(
     CONSTANTS.SELECTORS.FAVORITE_CHECKBOX
   );
-  const state = getAppState();
+  const state = getLinkAppState();
 
   if (nameInput) {
     nameInput.value = "";
@@ -727,7 +724,7 @@ function clearForm() {
 async function handleFormSubmit(e) {
   e.preventDefault();
 
-  const state = getAppState();
+  const state = getLinkAppState();
   const nameInput = document.querySelector(CONSTANTS.SELECTORS.NAME_INPUT);
   const urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
   const descInput = document.querySelector(CONSTANTS.SELECTORS.DESC_INPUT);
@@ -777,6 +774,61 @@ async function handleFormSubmit(e) {
   } catch (error) {
     alert(error.message);
   }
+}
+
+async function handleFormReset(e) {
+  e.preventDefault();
+
+  const state = getLinkAppState();
+
+  const original = state.getOriginalFormData();
+
+  const nameInput = document.querySelector(CONSTANTS.SELECTORS.NAME_INPUT);
+  const urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
+  const descInput = document.querySelector(CONSTANTS.SELECTORS.DESC_INPUT);
+  const headerIcon = document.querySelector(CONSTANTS.SELECTORS.HEADER_ICON);
+  const headerLink = document.querySelector(CONSTANTS.SELECTORS.HEADER_LINK);
+
+  if (nameInput) {
+    nameInput.value = original.title || "";
+  }
+  if (urlInput) {
+    urlInput.value = original.url || "";
+  }
+  if (descInput) {
+    descInput.value = original.description || "";
+  }
+
+  if (headerIcon && original.url) {
+    const linkManager = getLinkManager();
+    headerIcon.src = linkManager.getFaviconUrl(original.url);
+  }
+  if (headerLink) {
+    headerLink.href = original.url || "#";
+  }
+
+  const selectedLinkId = state.selectedLinkId;
+  if (selectedLinkId) {
+    const linkManager = getLinkManager();
+    try {
+      const originalLink = await linkManager.getById(selectedLinkId);
+      const favoriteButton = document.querySelector(
+        CONSTANTS.SELECTORS.FAVORITE_CHECKBOX
+      );
+      if (favoriteButton && originalLink) {
+        favoriteButton.checked = originalLink.isFavorite || false;
+        favoriteButton.setAttribute("aria-checked", favoriteButton.checked);
+        favoriteButton.setAttribute(
+          "aria-label",
+          favoriteButton.checked ? "즐겨찾기 해제" : "즐겨찾기 추가"
+        );
+      }
+    } catch (error) {
+      console.error("원본 링크 데이터 로드 실패:", error);
+    }
+  }
+
+  state.setFormDirty(false);
 }
 
 async function handleRemoveSelected() {
