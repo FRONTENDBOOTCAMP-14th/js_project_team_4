@@ -28,7 +28,7 @@
 
 - HTML: HTML5
 - CSS: CSS3
-- JavaScript: ES6+
+- JavaScript: ES6+(Vanilla JS)
 - 빌드 툴: Vite
 - 문서화: 노션, github wiki
 - 코드 관리: github
@@ -46,13 +46,3 @@
 ## 구현 요구사항([docs/implementaion_requirement.md](docs/implementaion_requirement.md))
 
 사용자가 다양한 생산성 기능을 활용할 수 있는 대시보드 기반의 웹 애플리케이션. 디자인은 직관적으로 구성하며, 시각적 효과와 상호작용을 통해 몰입도를 높인다.
-
-## 기술 스택
-
-HTML: 마크업
-
-CSS: 스타일링
-
-JS: 로직과 동적 마크업 생성
-
-바닐라 웹사이트: 해당 프로젝트는 외부 라이브러리를 최소화한 상태로 구현한다.
