@@ -305,7 +305,7 @@
   }
 
   input:checked + label {
-    background-image: url(/img/icons/favorite-star-yellow.svg);
+    background-image: url(/img/icons/favorite-star-green.svg);
     inline-size: var(--icon-md);
     block-size: var(--icon-md);
   }
