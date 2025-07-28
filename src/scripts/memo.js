@@ -14,8 +14,8 @@ import { openDialog, closeDialog } from './dialog.js'
   const dialogDateText = document.querySelector('.dialog__date')
   const dialogTitleInput = document.getElementById('inp-title')
   const dialogTextArea = document.getElementById('inp-text-area')
-  const dialogAddMemoBtn = document.querySelector('.dialog__button--add')
-  const dialogSaveMemoBtn = document.querySelector('.dialog__button--save')
+  const dialogAddMemoButton = document.querySelector('.dialog__button--add')
+  const dialogSaveMemoButton = document.querySelector('.dialog__button--save')
   const dialogDeleteMemoButton = document.querySelector('.dialog__button--delete')
   
   // 초기 메모 데이터
@@ -25,13 +25,13 @@ import { openDialog, closeDialog } from './dialog.js'
       id: Date.now(),
       title: '첫번째 메모',
       content: '메모내용입니다.메모내용입니다.메모내용입니다.',
-      createdAt: '2025-07-24T12:55:00'
+      createdAt: '2025-07-21T12:55:00'
     },
     {
       id: Date.now() + 1,
       title: '두번째 메모',
       content: '메모내용입니다. 테스트입니다',
-      createdAt: '2025-07-21T12:50:00'
+      createdAt: '2025-07-21T13:50:00'
     }
   ]
 
@@ -235,7 +235,7 @@ import { openDialog, closeDialog } from './dialog.js'
   })
 
   // 메인과 팝업창 추가 버튼 클릭 이벤트 리스너 추가
-  dialogAddMemoBtn.addEventListener('click', () => {
+  dialogAddMemoButton.addEventListener('click', () => {
     // 새 메모 작성을 위해 편집기 초기화
     delete dialogEditor.dataset.id // 기존 메모 ID 제거
     
@@ -248,12 +248,14 @@ import { openDialog, closeDialog } from './dialog.js'
     const today = new Date()
     dateText.textContent = `${today.getFullYear()}.${(today.getMonth() + 1).toString().padStart(2, '0')}.${today.getDate().toString().padStart(2, '0')}`
 
+    latestMemoDataSortFn()
+
     // 팝업 열기
     openDialog({ type: 'memo' })
   })
 
   // 팝업창 저장 버튼 클릭 이벤트 리스너 추가
-  dialogSaveMemoBtn.addEventListener('click', () => {
+  dialogSaveMemoButton.addEventListener('click', () => {
     const title = dialogTitleInput.value.trim()
     const content = dialogTextArea.value.trim()
     const existingMemoId = parseInt(dialogEditor.dataset.id)
@@ -273,9 +275,12 @@ import { openDialog, closeDialog } from './dialog.js'
         memoData[memoIndex].title = title
         memoData[memoIndex].content = content
         memoData[memoIndex].createdAt = new Date().toString() 
-
+        
         // 팝업 날짜 텍스트도 갱신
         dialogDateText.textContent = formatDate(new Date())
+
+        // 최신순으로 정렬
+        latestMemoDataSortFn()
 
         // 수정된 날짜로 업데이트하지 않고 원래 생성일 유지
         updateMainMemoListFn()
@@ -297,6 +302,7 @@ import { openDialog, closeDialog } from './dialog.js'
       // 저장 후 편집기 dataset에 새 id 할당
       dialogEditor.dataset.id = newMemo.id
     }
+
   })
 
   // 팝업창의 메모 저장시 팝업창 내 메모 리스트 업데이트 함수
@@ -383,6 +389,13 @@ import { openDialog, closeDialog } from './dialog.js'
     // 현재 편집중인 메모 id 제거
     dialogEditor.removeAttribute('data-id')
   })
+
+  // 메모 데이터를 최신순으로 정렬
+  function latestMemoDataSortFn() {
+    memoData.sort((firstMemo, secondMemo) => {
+      return new Date(secondMemo.createdAt) - new Date(firstMemo.createdAt)
+    })
+  }
 
   // 60초마다 시간 업데이트
   setInterval(() => {
