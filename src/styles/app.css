@@ -1,3 +1,6 @@
+@import "../styles/common/index.css";
+@import "../styles/components/index.css";
+
 .app {
   display: grid;
   /* width: 100%; */
@@ -8,12 +11,40 @@
   column-gap: var(--spacing-sm);
   grid-template-rows: repeat(7, minmax(0, 1fr));
   grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: center;
   grid-template-areas:
-    "header header header header header header"
+    "logo logo . . search search"
     "weather weather weather weather weather weather"
     "weather weather weather weather weather weather"
     "weather weather weather weather weather weather"
     "links todo memo memo calendar calendar"
     "links todo memo memo calendar calendar"
     "links todo memo memo calendar calendar";
+}
+
+.logo-link {
+  grid-area: logo;
+  color: var(--third-color);
+  font-size: var(--font-lg);
+}
+
+.search-bar {
+  grid-area: search;
+}
+
+.weather-tab {
+  grid-area: weather;
+}
+
+.link-card {
+  grid-area: links;
+}
+
+.todo-list {
+  grid-area: todo;
+}
+
+.memo__wrapper {
+  grid-area: memo;
+  height: 100%;
 }
