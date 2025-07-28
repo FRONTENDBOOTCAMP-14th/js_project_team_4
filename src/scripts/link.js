@@ -454,6 +454,7 @@ function initLinkModal(linkModalOverlay) {
 
   if (form) {
     form.addEventListener("submit", handleFormSubmit);
+    form.addEventListener("reset", clearForm);
   }
 
   if (addButton) {
