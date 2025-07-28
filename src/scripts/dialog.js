@@ -1,4 +1,13 @@
-// 팝업창(dialog)의 data-type 값에 따라 해당 화면이 열림
+/**
+ * 팝업창(dialog) 함수
+ * 공통 팝업 UI에서 재사용 가능한 함수
+ * 외부에서 호출할 수 있도록 IIFE로 감싸지 않고 export 형태로 제공
+ * 
+ * @param {Object} [options={}] 옵션 객체 -> 기본값: 빈 객체
+ * @param {string} [options.type=''] 열리는 팝업의 data-type 값 -> 기본값: 빈 문자열
+ * @returns {undefined} 반환값 없음
+ */
+
 export function openDialog({ type = '' } = {}) {
   const dialog = document.querySelector('.dialog')
   if (!dialog) return
