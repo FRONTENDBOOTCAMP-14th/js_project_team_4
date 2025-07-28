@@ -308,6 +308,7 @@
     background-image: url(/img/icons/favorite-star-green.svg);
     inline-size: var(--icon-md);
     block-size: var(--icon-md);
+    opacity: 1;
   }
 
   label {

@@ -857,3 +857,12 @@ async function handleRemoveSelected() {
     }
   }
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await initLinkManager();
+
+  const linkCardElement = document.querySelector(".link-card");
+  const linkModalOverlay = document.getElementById("linkModalOverlay");
+  initLinkCard(linkCardElement, linkModalOverlay);
+  initLinkModal(linkModalOverlay);
+});
