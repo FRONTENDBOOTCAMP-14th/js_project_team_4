@@ -40,7 +40,7 @@
 }
 
 .search-bar input {
-  width: 400px;  /* 최소 너비: 240px*/
+  width: 400px; /* 최소 너비: 240px*/
 }
 
 .search-bar__popover {
@@ -64,7 +64,6 @@
     display: flex;
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
-  
   }
   .search-bar__popover__youtube__btn {
     display: flex;
@@ -77,4 +76,3 @@
     gap: var(--spacing-sm);
   }
 }
-
