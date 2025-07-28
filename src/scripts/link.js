@@ -1,4 +1,4 @@
-/* DOMPurify */
+/* global DOMPurify */
 
 const CONSTANTS = {
   ERRORS: {

@@ -83,10 +83,7 @@ const weatherTranslations = {
   // 상세 날씨 설명
   clear: "맑음",
   clouds: "구름",
-  rain: "비",
   drizzle: "이슬비",
-  thunderstorm: "뇌우",
-  snow: "눈",
   atmosphere: "대기현상",
 
   // 더 상세한 설명들
@@ -97,12 +94,10 @@ const weatherTranslations = {
   "extreme rain": "극심한 비",
   "freezing rain": "얼어붙는 비",
   "light intensity shower rain": "가벼운 소나기",
-  "shower rain": "소나기",
   "heavy intensity shower rain": "강한 소나기",
   "ragged shower rain": "불규칙한 소나기",
 
   "light snow": "가벼운 눈",
-  snow: "눈",
   "heavy snow": "폭설",
   sleet: "진눈깨비",
   "light shower sleet": "가벼운 진눈깨비",
