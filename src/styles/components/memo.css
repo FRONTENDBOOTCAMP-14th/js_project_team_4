@@ -1,0 +1,115 @@
+button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* 메모 레이아웃 */
+.memo__wrapper {
+  position: relative;
+  border-radius: var(--card-radius);
+  background: var(--primary-color);
+  box-shadow: 0 0 1.5rem 0.25rem var(--shadow-color, rgba(18, 18, 18, 0.1));
+}
+
+/* 메모 상단 */
+.memo__header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline-start: var(--spacing-lg);
+  padding-inline-end: 10.8125rem;
+  padding-block: var(--spacing-sm);
+  color: var(--third-color);
+  font-size: var(--icon-xs);
+
+  .memo__title {
+    font-weight: 700;
+  }
+}
+
+/* 메모 버튼들 */
+.memo__actions {
+  position: absolute;
+  top: 0.8125rem;
+  right: var(--spacing-lg);
+
+  .memo__actions-list {
+    display: flex;
+    flex-flow: row nowrap;
+    flex-shrink: 0;
+    column-gap: 0.625rem;
+  }
+}
+
+/* 메모 내용 */
+.memo__body {
+  padding-inline: var(--spacing-lg);
+  padding-block: var(--spacing-sm);
+
+  .memo__list {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: var(--spacing-sm);
+
+    .memo__item {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+
+      .memo-card__desc,
+      .memo-card__title {
+        display: block;
+      }
+    }
+  }
+}
+
+/* 메모 아이템 */
+.memo-card__button {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 0.625rem;
+  text-align: left;
+
+  .memo-card__time {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    column-gap: var(--spacing-xs);
+
+    .memo-card__status-icon {
+      inline-size: 1rem;
+      block-size: 1rem;
+      background-color: var(--accent-color);
+      border-radius: 999px;
+    }
+
+    .memo-card__time-text {
+      color: var(--lifecord-grey);
+    }
+  }
+
+  .memo-card__desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--lifecord-grey);
+  }
+}
+
+/* 체크 박스 */
+.memo-card__checkbox {
+  flex-shrink: 0;
+}
+
+/* 데이터 없을 경우 */
+.dialog__memo-empty,
+.memo__empty {
+  text-align: center;
+}
