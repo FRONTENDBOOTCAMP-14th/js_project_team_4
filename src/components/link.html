@@ -8,7 +8,7 @@
     <link rel="icon" href="/favicon.png" type="image/png" />
     <meta name="description" content="링크 관리 컴포넌트 페이지입니다." />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
-    <script src="../scripts/link.js"></script>
+    <script type="module" src="../scripts/link.js"></script>
     <style>
       body {
         margin: 32px;
@@ -144,16 +144,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        await initLinkManager();
-
-        const linkCardElement = document.querySelector(".link-card");
-        const linkModalOverlay = document.getElementById("linkModalOverlay");
-        initLinkCard(linkCardElement, linkModalOverlay);
-        initLinkModal(linkModalOverlay);
-      });
-    </script>
   </body>
 </html>
