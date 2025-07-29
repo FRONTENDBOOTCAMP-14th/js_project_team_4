@@ -26,12 +26,12 @@
   display: flex;
   flex-flow: row nowrap;
 
-  min-width: 330px; 
-  max-width: 498px; 
-  width: 100%; 
+  min-width: 330px;
+  max-width: 498px;
+  width: 100%;
   height: var(--spacing-xl);
   position: relative;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .search-bar__bar {
@@ -39,7 +39,7 @@
   flex-flow: row nowrap;
   align-items: center;
   column-gap: 10px;
-  width: 100%; 
+  width: 100%;
 }
 
 .search-bar__popover__trigger {
@@ -49,17 +49,17 @@
 .search-bar__form {
   display: flex;
   align-items: center;
-  flex: 1; 
+  flex: 1;
   background: var(--primary-color);
   border-radius: 8px;
   padding: 4px 8px;
   gap: 6px;
-  min-width: 0; 
+  min-width: 0;
 }
 
 .search-bar__input {
   flex: 1;
-  min-width: 0; 
+  min-width: 0;
 }
 
 .search-bar__input::placeholder {
@@ -71,7 +71,7 @@
 }
 
 .search-bar__popover {
-  border-radius: var(--card-radius); 
+  border-radius: var(--card-radius);
   background: #fff;
   box-shadow: 0 0 16px 0 var(--shadow-color);
   width: 150px;
@@ -105,5 +105,4 @@
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
   }
-  
 }
