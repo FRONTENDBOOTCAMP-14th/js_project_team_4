@@ -18,7 +18,7 @@ document.addEventListener("click", (e) => {
 })
 
 // ------------------------------------------------------------------------------
-// 검색 엔진 변경
+// 검색 엔진 변경 및 로고 변경 통합
 
 // 팝오버의 검색엔진 변경 버튼
 const popoverChangeGoogle = document.querySelector(
@@ -31,7 +31,7 @@ const popoverChangeNaver = document.querySelector(
   ".search-bar__popover__naver__btn"
 )
 
-// 검색바의 검색엔진 변경 버튼
+// 검색바의 검색엔진 변경 버튼 (로고들)
 const searchbarChangeGoogle = document.querySelector(
   ".search-bar__bar__change__google"
 );
@@ -48,57 +48,59 @@ const searchForm = document.querySelector('.search-bar__form')
 // 검색엔진 input
 const searchInput = document.querySelector('.search-bar__input')
 
-
-// 검색엔진 form
+// 검색엔진 설정
 const searchEngines = {
   google: {
     action: 'https://www.google.com/search',
     name: 'q',
     placeholder: '구글에서 검색',
+    logo: searchbarChangeGoogle
   },
   naver: {
     action: 'https://search.naver.com/search.naver',
     name: 'query',
     placeholder: '네이버에서 검색',
+    logo: searchbarChangeNaver
   },
   youtube: {
     action: 'https://www.youtube.com/results',
     name: 'search_query',
     placeholder: '유튜브에서 검색',
+    logo: searchbarChangeYoutube
   }
 }
 
-// 검색 form 변경
+// 모든 로고 숨기기
+function hideAllLogos() {
+  [searchbarChangeGoogle, searchbarChangeYoutube, searchbarChangeNaver].forEach(logo => {
+    logo.classList.add('hidden')
+  })
+}
+
+// 검색 엔진 변경 (폼 설정 + 로고 변경)
+function changeSearchEngine(engine) {
+  const config = searchEngines[engine];
+  if (config) {
+    // 폼 설정 변경
+    searchForm.action = config.action;
+    searchInput.name = config.name;
+    searchInput.placeholder = config.placeholder;
+    
+    // 로고 변경
+    hideAllLogos();
+    config.logo.classList.remove('hidden');
+  }
+}
+
+// 모든 검색 엔진 버튼에 통합 이벤트 리스너 추가
 document.querySelectorAll('[data-engine]').forEach(el => {
   el.addEventListener('click', () => {
     const engine = el.dataset.engine;
-    const config = searchEngines[engine];
-    if (config) {
-      searchForm.action = config.action;
-      searchInput.name = config.name;
-      searchInput.placeholder = config.placeholder
-    }
+    changeSearchEngine(engine);
   })
 })
 
-// 기본값으로 구글 로고만 보이게 (네이버, 유튜브 아이콘 가림)
+// 기본값으로 구글 설정
 window.addEventListener('DOMContentLoaded', () => {
-  [
-   searchbarChangeYoutube, searchbarChangeNaver
-  ].forEach(form => {
-    form.classList.add('hidden')
-  })
+  changeSearchEngine('google');
 })
-
-// 팝오버에서 각 검색엔진을 클릭 시, 로고 변경
-function showOnly(imageToShow) {
-  [
-    searchbarChangeGoogle, searchbarChangeYoutube, searchbarChangeNaver
-  ].forEach(image => {
-    image.classList.add('hidden')
-  })
-   imageToShow.classList.remove('hidden')
-}
-popoverChangeGoogle.addEventListener('click', () => showOnly(searchbarChangeGoogle))
-popoverChangeYoutube.addEventListener('click', () => showOnly(searchbarChangeYoutube))
-popoverChangeNaver.addEventListener('click', () => showOnly(searchbarChangeNaver))
