@@ -246,7 +246,7 @@ button {
         }
 
         .dialog__memo-name {
-          word-break: keep-all;
+          text-align: left;
         }
       }
     }
@@ -335,5 +335,56 @@ button {
 @media screen and (max-height: 768px) {
   .memo-card__button--more {
     padding: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dialog__button--delete,
+  .dialog__button--add,
+  .dialog__button--save,
+  .dialog__date,
+  .dialog__title,
+  .memo-card__title,
+  .memo__button--all,
+  .memo__button--delete,
+  .memo__button--add {
+    color: var(--lifecord-white);
+  }
+
+  .dialog__memo-list {
+    & .dialog__memo-box {
+      & .dialog__memo-items {
+        .dialog__memo-button {
+          background: url(/img/icons/arrow-right-white.svg) no-repeat;
+          background-position: right 1rem center;
+          background-size: 0.625rem 1.125rem;
+          color: var(--lifecord-white);
+        }
+      }
+    }
+  }
+
+  .dialog__input-title,
+  .dialog__textarea {
+    color: var(--lifecord-white);
+  }
+
+  .dialog__input-title,
+  .dialog__textarea,
+  .dialog[open] {
+    background-color: var(--primary-color);
+  }
+
+  .dialog__detail {
+    & .dialog__actions {
+      .dialog__close {
+        background: var(--third-color);
+        background: var(--lifecord-white) url("/img/icons/close-black.svg")
+          no-repeat;
+        background-size: var(--icon-sm);
+        border-radius: 999px;
+        background-position: center;
+      }
+    }
   }
 }
