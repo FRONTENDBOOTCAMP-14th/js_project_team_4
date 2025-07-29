@@ -85,7 +85,7 @@ function updateMainMemoListFn() {
 // 메모가 없을 경우 표시 함수
 function updateNoDataMessageFn() {
   const checkboxes = document.querySelectorAll('input[name="inpMemoCheckBox"]');
-  mainNoData.style.display = checkboxes.length === 0 ? "block" : "none";
+  mainNoData.style.display = checkboxes.length === 0 ? "flex" : "none";
 }
 
 // 전체 메모 시간 업데이트 함수
@@ -336,7 +336,7 @@ function updateDialogMemoListFn() {
   const dialogNoData = document.querySelector(".dialog__memo-empty");
 
   if (memoData.length === 0) {
-    if (dialogNoData) dialogNoData.style.display = "block";
+    if (dialogNoData) dialogNoData.style.display = "flex";
     return;
   } else {
     if (dialogNoData) dialogNoData.style.display = "none";
