@@ -196,6 +196,17 @@ function openDialogWithMemoId(memoId = null) {
       dialogTextArea.value = selectedMemo.content;
       dialogDateText.textContent = formatDate(selectedMemo.createdAt);
       dialogEditor.dataset.id = selectedMemo.id;
+
+      // 메모 리스트에서 해당 memoId 버튼에 on 클래스 추가
+      const allButtons = dialogMemoList.querySelectorAll(
+        ".dialog__memo-button"
+      );
+      allButtons.forEach((btn) => btn.classList.remove("on"));
+
+      const activeBtn = dialogMemoList.querySelector(
+        `.dialog__memo-button[data-memo-id="${memoId}"]`
+      );
+      if (activeBtn) activeBtn.classList.add("on");
     }
   } else {
     // 새 메모일 때 빈 입력란과 오늘 날짜만 표시
