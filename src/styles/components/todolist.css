@@ -42,6 +42,10 @@
   background: var(--primary-color);
 }
 
+.todo-list__popover-trigger {
+  color: var(--third-color);
+}
+
 /* TODO-List 아이템 */
 .todo-list__item {
   display: flex;

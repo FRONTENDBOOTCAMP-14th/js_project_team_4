@@ -25,11 +25,12 @@
   padding: 16px 22px;
   display: flex;
   flex-flow: row nowrap;
+  color: var(--third-color);
 
   min-width: 330px;
   max-width: 498px;
   width: 100%;
-  height: var(--spacing-xl);
+  min-height: var(--spacing-xl);
   position: relative;
   box-sizing: border-box;
 }
