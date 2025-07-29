@@ -4,5 +4,6 @@
 @import "./weather-tab.css";
 @import "./link.css";
 @import "./searchbar.css";
-/* @import "./memo.css"; */
+@import "./memo.css";
 @import "./todolist.css";
+@import "./loading-spiner.css";

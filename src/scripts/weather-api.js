@@ -1,3 +1,6 @@
+// 로딩 스피너
+import { showWeatherLoading, hideWeatherLoading } from "./loading-spiner.js";
+
 // OpenWeather API 설정
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
@@ -83,10 +86,7 @@ const weatherTranslations = {
   // 상세 날씨 설명
   clear: "맑음",
   clouds: "구름",
-  rain: "비",
   drizzle: "이슬비",
-  thunderstorm: "뇌우",
-  snow: "눈",
   atmosphere: "대기현상",
 
   // 더 상세한 설명들
@@ -97,12 +97,10 @@ const weatherTranslations = {
   "extreme rain": "극심한 비",
   "freezing rain": "얼어붙는 비",
   "light intensity shower rain": "가벼운 소나기",
-  "shower rain": "소나기",
   "heavy intensity shower rain": "강한 소나기",
   "ragged shower rain": "불규칙한 소나기",
 
   "light snow": "가벼운 눈",
-  snow: "눈",
   "heavy snow": "폭설",
   sleet: "진눈깨비",
   "light shower sleet": "가벼운 진눈깨비",
@@ -151,12 +149,17 @@ function translateCityToKorean(englishName) {
     gwangju: "광주",
     daejeon: "대전",
     ulsan: "울산",
+    "suwon-si": "수원",
     suwon: "수원",
     changwon: "창원",
+    "seongnam-si": "성남",
     seongnam: "성남",
+    "goyang-si": "고양",
     goyang: "고양",
     yongin: "용인",
+    "bucheon-si": "부천",
     bucheon: "부천",
+    "ansan-si": "안산",
     ansan: "안산",
     anyang: "안양",
     namyangju: "남양주",
@@ -378,6 +381,7 @@ function processSearchQuery(query) {
 
 // 현재 날씨 가져오기
 async function fetchCurrentWeather(city = "서울") {
+  showWeatherLoading(); // 로딩 스피너 표시
   try {
     // 검색어 처리 (한글->영어 변환)
     const processedCity = processSearchQuery(city);
@@ -400,8 +404,13 @@ async function fetchCurrentWeather(city = "서울") {
   } catch (error) {
     console.error("현재 날씨 데이터를 가져오는데 실패했습니다:", error);
     alert("날씨 정보를 가져올 수 없습니다. 도시명을 확인해주세요.");
+  } finally {
+    hideWeatherLoading(); // 로딩 스피너 숨김
   }
 }
+
+// 로딩 스피너 호출
+fetchCurrentWeather();
 
 // 예보 데이터 가져오기
 async function fetchForecast(lat, lon) {
@@ -502,3 +511,11 @@ window.weatherAPI = {
   fetchWeatherByLocation,
   getUserLocation,
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  showWeatherLoading();
+
+  setTimeout(() => {
+    hideWeatherLoading();
+  }, 1000);
+});

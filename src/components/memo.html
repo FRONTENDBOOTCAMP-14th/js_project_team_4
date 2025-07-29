@@ -9,96 +9,115 @@
     />
     <title>메모장 컴포넌트</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link
+      rel="preload"
+      as="font"
+      href="/fonts/woff2/PretendardVariable.woff2"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="/fonts/pretendardvariable.css"
+      type="text/css"
+    />
     <link rel="stylesheet" href="../../src/style.css" />
     <script src="https://unpkg.com/dompurify/dist/purify.min.js"></script>
     <script type="module" src="../scripts/memo.js"></script>
     <style>
-      body {
+      .component-wrapper {
         margin: 1.875rem;
       }
     </style>
   </head>
   <body>
     <a href="../../index.html">메인페이지로 돌아가기</a>
+    <div class="component-wrapper">
+      <!-- 메모 리스트 영역 -->
+      <div class="memo__wrapper">
+        <div class="memo__header">
+          <h2 class="memo__title">Memo-오늘</h2>
+        </div>
 
-    <!-- 메모 리스트 영역 -->
-    <div class="memo">
-      <div class="memo__header">
-        <h2 class="memo__title">Memo-오늘</h2>
-        <ul class="memo__actions">
-          <li>
-            <button type="button" class="memo__button--all">전체 선택</button>
-          </li>
-          <li>
-            <button type="button" class="memo__button--delete">삭제</button>
-          </li>
-          <li>
-            <button type="button" class="memo__button--add show-dialog">
-              추가
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <div class="memo__body">
-        <ul class="memo__list">
-          <!-- 메인 메모 아이템 동적 생성 -->
-        </ul>
-        <!-- 메모가 없을 때 메시지 -->
-        <div class="memo__empty">내용이 없습니다.</div>
-      </div>
-    </div>
-
-    <!-- 팝업(Dialog) -->
-    <dialog
-      class="dialog"
-      data-type="memo"
-      aria-labelledby="memo-popup"
-      aria-describedby="memo-details"
-    >
-      <div class="dialog__container">
-        <h2 id="memo-popup" class="dialog__title">메모</h2>
-        <!-- 메모 리스트 영역 -->
-        <section class="dialog__memo-list">
-          <h3 class="dialog__memo-list-title sr-only">메모 목록</h3>
-          <ul class="dialog__memo-items">
-            <!-- 팝업 메모 아이템 동적 생성 -->
+        <div class="memo__body">
+          <ul class="memo__list">
+            <!-- 메인 메모 아이템 동적 생성 -->
           </ul>
           <!-- 메모가 없을 때 메시지 -->
-          <div class="dialog__memo-empty">메모 목록이 없습니다.</div>
-        </section>
+          <div class="memo__empty">내용이 없습니다.</div>
+        </div>
 
-        <!-- 메모 상세 -->
-        <section class="dialog__detail" id="memo-details">
-          <h3 class="dialog__detail-title sr-only">메모 상세</h3>
-          <div class="dialog__editor" data-id="">
-            <p class="dialog__date">2025.07.22</p>
-            <div class="dialog__form">
-              <label for="inp-title" class="sr-only">메모장 제목</label>
-              <input
-                type="text"
-                id="inp-title"
-                class="dialog__input-title"
-                placeholder="메모 제목을 입력하세요."
-              />
-              <label for="inp-text-area" class="sr-only">메모장 내용</label>
-              <textarea
-                id="inp-text-area"
-                class="dialog__textarea"
-                placeholder="메모 내용을 입력하세요."
-              ></textarea>
-            </div>
-
-            <div class="dialog__actions">
-              <button type="button" class="dialog__button--save">저장</button>
-              <button type="button" class="dialog__button--add">추가</button>
-              <button type="button" class="dialog__button--delete">삭제</button>
-            </div>
-          </div>
-        </section>
+        <div class="memo__actions">
+          <ul class="memo__actions-list">
+            <li>
+              <button type="button" class="memo__button--all">전체 선택</button>
+            </li>
+            <li>
+              <button type="button" class="memo__button--delete">삭제</button>
+            </li>
+            <li>
+              <button type="button" class="memo__button--add show-dialog">
+                추가
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <button type="button" class="dialog__close">닫기</button>
-    </dialog>
+      <!-- 팝업(Dialog) -->
+      <dialog
+        class="dialog"
+        data-type="memo"
+        aria-labelledby="memo-popup"
+        aria-describedby="memo-details"
+      >
+        <div class="dialog__container">
+          <!-- 메모 리스트 영역 -->
+          <section class="left-box dialog__memo-list">
+            <h2 id="memo-popup" class="dialog__title">메모</h2>
+            <h3 class="dialog__memo-list-title sr-only">메모 목록</h3>
+            <ul class="dialog__memo-items">
+              <!-- 팝업 메모 아이템 동적 생성 -->
+            </ul>
+            <!-- 메모가 없을 때 메시지 -->
+            <div class="dialog__memo-empty">메모 목록이 없습니다.</div>
+          </section>
+
+          <!-- 메모 상세 -->
+          <section class="right-box dialog__detail" id="memo-details">
+            <h3 class="dialog__detail-title sr-only">메모 상세</h3>
+            <div class="dialog__editor" data-id="">
+              <p class="dialog__date">2025.07.22</p>
+              <div class="dialog__form">
+                <label for="inp-title" class="sr-only">메모장 제목</label>
+                <input
+                  type="text"
+                  id="inp-title"
+                  class="dialog__input-title"
+                  placeholder="메모 제목을 입력하세요."
+                />
+                <label for="inp-text-area" class="sr-only">메모장 내용</label>
+                <textarea
+                  id="inp-text-area"
+                  class="dialog__textarea"
+                  placeholder="메모 내용을 입력하세요."
+                ></textarea>
+              </div>
+
+              <div class="dialog__actions">
+                <button type="button" class="dialog__button--save">저장</button>
+                <button type="button" class="dialog__button--add">추가</button>
+                <button type="button" class="dialog__button--delete">
+                  삭제
+                </button>
+                <button type="button" class="dialog__close">
+                  <span class="sr-only">닫기</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </dialog>
+    </div>
   </body>
 </html>
