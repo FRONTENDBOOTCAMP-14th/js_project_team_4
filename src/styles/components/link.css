@@ -50,9 +50,8 @@
   background-color: white;
   border-radius: var(--card-radius, 16px);
   width: 95%;
-  max-width: 1200px;
   height: 95%;
-  max-height: 800px;
+  max-width: 1440px;
   display: flex;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
