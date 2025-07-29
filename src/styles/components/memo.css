@@ -25,12 +25,13 @@ button {
   justify-content: space-between;
   align-items: center;
   padding-inline-start: var(--spacing-lg);
-  padding-inline-end: 10.8125rem;
+  padding-inline-end: 14.0625rem;
   padding-block: var(--spacing-sm);
   color: var(--third-color);
   font-size: var(--icon-xs);
 
   .memo__title {
+    font-size: var(--font-md);
     font-weight: 700;
   }
 }
@@ -38,20 +39,21 @@ button {
 /* 메모 버튼들 */
 .memo__actions {
   position: absolute;
-  top: 1.8125rem;
+  top: 1.75rem;
   right: var(--spacing-lg);
 
   .memo__actions-list {
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
     column-gap: 0.625rem;
   }
 }
 
 /* 메모 내용 */
 .memo__body {
+  block-size: 100%;
   padding-inline: var(--spacing-lg);
-  padding-block: var(--spacing-sm);
 
   .memo__list {
     display: flex;
@@ -63,7 +65,6 @@ button {
       flex-flow: row nowrap;
       justify-content: space-between;
 
-      .memo-card__desc,
       .memo-card__title {
         display: block;
       }
@@ -84,10 +85,11 @@ button {
     flex-flow: row nowrap;
     align-items: center;
     column-gap: var(--spacing-xs);
+    font-size: var(--font-xs);
 
     .memo-card__status-icon {
-      inline-size: 1rem;
-      block-size: 1rem;
+      inline-size: 0.75rem;
+      block-size: 0.75rem;
       background-color: var(--accent-color);
       border-radius: 999px;
     }
@@ -104,6 +106,33 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--lifecord-grey);
+  }
+}
+
+/* 높이에 맞춰 화면 대응 */
+@media screen and (max-height: 768px) {
+  .memo-card__desc {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (max-height: 710px) {
+  .memo__body {
+    overflow-y: scroll;
+  }
+}
+
+@media screen and (min-height: 900px) {
+  .memo-card__button {
+    .memo-card__desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
@@ -128,6 +157,11 @@ button {
 /* 데이터 없을 경우 */
 .dialog__memo-empty,
 .memo__empty {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
   text-align: center;
 }
 
@@ -178,33 +212,42 @@ button {
     font-weight: 700;
   }
 
-  .dialog__memo-items {
-    display: flex;
-    flex-flow: column nowrap;
-    row-gap: var(--spacing-sm);
+  .dialog__memo-box {
+    overflow-y: auto;
     block-size: 100%;
     padding: var(--spacing-md);
     background-color: var(--fourth-color);
     border-radius: var(--card-radius);
 
-    .dialog__memo-button {
+    .dialog__memo-items {
       display: flex;
-      flex-flow: row nowrap;
-      inline-size: 100%;
-      padding: var(--spacing-sm);
-      border-radius: var(--inner-card-radius);
-      font-weight: 700;
-      background: url("/img/icons/arrow-right-black.svg") no-repeat;
-      background-position: right 1rem center;
-      background-size: 0.625rem 1.125rem;
+      flex-flow: column nowrap;
+      row-gap: var(--spacing-sm);
 
-      &.on,
-      &:hover {
-        background: var(--accent-color) url("/img/icons/arrow-right-white.svg")
-          no-repeat;
+      .dialog__memo-button {
+        display: flex;
+        flex-flow: row nowrap;
+        inline-size: 100%;
+        padding: var(--spacing-sm);
+        padding-right: 2.3125rem;
+        border-radius: var(--inner-card-radius);
+        font-weight: 700;
+        background: url("/img/icons/arrow-right-black.svg") no-repeat;
         background-position: right 1rem center;
         background-size: 0.625rem 1.125rem;
-        color: var(--lifecord-white);
+
+        &.on,
+        &:hover {
+          background: var(--accent-color)
+            url("/img/icons/arrow-right-white.svg") no-repeat;
+          background-position: right 1rem center;
+          background-size: 0.625rem 1.125rem;
+          color: var(--lifecord-white);
+        }
+
+        .dialog__memo-name {
+          text-align: left;
+        }
       }
     }
   }
@@ -278,6 +321,70 @@ button {
       aspect-ratio: 1;
       background: url("/img/icons/dialog_close.svg") no-repeat;
       background-size: var(--icon-lg);
+    }
+  }
+}
+
+/* 더보기 버튼 */
+.memo-card__button--more {
+  inline-size: 100%;
+  padding: var(--spacing-sm);
+}
+
+/* 높이에 맞춰 화면 대응 */
+@media screen and (max-height: 768px) {
+  .memo-card__button--more {
+    padding: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dialog__button--delete,
+  .dialog__button--add,
+  .dialog__button--save,
+  .dialog__date,
+  .dialog__title,
+  .memo-card__title,
+  .memo__button--all,
+  .memo__button--delete,
+  .memo__button--add {
+    color: var(--lifecord-white);
+  }
+
+  .dialog__memo-list {
+    & .dialog__memo-box {
+      & .dialog__memo-items {
+        .dialog__memo-button {
+          background: url(/img/icons/arrow-right-white.svg) no-repeat;
+          background-position: right 1rem center;
+          background-size: 0.625rem 1.125rem;
+          color: var(--lifecord-white);
+        }
+      }
+    }
+  }
+
+  .dialog__input-title,
+  .dialog__textarea {
+    color: var(--lifecord-white);
+  }
+
+  .dialog__input-title,
+  .dialog__textarea,
+  .dialog[open] {
+    background-color: var(--primary-color);
+  }
+
+  .dialog__detail {
+    & .dialog__actions {
+      .dialog__close {
+        background: var(--third-color);
+        background: var(--lifecord-white) url("/img/icons/close-black.svg")
+          no-repeat;
+        background-size: var(--icon-sm);
+        border-radius: 999px;
+        background-position: center;
+      }
     }
   }
 }

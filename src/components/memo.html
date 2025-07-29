@@ -33,7 +33,7 @@
   <body>
     <a href="../../index.html">메인페이지로 돌아가기</a>
     <div class="component-wrapper">
-      <!-- 메모 리스트 영역 -->
+      <!-- 메모 리스트 영역 시작 -->
       <div class="memo__wrapper">
         <div class="memo__header">
           <h2 class="memo__title">Memo-오늘</h2>
@@ -62,9 +62,16 @@
             </li>
           </ul>
         </div>
+
+        <button
+          type="button"
+          class="memo-card__button--more btn-base bg-primary font-bold show-dialog"
+        >
+          메모 관리
+        </button>
       </div>
 
-      <!-- 팝업(Dialog) -->
+      <!-- 메모 팝업(Dialog) 시작 -->
       <dialog
         class="dialog"
         data-type="memo"
@@ -76,11 +83,13 @@
           <section class="left-box dialog__memo-list">
             <h2 id="memo-popup" class="dialog__title">메모</h2>
             <h3 class="dialog__memo-list-title sr-only">메모 목록</h3>
-            <ul class="dialog__memo-items">
-              <!-- 팝업 메모 아이템 동적 생성 -->
-            </ul>
-            <!-- 메모가 없을 때 메시지 -->
-            <div class="dialog__memo-empty">메모 목록이 없습니다.</div>
+            <div class="dialog__memo-box">
+              <ul class="dialog__memo-items">
+                <!-- 팝업 메모 아이템 동적 생성 -->
+              </ul>
+              <!-- 메모가 없을 때 메시지 -->
+              <div class="dialog__memo-empty">메모 목록이 없습니다.</div>
+            </div>
           </section>
 
           <!-- 메모 상세 -->
@@ -118,6 +127,7 @@
           </section>
         </div>
       </dialog>
+      <!-- 메모 팝업(Dialog) 끝 -->
     </div>
   </body>
 </html>

@@ -18,23 +18,19 @@
         <img src="/favicon.png" class="btn-base__icon--large" alt="" />
         Lifecord
       </a>
-      <!-- 검색바 - 전체 박스 -->
       <div class="search-bar">
-        <!-- 검색바 - 컨텐츠 영역 -->
         <div class="search-bar__bar">
-          <!-- 검색바 - 검색엔진 변경 버튼  -->
           <button
             type="button"
             aria-label="검색엔진 교체"
-            class="search-bar__popover__trigger btn-base"
+            class="search-bar__popover__trigger"
           >
             <svg
               class="search-bar__bar__change__google"
-              data-engine="google"
               width="16"
               height="13"
               viewBox="0 0 16 17"
-              fill="currentColor"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -45,11 +41,10 @@
 
             <svg
               class="search-bar__bar__change__youtube"
-              data-engine="youtube"
               width="16"
               height="11"
               viewBox="0 0 16 11"
-              fill="currentColor"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -60,11 +55,10 @@
 
             <svg
               class="search-bar__bar__change__naver"
-              data-engine="naver"
               width="16"
               height="13"
               viewBox="0 0 16 16"
-              fill="currentColor"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -74,25 +68,72 @@
             </svg>
           </button>
 
-          <!-- 검색바 - 검색 form (default - google) -->
+          <!-- 구글 검색 (default) -->
           <form
             action="https://www.google.com/search"
             method="get"
-            class="search-bar__form"
+            class="search-bar__search__change__input__google"
           >
-            <input
-              type="text"
-              name="q"
-              placeholder="구글에서 검색"
-              class="search-bar__input"
-            />
-            <button type="submit" class="search-bar_btn" aria-label="검색">
+            <input type="text" name="q" placeholder="구글에서 검색" />
+            <button type="submit" class="search-btn" aria-label="검색">
               <svg
                 width="14"
                 height="14"
                 viewBox="0 0 14 14"
-                fill="currentColor"
-                class="btn-base__icon--small"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M5.45793 9.94865L1.77306 13.6914C1.37209 14.0985 0.71628 14.1034 0.308521 13.7027C-0.0982674 13.3015 -0.103607 12.6452 0.297356 12.2381L4.03563 8.44095C3.49292 7.58753 3.1774 6.57129 3.1774 5.48C3.1774 2.45087 5.60696 0 8.58894 0C11.5709 0 14 2.45087 14 5.48C14 8.50863 11.5709 10.96 8.58894 10.96C7.42343 10.96 6.34238 10.5853 5.45793 9.94865ZM8.58894 2.07075C6.74092 2.07124 5.24872 3.60298 5.24872 5.48C5.24872 7.35702 6.74092 8.88874 8.58894 8.88874C10.4365 8.88874 11.9287 7.35702 11.9287 5.48C11.9287 3.60298 10.4365 2.07124 8.58894 2.07075Z"
+                  fill="#1F1F1F"
+                />
+              </svg>
+            </button>
+          </form>
+          <!-- 네이버 검색 -->
+          <form
+            action="https://search.naver.com/search.naver"
+            method="get"
+            class="search-bar__search__change__input__naver"
+          >
+            <input type="text" name="query" placeholder="네이버에서 검색" />
+            <button type="submit" class="search-btn" aria-label="검색">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M5.45793 9.94865L1.77306 13.6914C1.37209 14.0985 0.71628 14.1034 0.308521 13.7027C-0.0982674 13.3015 -0.103607 12.6452 0.297356 12.2381L4.03563 8.44095C3.49292 7.58753 3.1774 6.57129 3.1774 5.48C3.1774 2.45087 5.60696 0 8.58894 0C11.5709 0 14 2.45087 14 5.48C14 8.50863 11.5709 10.96 8.58894 10.96C7.42343 10.96 6.34238 10.5853 5.45793 9.94865ZM8.58894 2.07075C6.74092 2.07124 5.24872 3.60298 5.24872 5.48C5.24872 7.35702 6.74092 8.88874 8.58894 8.88874C10.4365 8.88874 11.9287 7.35702 11.9287 5.48C11.9287 3.60298 10.4365 2.07124 8.58894 2.07075Z"
+                  fill="#1F1F1F"
+                />
+              </svg>
+            </button>
+          </form>
+
+          <!-- 유튜브 검색 -->
+          <form
+            action="https://www.youtube.com/results"
+            method="get"
+            class="search-bar__search__change__input__youtube"
+          >
+            <input
+              type="text"
+              name="search_query"
+              placeholder="유튜브에서 검색"
+            />
+            <button type="submit" class="search-btn" aria-label="검색">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
@@ -106,18 +147,13 @@
           </form>
         </div>
 
-        <!-- 검색바 - 검색 엔진 변경 팝오버창 -->
         <div class="search-bar__popover">
-          <button
-            type="button"
-            class="search-bar__popover__google__btn"
-            data-engine="google"
-          >
+          <button type="button" class="search-bar__popover__google__btn">
             <svg
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              fill="currentColor"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -127,16 +163,12 @@
             </svg>
             <span>구글</span>
           </button>
-          <button
-            type="button"
-            class="search-bar__popover__youtube__btn"
-            data-engine="youtube"
-          >
+          <button type="button" class="search-bar__popover__youtube__btn">
             <svg
               width="24"
               height="18"
               viewBox="0 0 24 18"
-              fill="currentColor"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -146,16 +178,12 @@
             </svg>
             <span>유튜브</span>
           </button>
-          <button
-            type="button"
-            class="search-bar__popover__naver__btn"
-            data-engine="naver"
-          >
+          <button type="button" class="search-bar__popover__naver__btn">
             <svg
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              fill="currentColor"
+              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -353,7 +381,7 @@
       </section>
       <form class="todo-list">
         <div class="todo-list__header">
-          <p class="todo-list__title">Todo</p>
+          <p class="todo-list__title">Todo- 오늘</p>
           <button type="button" class="todo-list__popover-trigger">
             <svg
               width="20"
@@ -407,7 +435,7 @@
       <!-- 메모 리스트 영역 시작 -->
       <div class="memo__wrapper">
         <div class="memo__header">
-          <h2 class="memo__title">Memo</h2>
+          <h2 class="memo__title">Memo-오늘</h2>
         </div>
 
         <div class="memo__body">
