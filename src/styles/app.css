@@ -49,3 +49,10 @@
   grid-area: memo;
   height: 100%;
 }
+
+.calendar {
+  grid-area: calendar;
+  /* 이 밑에 있는 부분은 캘린더가 완성되면 삭제해야 함 */
+  box-shadow: var(--shadow-color);
+  display: flex;
+}
