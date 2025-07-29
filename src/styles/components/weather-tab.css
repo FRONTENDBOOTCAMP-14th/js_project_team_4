@@ -12,7 +12,7 @@
   border-radius: var(--border-radius);
   box-shadow: 0 0 16px 4px rgba(18, 18, 18, 0.06);
   overflow: hidden;
-  aspect-ratio: 5 / 1;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   background-image: var(--background-image, url("/img/bg/clouds.jpg"));
@@ -182,7 +182,6 @@
 @media (max-width: 1024px) {
   .weather-tab {
     flex-direction: column;
-    aspect-ratio: auto;
   }
 
   .weather-tab__search-form {

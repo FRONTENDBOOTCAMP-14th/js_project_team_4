@@ -26,9 +26,9 @@
   display: flex;
   flex-flow: row nowrap;
   flex: 1 0 0;
+  justify-content: space-between;
 
-  width: 498px; /* 최소 너비: 330px */
-  height: var(--spacing-xl);
+  height: fit-content;
   position: relative;
 }
 
@@ -37,10 +37,6 @@
   flex-flow: row nowrap;
   column-gap: 10px;
   align-items: center;
-}
-
-.search-bar input {
-  width: 400px; /* 최소 너비: 240px*/
 }
 
 .search-bar__popover {

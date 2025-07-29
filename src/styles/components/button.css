@@ -31,6 +31,12 @@ a.btn-base {
   flex-shrink: 0;
 }
 
+.btn-base__icon--small {
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+  flex-shrink: 0;
+}
+
 .list-button {
   width: 100%;
   justify-content: space-between;
