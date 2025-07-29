@@ -72,9 +72,9 @@
         aria-describedby="memo-details"
       >
         <div class="dialog__container">
-          <h2 id="memo-popup" class="dialog__title">메모</h2>
           <!-- 메모 리스트 영역 -->
-          <section class="dialog__memo-list">
+          <section class="left-box dialog__memo-list">
+            <h2 id="memo-popup" class="dialog__title">메모</h2>
             <h3 class="dialog__memo-list-title sr-only">메모 목록</h3>
             <ul class="dialog__memo-items">
               <!-- 팝업 메모 아이템 동적 생성 -->
@@ -84,7 +84,7 @@
           </section>
 
           <!-- 메모 상세 -->
-          <section class="dialog__detail" id="memo-details">
+          <section class="right-box dialog__detail" id="memo-details">
             <h3 class="dialog__detail-title sr-only">메모 상세</h3>
             <div class="dialog__editor" data-id="">
               <p class="dialog__date">2025.07.22</p>
@@ -110,12 +110,13 @@
                 <button type="button" class="dialog__button--delete">
                   삭제
                 </button>
+                <button type="button" class="dialog__close">
+                  <span class="sr-only">닫기</span>
+                </button>
               </div>
             </div>
           </section>
         </div>
-
-        <button type="button" class="dialog__close">닫기</button>
       </dialog>
     </div>
   </body>

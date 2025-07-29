@@ -196,6 +196,17 @@ function openDialogWithMemoId(memoId = null) {
       dialogTextArea.value = selectedMemo.content;
       dialogDateText.textContent = formatDate(selectedMemo.createdAt);
       dialogEditor.dataset.id = selectedMemo.id;
+
+      // 메모 리스트에서 해당 memoId 버튼에 on 클래스 추가
+      const allButtons = dialogMemoList.querySelectorAll(
+        ".dialog__memo-button"
+      );
+      allButtons.forEach((btn) => btn.classList.remove("on"));
+
+      const activeBtn = dialogMemoList.querySelector(
+        `.dialog__memo-button[data-memo-id="${memoId}"]`
+      );
+      if (activeBtn) activeBtn.classList.add("on");
     }
   } else {
     // 새 메모일 때 빈 입력란과 오늘 날짜만 표시
@@ -331,11 +342,11 @@ function updateDialogMemoListFn() {
     if (dialogNoData) dialogNoData.style.display = "none";
   }
 
-  memoData.forEach((memo) => {
+  memoData.forEach((memo, index) => {
     const li = document.createElement("li");
     li.className = "dialog__memo-item";
     li.innerHTML = DOMPurify.sanitize(`
-      <button type="button" class="dialog__memo-button" data-memo-id="${memo.id}">
+      <button type="button" class="dialog__memo-button ${index === 0 ? "on" : ""}" data-memo-id="${memo.id}">
         <span class="dialog__memo-name">${memo.title}</span>
       </button>
     `);
@@ -354,6 +365,13 @@ function latestMemoDataSortFn() {
 dialogMemoList.addEventListener("click", (e) => {
   const dialogMemoButton = e.target.closest(".dialog__memo-button");
   if (!dialogMemoButton) return;
+
+  // 모든 버튼의 on 클래스 제거
+  const allButtons = dialogMemoList.querySelectorAll(".dialog__memo-button");
+  allButtons.forEach((btn) => btn.classList.remove("on"));
+
+  // 클릭된 버튼에만 on 클래스 추가
+  dialogMemoButton.classList.add("on");
 
   const memoId = parseInt(dialogMemoButton.dataset.memoId);
   if (isNaN(memoId)) return;
