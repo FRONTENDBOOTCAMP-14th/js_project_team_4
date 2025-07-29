@@ -72,7 +72,8 @@
 
 .search-bar__popover {
   border-radius: var(--card-radius);
-  background: #fff;
+  background: var(--primary-color);
+  color: var(--third-color);
   box-shadow: 0 0 16px 0 var(--shadow-color);
   width: 150px;
   height: 216px;
