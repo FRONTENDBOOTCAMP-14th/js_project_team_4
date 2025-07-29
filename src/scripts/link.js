@@ -13,8 +13,7 @@ const CONSTANTS = {
     FAVORITES_LOAD_FAILED: "즐겨찾기를 불러올 수 없습니다.",
     URL_REQUIRED: "URL을 입력해주세요.",
     SELECT_LINK_TO_DELETE: "삭제할 링크를 선택해주세요.",
-    UNSAVED_CHANGES:
-      "변경사항이 저장되지 않았습니다. 정말로 다른 링크를 선택하시겠습니까?",
+    UNSAVED_CHANGES: "변경사항이 저장되지 않았습니다. 정말로 진행하시겠습니까?",
     CONFIRM_DELETE: "선택한 링크를 삭제하시겠습니까?",
   },
 
