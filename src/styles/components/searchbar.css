@@ -11,7 +11,6 @@
   border: 0;
   background: transparent;
   list-style: none;
-
 }
 
 .search-bar .hidden {
@@ -93,14 +92,17 @@
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
   }
+
   .search-bar__popover__youtube__btn {
     display: flex;
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
   }
+
   .search-bar__popover__naver__btn {
     display: flex;
     flex-flow: row nowrap;
     gap: var(--spacing-sm);
   }
+  
 }
