@@ -52,6 +52,7 @@
   width: 95%;
   height: 95%;
   max-width: 1440px;
+  max-height: 800px;
   display: flex;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
