@@ -1,3 +1,6 @@
+// 로딩 스피너
+import { showWeatherLoading, hideWeatherLoading } from "./loading-spiner.js";
+
 // OpenWeather API 설정
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
@@ -378,6 +381,7 @@ function processSearchQuery(query) {
 
 // 현재 날씨 가져오기
 async function fetchCurrentWeather(city = "서울") {
+  showWeatherLoading(); // 로딩 스피너 표시
   try {
     // 검색어 처리 (한글->영어 변환)
     const processedCity = processSearchQuery(city);
@@ -400,8 +404,13 @@ async function fetchCurrentWeather(city = "서울") {
   } catch (error) {
     console.error("현재 날씨 데이터를 가져오는데 실패했습니다:", error);
     alert("날씨 정보를 가져올 수 없습니다. 도시명을 확인해주세요.");
+  } finally {
+    hideWeatherLoading(); // 로딩 스피너 숨김
   }
 }
+
+// 로딩 스피너 호출
+fetchCurrentWeather();
 
 // 예보 데이터 가져오기
 async function fetchForecast(lat, lon) {
@@ -502,3 +511,11 @@ window.weatherAPI = {
   fetchWeatherByLocation,
   getUserLocation,
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  showWeatherLoading();
+
+  setTimeout(() => {
+    hideWeatherLoading();
+  }, 1000);
+});
