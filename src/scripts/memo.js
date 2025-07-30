@@ -174,7 +174,7 @@ function deleteButtonFn() {
     memoData = memoData.filter((memo) => !deleteToIds.includes(memo.id));
     updateMainMemoListFn(); // 화면에 다시 그리기
     updateDialogMemoListFn(); // 팝업 내 메모리스트도 업데이트
-    checkAllButton.textContent = "전체"; // 텍스트 초기화
+    checkAllButton.textContent = "전체 선택"; // 텍스트 초기화
 
     deleteMode = false; // 삭제 후 모두 초기화
   } else {
