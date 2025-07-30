@@ -10,19 +10,19 @@ canvas.height = 300;
 
 // 이미지 불러오기
 const cactusImage = new Image();
-cactusImage.src = '/public/img/dinosour/cactus.png';
+cactusImage.src = '/img/dinosour/cactus.png';
 
 const dinosourRunImage = new Image();
-dinosourRunImage.src = '/public/img/dinosour/dinosour-run1.png';
+dinosourRunImage.src = '/img/dinosour/dinosour-run1.png';
 
 const dinosourRun2Image = new Image();
-dinosourRun2Image.src = '/public/img/dinosour/dinosour-run2.png';
+dinosourRun2Image.src = '/img/dinosour/dinosour-run2.png';
 
 const dinosourFailImage = new Image();
-dinosourFailImage.src = '/public/img/dinosour/dinosour-fail.png';
+dinosourFailImage.src = '/img/dinosour/dinosour-fail.png';
 
 const dinosourJumpImage = new Image();
-dinosourJumpImage.src = '/public/img/dinosour/dinosour-jump.png';
+dinosourJumpImage.src = '/img/dinosour/dinosour-jump.png';
 
 // 게임 상태 변수
 let gameStarted = false;
@@ -31,10 +31,12 @@ let cactusInterval = 200;
 let gameSpeed = 1;
 let gamePaused = false;
 
-// 다크모드 변경에 따라 글자색이 바뀌도록 설정
-const thirdColor = getComputedStyle(document.documentElement)
-  .getPropertyValue('--third-color')
-  .trim();
+// 다크모드 전환에 따라 글자색이 바뀌도록 설정 - 함수로 변경
+function getCurrentThirdColor() {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue('--third-color')
+    .trim();
+}
 
 // 공룡 설정
 const dino = {
@@ -78,18 +80,18 @@ let jumpTimer = 0;
 let animation;
 let gameOver = false;
 
-// 스코어 표시 함수 추가
+// 스코어 표시 함수 수정 - 실시간으로 색상 가져오기
 function drawScore() {
   const score = Math.floor(timer / 10);
-  ctx.fillStyle = thirdColor;
+  ctx.fillStyle = getCurrentThirdColor();
   ctx.font = '20px Arial';
   ctx.textAlign = 'right';
   ctx.fillText(`Score: ${score}`, canvas.width - 20, 30);
 }
 
-// 게임오버 메시지 표시 함수 추가
+// 게임오버 메시지 표시 함수 수정 - 실시간으로 색상 가져오기
 function drawGameOver() {
-  ctx.fillStyle = thirdColor;
+  ctx.fillStyle = getCurrentThirdColor();
   ctx.font = 'bold 36px Arial';
   ctx.textAlign = 'center';
   ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2 - 20);
@@ -99,9 +101,9 @@ function drawGameOver() {
   ctx.fillText('Press SPACE to restart', canvas.width / 2, canvas.height / 2 + 20);
 }
 
-// 일시정지 메시지 표시 함수 추가
+// 일시정지 메시지 표시 함수 수정 - 실시간으로 색상 가져오기
 function drawPaused() {
-  ctx.fillStyle = thirdColor;
+  ctx.fillStyle = getCurrentThirdColor();
   ctx.font = 'bold 36px Arial';
   ctx.textAlign = 'center';
   ctx.fillText('PAUSE', canvas.width / 2, canvas.height / 2 - 20);
@@ -310,3 +312,20 @@ if (modalEndBtn) {
     }
   });
 }
+
+// 다크모드 감지
+const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+darkModeMediaQuery.addEventListener('change', () => {
+  if (gameOver) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    dino.draw();
+    drawScore();
+    drawGameOver(); // 강제로 다시 그리기
+  } else if (gamePaused) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    dino.draw();
+    drawScore();
+    drawPaused(); // 일시정지도 마찬가지로
+  } 
+});
