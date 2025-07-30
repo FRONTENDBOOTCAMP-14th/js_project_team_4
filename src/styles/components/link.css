@@ -282,6 +282,7 @@
   width: 100%;
   justify-content: flex-start;
   border-radius: var(--button-radius, 8px);
+  scale: 0.95;
 }
 
 .link-card__link:hover {
