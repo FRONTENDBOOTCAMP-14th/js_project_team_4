@@ -1,4 +1,5 @@
 /* global DOMPurify */
+import { showLinkSaveLoading, hideLinkSaveLoading } from "./loading-spiner.js";
 
 const CONSTANTS = {
   ERRORS: {
@@ -426,6 +427,9 @@ function initLinkModal(linkModalOverlay) {
   const favoriteButton = linkModalOverlay.querySelector(
     CONSTANTS.SELECTORS.FAVORITE_CHECKBOX
   );
+
+  const state = getLinkAppState();
+
   if (favoriteButton) {
     favoriteButton.setAttribute("aria-label", "즐겨찾기 추가");
 
@@ -443,6 +447,9 @@ function initLinkModal(linkModalOverlay) {
       e.target === linkModalOverlay ||
       e.target.closest(CONSTANTS.SELECTORS.LINK_MODAL_CLOSE)
     ) {
+      if (state.isFormDirty && !confirm(CONSTANTS.ERRORS.UNSAVED_CHANGES)) {
+        return;
+      }
       linkModalOverlay.classList.remove(CONSTANTS.CSS.SHOW);
       document.body.style.overflow = "auto";
       clearForm();
@@ -452,6 +459,10 @@ function initLinkModal(linkModalOverlay) {
   if (form) {
     form.addEventListener("submit", handleFormSubmit);
     form.addEventListener("reset", handleFormReset);
+    const inputs = form.querySelectorAll("input, textarea");
+    inputs.forEach((input) => {
+      input.addEventListener("input", handleFormChange);
+    });
   }
 
   if (addButton) {
@@ -589,11 +600,7 @@ function selectLink(link) {
   const state = getLinkAppState();
 
   if (state.isFormDirty && state.selectedLinkId !== link.id) {
-    if (
-      !confirm(
-        "변경사항이 저장되지 않았습니다. 정말로 다른 링크를 선택하시겠습니까?"
-      )
-    ) {
+    if (!confirm(CONSTANTS.ERRORS.UNSAVED_CHANGES)) {
       return;
     }
   }
@@ -741,6 +748,9 @@ async function handleFormSubmit(e) {
     return;
   }
 
+  // 로딩 스피너 표시
+  showLinkSaveLoading();
+
   try {
     const linkManager = getLinkManager();
     const editingId = state.selectedLinkId;
@@ -772,6 +782,9 @@ async function handleFormSubmit(e) {
     ]);
   } catch (error) {
     alert(error.message);
+  } finally {
+    // 로딩 스피너 숨김
+    hideLinkSaveLoading();
   }
 }
 
