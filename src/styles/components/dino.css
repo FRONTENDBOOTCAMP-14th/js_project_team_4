@@ -86,7 +86,7 @@ button:disabled {
   background: var(--primary-color);
   color: var(--third-color);
   border-radius: var(--card-radius, 16px);
-  border: 2px solid var(--third-color);
+  border: 4px solid var(--third-color);
   box-shadow: 6px 6px var(--third-color);
 }
 
