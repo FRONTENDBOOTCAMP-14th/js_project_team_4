@@ -1028,19 +1028,23 @@ function createLinkManager() {
 
   /**
    * URL에서 파비콘 URL을 생성합니다.
+   * Google의 favicon 서비스를 사용하여 third-party cookie 문제를 방지합니다.
    *
    * @function getFaviconUrl
    * @param {string} url - 대상 URL
    * @returns {string} 파비콘 URL
    *
    * @example
-   * getFaviconUrl('https://google.com') // 'https://google.com/favicon.ico'
+   * getFaviconUrl('https://google.com') // Google favicon service URL
    * getFaviconUrl('invalid-url') // '/favicon.png'
    */
   function getFaviconUrl(url) {
     try {
-      const domain = new URL(url).origin;
-      return `${domain}/favicon.ico`;
+      const urlObj = new URL(url);
+      const domain = urlObj.hostname;
+
+      // Google의 favicon 서비스 사용 (third-party cookie 문제 방지)
+      return `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
     } catch {
       return "/favicon.png";
     }
