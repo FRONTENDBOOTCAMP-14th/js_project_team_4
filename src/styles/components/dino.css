@@ -56,26 +56,27 @@ button:disabled {
   align-items: center;
 }
 
-.dino-game__card__img {
-  inline-size: 60%;
-  padding-bottom: var(--spacing-sm);
-}
-
 .modal-start__btn {
   inline-size: 300px;
-  padding: var(--spacing-sm);
-  background: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 5px;
+  padding: var(--spacing-md);
+  background: var(--primary-color);
+  color: var(--third-color);
+  border-radius: var(--card-radius, 16px);
+  border: 2px solid var(--third-color);
+  box-shadow: 6px 6px var(--third-color);
+}
+
+.modal-start__btn:active {
+  box-shadow: none;
+  transform: translate(6px, 6px);
 }
 
 .dino-game__modall__canvas {
-  background-color: white;
+  background-color: var(--primary-color);
   border: 0;
   border-radius: var(--card-radius, 16px);
-  width: 60%;
-  height: 70%;
+  width: 90%;
+  height: 90%;
   display: flex;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
