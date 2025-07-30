@@ -275,7 +275,7 @@ drawInitialScreen();
 // 모달창 제어 기능
 const modalStartBtn = document.querySelector(".modal-start__btn");
 const modalEndBtn = document.querySelector(".modal-end__btn");
-const gameModal = document.querySelector(".dino-game__modall__canvas");
+const gameModal = document.querySelector(".dino-game__modal__canvas");
 
 // 페이지 로드 시 모달창 숨기기
 document.addEventListener('DOMContentLoaded', function() {

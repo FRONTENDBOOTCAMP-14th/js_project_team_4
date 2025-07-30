@@ -71,7 +71,7 @@ button:disabled {
   transform: translate(6px, 6px);
 }
 
-.dino-game__modall__canvas {
+.dino-game__modal__canvas {
   background-color: var(--primary-color);
   border: 0;
   border-radius: var(--card-radius, 16px);
