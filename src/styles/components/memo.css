@@ -8,6 +8,7 @@ button {
 
 /* 메모 레이아웃 */
 .memo__wrapper {
+  overflow: hidden;
   display: flex;
   flex-flow: column nowrap;
   row-gap: var(--spacing-sm);
@@ -52,8 +53,9 @@ button {
 
 /* 메모 내용 */
 .memo__body {
+  overflow-y: auto;
   block-size: 100%;
-  padding-inline: var(--spacing-lg);
+  padding-inline: var(--spacing-sm);
 
   .memo__list {
     display: flex;
@@ -64,6 +66,7 @@ button {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
+      padding-inline: var(--spacing-sm);
 
       .memo-card__title {
         display: block;
@@ -106,6 +109,7 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--lifecord-grey);
+    word-break: break-all;
   }
 }
 
@@ -247,6 +251,7 @@ button {
 
         .dialog__memo-name {
           text-align: left;
+          word-break: break-all;
         }
       }
     }
@@ -339,6 +344,19 @@ button {
 }
 
 @media (prefers-color-scheme: dark) {
+  .memo-card__checkbox {
+    input {
+      background: url("/img/icons/checkbox/checkbox-basic-white.png") no-repeat;
+      background-size: 100%;
+
+      &:checked {
+        background: url("/img/icons/checkbox/checked-white.png") no-repeat;
+      }
+    }
+  }
+
+  .dialog__memo-empty,
+  .memo__empty,
   .dialog__button--delete,
   .dialog__button--add,
   .dialog__button--save,
@@ -355,7 +373,7 @@ button {
     & .dialog__memo-box {
       & .dialog__memo-items {
         .dialog__memo-button {
-          background: url(/img/icons/arrow-right-white.svg) no-repeat;
+          background: url("/img/icons/arrow-right-white.svg") no-repeat;
           background-position: right 1rem center;
           background-size: 0.625rem 1.125rem;
           color: var(--lifecord-white);
