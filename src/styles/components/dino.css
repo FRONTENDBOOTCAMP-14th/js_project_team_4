@@ -1,0 +1,107 @@
+.controls button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+#start-btn {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#restart-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#pause-btn {
+  background: #f7b614;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.modal-end__btn{
+  inline-size: 300px;
+  padding: 10px 20px;
+  margin: 10px 10px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.dino-game__card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-sm);
+  border-radius: var(--card-radius, 16px);
+  background: var(--primary-color);
+  color: var(--third-color);
+  box-shadow: 0 0 24px 4px var(--shadow-color, rgba(18, 18, 18, 0.1));
+  height: 100%;
+  overflow: hidden;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.dino-game__card__img {
+  inline-size: 60%;
+  padding-bottom: var(--spacing-sm);
+}
+
+.modal-start__btn {
+  inline-size: 300px;
+  padding: var(--spacing-sm);
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+.dino-game__modall__canvas {
+  background-color: white;
+  border: 0;
+  border-radius: var(--card-radius, 16px);
+  width: 60%;
+  height: 70%;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.dino-game__modal__canvas__container {
+  inline-size: 100%;
+  block-size: 100%;
+
+  display: flex;
+  flex-flow: column;
+  justify-content: center; 
+  align-items: center;     
+  max-width: 100%;
+       
+  .controls {
+     margin-top: 20px;
+     display: flex;
+     gap: 10px; 
+     padding-bottom: 20px;
+  }
+}
+
+/* 다크 모드 전환 시 이미지 변경 */
+@media (prefers-color-scheme: dark) {
+  .dino-game__card__img {
+    content: url("/public/img/dinosour/gamestart-white.svg");
+  }
+}

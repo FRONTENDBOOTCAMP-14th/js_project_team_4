@@ -65,3 +65,7 @@
   align-items: center;
   font-weight: 700;
 }
+
+.dino-game__card{
+  grid-area: calendar;
+}
