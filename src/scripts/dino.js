@@ -10,19 +10,19 @@ canvas.height = 300;
 
 // 이미지 불러오기
 const cactusImage = new Image();
-cactusImage.src = '/public/img/dinosour/cactus.png';
+cactusImage.src = '/img/dinosour/cactus.png';
 
 const dinosourRunImage = new Image();
-dinosourRunImage.src = '/public/img/dinosour/dinosour-run1.png';
+dinosourRunImage.src = '/img/dinosour/dinosour-run1.png';
 
 const dinosourRun2Image = new Image();
-dinosourRun2Image.src = '/public/img/dinosour/dinosour-run2.png';
+dinosourRun2Image.src = '/img/dinosour/dinosour-run2.png';
 
 const dinosourFailImage = new Image();
-dinosourFailImage.src = '/public/img/dinosour/dinosour-fail.png';
+dinosourFailImage.src = '/img/dinosour/dinosour-fail.png';
 
 const dinosourJumpImage = new Image();
-dinosourJumpImage.src = '/public/img/dinosour/dinosour-jump.png';
+dinosourJumpImage.src = '/img/dinosour/dinosour-jump.png';
 
 // 게임 상태 변수
 let gameStarted = false;

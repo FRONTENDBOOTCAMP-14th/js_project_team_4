@@ -8,32 +8,56 @@
 #start-btn {
   background: #4CAF50;
   color: white;
-  border: none;
-  border-radius: 5px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 4px 4px #4CAF50;
+  border-radius: var(--full-radius);
+}
+
+#start-btn:active {
+  box-shadow: none;
+  transform: translate(4px, 4px);
 }
 
 #restart-btn {
   background: #ff6b6b;
   color: white;
-  border: none;
-  border-radius: 5px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 4px 4px #ff6b6b;
+  border-radius: var(--full-radius);
+}
+
+#restart-btn:active {
+  box-shadow: none;
+  transform: translate(4px, 4px);
 }
 
 #pause-btn {
   background: #f7b614;
   color: white;
-  border: none;
-  border-radius: 5px;
+  border: 2px solid var(--primary-color);
+  box-shadow: 4px 4px #f7b614;
+  border-radius: var(--full-radius);
+}
+
+#pause-btn:active {
+  box-shadow: none;
+  transform: translate(4px, 4px);
 }
 
 .modal-end__btn{
   inline-size: 300px;
   padding: 10px 20px;
   margin: 10px 10px;
-  background: black;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background: var(--third-color);
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  box-shadow: 4px 4px var(--third-color);
+  border-radius: var(--full-radius);
+}
+
+.modal-end__btn:active {
+  box-shadow: none;
+  transform: translate(4px, 4px);
 }
 
 button:disabled {
@@ -103,6 +127,6 @@ button:disabled {
 /* 다크 모드 전환 시 이미지 변경 */
 @media (prefers-color-scheme: dark) {
   .dino-game__card__img {
-    content: url("/public/img/dinosour/gamestart-white.svg");
+    content: url("/img/dinosour/gamestart-white.svg");
   }
 }
