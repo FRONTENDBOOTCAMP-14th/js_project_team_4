@@ -2443,135 +2443,6 @@ function createAdvancedEventFeatures() {
 }
 
 /**
- * 성능 모니터링 시스템을 생성합니다.
- * 링크 관리 작업의 실행 시간을 측정하고 로그를 관리합니다.
- *
- * @function createPerformanceMonitor
- * @returns {Object} 성능 모니터링 객체
- * @returns {Function} returns.startMonitoring - 모니터링 시작 함수
- * @returns {Function} returns.getPerformanceLog - 성능 로그 반환 함수
- * @returns {Function} returns.clearLog - 로그 초기화 함수
- * @returns {Function} returns.isMonitoring - 모니터링 상태 확인 함수
- *
- * @example
- * const monitor = createPerformanceMonitor();
- * monitor.startMonitoring();
- *
- * // 나중에 로그 확인
- * const logs = monitor.getPerformanceLog();
- * console.log('성능 로그:', logs);
- */
-function createPerformanceMonitor() {
-  const linkManager = getLinkManager();
-  /** @type {Array<Object>} 성능 측정 로그 배열 */
-  const performanceLog = [];
-  /** @type {boolean} 모니터링 활성화 상태 */
-  let isMonitoring = false;
-
-  /**
-   * 성능 모니터링을 시작합니다.
-   * 링크 매니저의 로딩 이벤트를 구독하여 실행 시간을 측정합니다.
-   *
-   * @method startMonitoring
-   *
-   * @example
-   * monitor.startMonitoring();
-   * console.log('성능 모니터링이 시작되었습니다.');
-   */
-  function startMonitoring() {
-    if (isMonitoring || !linkManager) return;
-
-    isMonitoring = true;
-    console.log("성능 모니터링 시작됨");
-
-    /**
-     * 로딩 시작 이벤트 핸들러
-     *
-     * @param {Object} data - 이벤트 데이터
-     * @param {string} data.operation - 수행 중인 작업명
-     */
-    linkManager.on(CONSTANTS.EVENTS.LOADING_STARTED, ({ operation }) => {
-      performanceLog.push({
-        operation,
-        startTime: performance.now(),
-        type: "start",
-      });
-    });
-
-    /**
-     * 로딩 종료 이벤트 핸들러
-     *
-     * @param {Object} data - 이벤트 데이터
-     * @param {string} data.operation - 완료된 작업명
-     */
-    linkManager.on(CONSTANTS.EVENTS.LOADING_ENDED, ({ operation }) => {
-      const startEntry = performanceLog.find(
-        (entry) => entry.operation === operation && entry.type === "start"
-      );
-
-      if (startEntry) {
-        const endTime = performance.now();
-        const duration = endTime - startEntry.startTime;
-
-        console.log(`성능 측정 - ${operation}: ${duration.toFixed(2)}ms`);
-
-        performanceLog.push({
-          operation,
-          startTime: startEntry.startTime,
-          endTime,
-          duration,
-          type: "complete",
-        });
-      }
-    });
-  }
-
-  return {
-    startMonitoring,
-
-    /**
-     * 현재까지의 성능 로그를 반환합니다.
-     *
-     * @method getPerformanceLog
-     * @returns {Array<Object>} 성능 로그 배열의 복사본
-     *
-     * @example
-     * const logs = monitor.getPerformanceLog();
-     * logs.forEach(log => {
-     *   if (log.type === 'complete') {
-     *     console.log(`${log.operation}: ${log.duration}ms`);
-     *   }
-     * });
-     */
-    getPerformanceLog: () => [...performanceLog],
-
-    /**
-     * 성능 로그를 초기화합니다.
-     *
-     * @method clearLog
-     *
-     * @example
-     * monitor.clearLog();
-     * console.log('성능 로그가 초기화되었습니다.');
-     */
-    clearLog: () => (performanceLog.length = 0),
-
-    /**
-     * 현재 모니터링 상태를 반환합니다.
-     *
-     * @method isMonitoring
-     * @returns {boolean} 모니터링 활성화 여부
-     *
-     * @example
-     * if (monitor.isMonitoring()) {
-     *   console.log('성능 모니터링이 활성화되어 있습니다.');
-     * }
-     */
-    isMonitoring: () => isMonitoring,
-  };
-}
-
-/**
  * 애플리케이션 초기화 함수입니다.
  * DOM 로드 완료 후 모든 컴포넌트를 순차적으로 초기화합니다.
  *
@@ -2626,17 +2497,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       advancedFeatures.setupRealTimeValidation();
       advancedFeatures.setupDragAndDrop();
       console.log("✅ 고급 기능 초기화 완료");
-    }
-
-    // 6. 성능 모니터링 시작
-    console.log("📊 성능 모니터링 초기화 중...");
-    const performanceMonitor = createPerformanceMonitor();
-    if (
-      performanceMonitor &&
-      typeof performanceMonitor.startMonitoring === "function"
-    ) {
-      performanceMonitor.startMonitoring();
-      console.log("✅ 성능 모니터링 시작됨");
     }
 
     // 7. 접근성 개선사항 적용
@@ -2762,30 +2622,6 @@ if (typeof window !== "undefined") {
           console.log(`🎯 Event: ${event}`, data);
         });
       });
-    },
-
-    /**
-     * 링크 관리자의 기본 작업에 대한 성능 테스트를 실행합니다.
-     * 링크 추가, 업데이트, 삭제 작업의 총 소요 시간을 측정합니다.
-     *
-     * @async
-     * @function performanceTest
-     * @returns {Promise<void>}
-     *
-     * @example
-     * // 개발자 콘솔에서:
-     * await LinkManagerDebug.performanceTest();
-     * // 콘솔에 "Link Operations: XXXms" 형태로 출력됩니다.
-     */
-    async performanceTest() {
-      const manager = getLinkManager();
-      const testUrl = "https://example.com";
-
-      console.time("Link Operations");
-      const link = await manager.addLink(testUrl, "Test Link");
-      await manager.updateLink(link.id, { title: "Updated Test Link" });
-      await manager.deleteLink(link.id);
-      console.timeEnd("Link Operations");
     },
   };
 }
