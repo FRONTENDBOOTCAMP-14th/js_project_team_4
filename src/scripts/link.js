@@ -2743,7 +2743,18 @@ if (typeof window !== "undefined") {
     getUIEventHandlers,
     EVENTS: CONSTANTS.EVENTS,
 
-    // 디버깅 헬퍼
+    /**
+     * 모든 이벤트에 대한 로깅 리스너를 등록합니다.
+     * 각 이벤트가 발생할 때마다 콘솔에 이벤트 이름과 데이터를 출력합니다.
+     *
+     * @function logAllEvents
+     * @returns {void}
+     *
+     * @example
+     * // 개발자 콘솔에서:
+     * LinkManagerDebug.logAllEvents();
+     * // 이후 모든 이벤트가 콘솔에 기록됩니다.
+     */
     logAllEvents() {
       const manager = getLinkManager();
       Object.values(CONSTANTS.EVENTS).forEach((event) => {
@@ -2753,7 +2764,19 @@ if (typeof window !== "undefined") {
       });
     },
 
-    // 성능 테스트
+    /**
+     * 링크 관리자의 기본 작업에 대한 성능 테스트를 실행합니다.
+     * 링크 추가, 업데이트, 삭제 작업의 총 소요 시간을 측정합니다.
+     *
+     * @async
+     * @function performanceTest
+     * @returns {Promise<void>}
+     *
+     * @example
+     * // 개발자 콘솔에서:
+     * await LinkManagerDebug.performanceTest();
+     * // 콘솔에 "Link Operations: XXXms" 형태로 출력됩니다.
+     */
     async performanceTest() {
       const manager = getLinkManager();
       const testUrl = "https://example.com";
