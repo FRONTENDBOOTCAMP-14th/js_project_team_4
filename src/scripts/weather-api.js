@@ -1,9 +1,8 @@
 // 로딩 스피너
 import { showWeatherLoading, hideWeatherLoading } from "./loading-spiner.js";
 
-// OpenWeather API 설정
-const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
-const BASE_URL = "https://api.openweathermap.org/data/2.5";
+// Netlify Functions 엔드포인트 (기존 API_KEY, BASE_URL 제거)
+const WEATHER_API_ENDPOINT = "/.netlify/functions/weather";
 
 const weatherTemp = document.querySelector(".weather-tab__temp");
 const weatherLocation = document.querySelector(".weather-tab__location");
@@ -137,6 +136,7 @@ const cityTranslations = {
   춘천: "chuncheon",
   전주: "jeonju",
   천안: "cheonan",
+  안성: "anseong",
 };
 
 // 도시명을 한글로 변환하는 함수
@@ -167,6 +167,7 @@ function translateCityToKorean(englishName) {
     chuncheon: "춘천",
     jeonju: "전주",
     cheonan: "천안",
+    anseong: "안성",
   };
 
   return cityMap[englishName.toLowerCase()] || englishName;
@@ -379,21 +380,23 @@ function processSearchQuery(query) {
   return trimmedQuery;
 }
 
-// 현재 날씨 가져오기
+// 현재 날씨 가져오기 - Netlify Functions 사용
 async function fetchCurrentWeather(city = "서울") {
   showWeatherLoading(); // 로딩 스피너 표시
   try {
     // 검색어 처리 (한글->영어 변환)
     const processedCity = processSearchQuery(city);
 
+    // Netlify Functions 호출
     const response = await fetch(
-      `${BASE_URL}/weather?q=${encodeURIComponent(
-        processedCity
-      )}&appid=${API_KEY}&units=metric&lang=kr`
+      `${WEATHER_API_ENDPOINT}?city=${encodeURIComponent(processedCity)}&type=current`
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.error || `HTTP error! status: ${response.status}`
+      );
     }
 
     const data = await response.json();
@@ -412,15 +415,19 @@ async function fetchCurrentWeather(city = "서울") {
 // 로딩 스피너 호출
 fetchCurrentWeather();
 
-// 예보 데이터 가져오기
+// 예보 데이터 가져오기 - Netlify Functions 사용
 async function fetchForecast(lat, lon) {
   try {
+    // Netlify Functions 호출
     const response = await fetch(
-      `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`
+      `${WEATHER_API_ENDPOINT}?lat=${lat}&lon=${lon}&type=forecast`
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.error || `HTTP error! status: ${response.status}`
+      );
     }
 
     const data = await response.json();
@@ -430,15 +437,19 @@ async function fetchForecast(lat, lon) {
   }
 }
 
-// 위치 기반 날씨 가져오기
+// 위치 기반 날씨 가져오기 - Netlify Functions 사용
 async function fetchWeatherByLocation(lat, lon) {
   try {
+    // Netlify Functions 호출
     const response = await fetch(
-      `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`
+      `${WEATHER_API_ENDPOINT}?lat=${lat}&lon=${lon}&type=current`
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(
+        errorData.error || `HTTP error! status: ${response.status}`
+      );
     }
 
     const data = await response.json();
@@ -502,7 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentCity) {
       fetchCurrentWeather(currentCity);
     }
-  }, 600000); // 10분 = 600000ms
+  }, 600000);
 });
 
 // 전역에서 접근 가능하도록 함수 노출
@@ -511,11 +522,3 @@ window.weatherAPI = {
   fetchWeatherByLocation,
   getUserLocation,
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-  showWeatherLoading();
-
-  setTimeout(() => {
-    hideWeatherLoading();
-  }, 1000);
-});
