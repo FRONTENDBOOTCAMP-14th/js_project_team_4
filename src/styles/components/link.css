@@ -120,10 +120,6 @@
   white-space: nowrap;
 }
 
-.link-modal__link:hover {
-  background-color: var(--fourth-color, #e9ecef);
-}
-
 .link-modal__link[aria-pressed="true"] {
   background: var(--accent-color) !important;
   color: var(--lifecord-white) !important;
@@ -283,10 +279,6 @@
   justify-content: flex-start;
   border-radius: var(--button-radius, 8px);
   scale: 0.95;
-}
-
-.link-card__link:hover {
-  background-color: var(--hover-color, rgba(0, 0, 0, 0.05));
 }
 
 /* 체크박스 */
