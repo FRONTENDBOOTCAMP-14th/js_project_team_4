@@ -112,6 +112,11 @@ section {
   display: block;
 }
 
+input[type="text" i] {
+  padding-block: 0;
+  padding-inline: 0;
+}
+
 /* Prevent font size inflation */
 html {
   -moz-text-size-adjust: none;
