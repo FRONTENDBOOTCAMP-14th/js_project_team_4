@@ -25,7 +25,7 @@ button {
   justify-content: space-between;
   align-items: center;
   padding-inline-start: var(--spacing-sm);
-  padding-inline-end: 14.0625rem;
+  padding-inline-end: 10.9375rem;
   padding-block: var(--spacing-sm);
   color: var(--third-color);
   font-size: var(--icon-xs);
@@ -33,7 +33,6 @@ button {
   .memo__title {
     font-size: var(--font-md);
     font-weight: 700;
-    white-space: nowrap;
   }
 }
 
@@ -341,13 +340,12 @@ button {
 /* 더보기 버튼 */
 .memo-card__button--more {
   inline-size: 100%;
-  padding: var(--spacing-sm);
 }
 
 /* 높이에 맞춰 화면 대응 */
 @media screen and (max-height: 768px) {
   .memo-card__button--more {
-    padding: 0;
+    padding: var(--spacing-xs);
   }
 }
 
