@@ -172,3 +172,6 @@ temp/
 
 # aouth client secret
 client_secret.json
+
+# Local Netlify folder
+.netlify
