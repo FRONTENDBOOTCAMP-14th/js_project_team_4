@@ -1,0 +1,17 @@
+.login-btn {
+  all: unset;
+  width: 48px;
+  height: 48px;
+  background-image: url("/img/icons/person.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-btn {
+    background-image: url("/img/icons/person-white.svg");
+  }
+}

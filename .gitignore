@@ -169,3 +169,6 @@ Thumbs.db
 # Temporary files
 tmp/
 temp/
+
+# aouth client secret
+client_secret.json

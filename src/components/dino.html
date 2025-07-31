@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공룡 게임</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <meta name="description" content="공룡게임 컴포넌트 페이지입니다." />
+    <script type="module" src="../scripts/dino.js"></script>
+    <style>
+      body {
+        margin: 32px;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 16px;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2d2d2d;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>공룡게임</h1>
+    <a href="../../index.html">메인으로 돌아가기</a>
+
+    <!-- 공룡게임 카드 컴포넌트 -->
+    <div class="dino-game__card">
+      <button type="button" class="modal-start__btn">
+        <img
+          class="dino-game__card__img"
+          src="/img/dinosour/gamestart-black.svg"
+          alt="공룡게임 하러가기"
+        />
+      </button>
+    </div>
+    <!-- 공룡게임 카드 컴포넌트 끝-->
+
+    <!-- 공룡게임 모달 컴포넌트 -->
+    <div class="dino-game__modal">
+      <dialog class="dino-game__modal__canvas">
+        <div class="dino-game__modal__canvas__container">
+          <canvas id="canvas"></canvas>
+          <div class="controls">
+            <button type="button" id="start-btn">게임 시작</button>
+            <button type="button" id="pause-btn" disabled>일시 정지</button>
+            <button type="button" id="restart-btn" disabled>다시 시작</button>
+          </div>
+
+          <button type="button" class="modal-end__btn">게임닫기</button>
+        </div>
+      </dialog>
+    </div>
+    <!-- 공룡게임 모달 컴포넌트 끝-->
+  </body>
+</html>
