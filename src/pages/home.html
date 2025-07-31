@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" href="/src/styles/app.css" />
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>라이프코드(lifecord)</title>
   </head>
   <body>
@@ -168,6 +169,14 @@
         </div>
       </div>
       <!-- 검색바 마크업 끝 -->
+
+      <!-- 로그인 버튼 시작 -->
+      <div class="login">
+        <button class="login-btn" aria-label="Google 계정으로 로그인"></button>
+      </div>
+      <!-- 로그인 버튼 끝 -->
+
+      <!-- 날씨 탭 마크업 시작 -->
       <div class="weather-tab">
         <div class="weather-tab__wrapper">
           <div class="weather-tab__inner">
@@ -355,7 +364,11 @@
       <form class="todo-list">
         <div class="todo-list__header">
           <p class="todo-list__title">Todo</p>
-          <button type="button" class="todo-list__popover-trigger">
+          <button
+            type="button"
+            class="todo-list__popover-trigger"
+            aria-label="할 일 관리"
+          >
             <svg
               width="20"
               height="30"
@@ -443,16 +456,19 @@
       </div>
       <!-- 메모 리스트 영역 끝 -->
 
-       
-   <!-- 공룡게임 카드 컴포넌트 -->
-    <div class="dino-game__card">
-      <button type="button" class="modal-start__btn">
-        <img class="dino-game__card__img" src="/img/dinosour/gamestart-black.svg" alt="공룡게임 카드" />
-      </button>
+      <!-- 공룡게임 카드 컴포넌트 -->
+      <div class="dino-game__card">
+        <button type="button" class="modal-start__btn">
+          <img
+            class="dino-game__card__img"
+            src="/img/dinosour/gamestart-black.svg"
+            alt="공룡게임 카드"
+          />
+        </button>
+      </div>
+      <!-- 공룡게임 카드 컴포넌트 끝-->
     </div>
-   <!-- 공룡게임 카드 컴포넌트 끝-->
-  
-  
+
     <!-- 앱 영역 끝 -->
     <!-- 메모 팝업(Dialog) 시작 -->
     <dialog
@@ -603,7 +619,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- 공룡게임 모달 컴포넌트 -->
     <div class="dino-game__modal">
       <dialog class="dino-game__modal__canvas">
@@ -620,7 +636,7 @@
       </dialog>
     </div>
     <!-- 공룡게임 모달 컴포넌트 끝-->
-    
+
     <script type="module" src="/src/scripts/searchbar.js"></script>
     <script type="module" src="/src/scripts/weather-api.js"></script>
     <script type="module" src="/src/scripts/weather-tab.js"></script>
@@ -628,5 +644,6 @@
     <script type="module" src="/src/scripts/memo.js"></script>
     <script type="module" src="/src/scripts/todolist.js"></script>
     <script type="module" src="/src/scripts/dino.js"></script>
+    <script type="module" src="/src/scripts/login.js"></script>
   </body>
 </html>

@@ -179,6 +179,7 @@
   color: white;
 }
 
+/*
 @media (max-width: 1024px) {
   .weather-tab {
     flex-direction: column;
@@ -211,6 +212,7 @@
     max-height: 60vh;
   }
 }
+*/
 
 /* ::before 스피너 */
 .weather-tab.loading::before {
