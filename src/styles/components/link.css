@@ -320,3 +320,14 @@
     background-size: var(--icon-md);
   }
 }
+
+.link-card__empty-state {
+  padding: var(--spacing-sm);
+}
+
+/* 높이에 맞춰 화면 대응 */
+@media screen and (max-height: 768px) {
+  .link-card__button--more {
+    padding: var(--spacing-xs);
+  }
+}

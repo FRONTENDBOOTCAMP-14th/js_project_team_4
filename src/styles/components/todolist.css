@@ -31,19 +31,22 @@
 
 /* TODO- 오늘 */
 .todo-list__header {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
   padding: var(--spacing-sm);
-  top: 0;
-  font-size: 20px;
+  font-size: var(--font-md);
   font-weight: 700;
   color: var(--third-color);
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  color: var(--third-color);
   background: var(--primary-color);
+  align-items: center;
+  line-height: 1.1;
 }
 
 .todo-list__popover-trigger {
   color: var(--third-color);
+  height: 22px;
 }
 
 /* TODO-List 아이템 */
@@ -85,6 +88,16 @@
 
   input {
     width: inherit;
+  }
+}
+
+.search-bar__popover__youtube__btn svg {
+  align-self: center;
+}
+
+@media screen and (max-height: 768px) {
+  .new-todo {
+    padding: var(--spacing-xs);
   }
 }
 
