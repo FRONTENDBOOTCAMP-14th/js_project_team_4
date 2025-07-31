@@ -33,6 +33,12 @@
   grid-area: search;
 }
 
+.login {
+  grid-area: login;
+  display: flex;
+  justify-content: flex-end;
+}
+
 .weather-tab {
   grid-area: weather;
 }
