@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "라이프코드",
+  "version": "1.0",
+  "description": "라이프코드의 브라우저 대시보드",
+  "action": { "default_popup": "index.html" },
+  "permissions": ["storage"],
+  "chrome_url_overrides": { "newtab": "index.html" }
+}
