@@ -66,10 +66,15 @@ button {
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
-      padding-inline: var(--spacing-sm);
+      column-gap: var();
+      padding-inline-start: var(--spacing-sm);
 
       .memo-card__title {
         display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
       }
     }
   }
@@ -80,7 +85,7 @@ button {
   display: flex;
   flex-flow: column nowrap;
   row-gap: 0.625rem;
-  inline-size: calc(100% - 1.5rem);
+  inline-size: calc(100% - 2.5rem);
   text-align: left;
 
   .memo-card__time {
@@ -99,6 +104,7 @@ button {
 
     .memo-card__time-text {
       color: var(--lifecord-grey);
+      line-height: 1;
     }
   }
 
@@ -124,7 +130,7 @@ button {
 
 @media screen and (max-height: 710px) {
   .memo__body {
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 
@@ -143,6 +149,7 @@ button {
 /* 체크 박스 */
 .memo-card__checkbox {
   flex-shrink: 0;
+  inline-size: var(--icon-sm);
 
   input {
     inline-size: var(--icon-sm);
@@ -169,12 +176,12 @@ button {
   text-align: center;
 }
 
-/* dialog open */
+/* 팝업창(dialog) open */
 .dialog[open] {
   display: flex;
   flex-flow: row nowrap;
   inline-size: 90%;
-  block-size: 80%;
+  block-size: 90%;
   max-inline-size: 90rem;
   max-block-size: 50rem;
   padding: 0;
@@ -182,7 +189,7 @@ button {
   border-radius: var(--card-radius);
 
   &::backdrop {
-    background-color: rgba(31, 31, 31, 0.3);
+    background-color: rgba(31, 31, 31, 0.5);
   }
 
   .dialog__container {
@@ -236,14 +243,14 @@ button {
         padding-right: 2.3125rem;
         border-radius: var(--inner-card-radius);
         font-weight: 700;
-        background: url("/img/icons/arrow-right-black.svg") no-repeat;
+        background: url("/img/icons/arrow-to-right-black.svg") no-repeat;
         background-position: right 1rem center;
         background-size: 0.625rem 1.125rem;
 
         &.on,
         &:hover {
           background: var(--accent-color)
-            url("/img/icons/arrow-right-white.svg") no-repeat;
+            url("/img/icons/arrow-to-right-white.svg") no-repeat;
           background-position: right 1rem center;
           background-size: 0.625rem 1.125rem;
           color: var(--lifecord-white);
@@ -288,6 +295,7 @@ button {
       padding: var(--spacing-sm);
       font-size: 2.25rem;
       font-weight: 700;
+      line-height: 1;
 
       &::placeholder {
         color: var(--lifecord-grey);
@@ -299,6 +307,7 @@ button {
       block-size: inherit;
       padding: var(--spacing-sm);
       border: 0;
+      resize: none;
 
       &::placeholder {
         color: var(--lifecord-grey);
@@ -343,6 +352,7 @@ button {
   }
 }
 
+/* 다크 모드 일 경우 */
 @media (prefers-color-scheme: dark) {
   .memo-card__checkbox {
     input {
@@ -371,6 +381,8 @@ button {
 
   .dialog__memo-list {
     & .dialog__memo-box {
+      background: var(--primary-color);
+
       & .dialog__memo-items {
         .dialog__memo-button {
           background: url("/img/icons/arrow-right-white.svg") no-repeat;
@@ -390,7 +402,7 @@ button {
   .dialog__input-title,
   .dialog__textarea,
   .dialog[open] {
-    background-color: var(--primary-color);
+    background-color: #2d2d2d;
   }
 
   .dialog__detail {
