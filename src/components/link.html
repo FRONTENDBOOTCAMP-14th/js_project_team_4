@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>링크 관리</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <meta name="description" content="링크 관리 컴포넌트 페이지입니다." />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script type="module" src="../scripts/link.js"></script>
+    <style>
+      body {
+        margin: 32px;
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 16px;
+      }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2d2d2d;
+      }
+
+      .link-example-container {
+        width: 250px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>링크</h1>
+    <a href="../../index.html">메인으로 돌아가기</a>
+    <div class="link-container">
+      <!-- 링크 카드 컴포넌트 -->
+      <div class="link-example-container">
+        <section class="link-card">
+          <h2 class="link-card__title font-bold">즐겨찾기</h2>
+          <ul class="link-card__list">
+            <!-- 동적으로 생성될 즐겨찾기 링크들 -->
+          </ul>
+          <button
+            type="button"
+            class="link-card__button--more btn-base bg-primary font-bold"
+          >
+            링크 관리
+          </button>
+        </section>
+      </div>
+
+      <!-- 링크 모달 -->
+      <div class="link-modal-overlay" id="linkModalOverlay">
+        <div class="link-modal">
+          <!-- 모달 사이드바 -->
+          <section class="link-modal__sidebar">
+            <h2 class="link-modal__title font-bold">링크</h2>
+            <div class="link-modal__list">
+              <ul>
+                <li>
+                  <!-- 동적으로 생성될 링크들 -->
+                </li>
+              </ul>
+              <div class="link-modal__list__button-box">
+                <button type="button" class="btn-base bg-primary">추가</button>
+                <button type="button" class="btn-base bg-primary">제거</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- 모달 입력 폼 -->
+          <div class="link-modal__main">
+            <div class="link-modal__header">
+              <div class="link-modal__header__name-icon-box">
+                <a href="#" class="btn-base bg-primary">
+                  <img
+                    aria-label="링크로 가기"
+                    class="btn-base__icon--large"
+                    src="/favicon.png"
+                    alt=""
+                  />
+                </a>
+                <input
+                  type="text"
+                  value=""
+                  name="link-modal__header__name"
+                  id="link-modal__header__name"
+                  placeholder="이름 입력"
+                  class="link-modal__header__name font-bold"
+                />
+                <div class="form-checkbox-favorite--bg-icon">
+                  <input id="favorite-link" type="checkbox" />
+                  <label for="favorite-link"></label>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="link-modal__close btn-base bg-third btn-rounded"
+              >
+                <picture class="btn-base__icon">
+                  <source
+                    srcset="/img/icons/close-black.svg"
+                    media="(prefers-color-scheme: dark)"
+                  />
+                  <img
+                    src="/img/icons/close.svg"
+                    class="btn-base__icon"
+                    alt="닫기 버튼"
+                  />
+                </picture>
+              </button>
+            </div>
+
+            <form class="link-modal__form">
+              <div>
+                <label for="link-modal__form__url">링크 URL</label>
+                <input
+                  type="text"
+                  name="link-modal__form__url"
+                  id="link-modal__form__url"
+                  value=""
+                  placeholder="링크 URL을 입력해주세요."
+                  required
+                />
+              </div>
+              <div class="link-modal__form__description-container">
+                <label for="link-modal__form__description">링크 설명</label>
+                <textarea
+                  name="link-modal__form__description"
+                  id="link-modal__form__description"
+                  placeholder="링크 설명을 입력해주세요.(선택)"
+                  rows="4"
+                ></textarea>
+              </div>
+              <div class="link-modal__form__button-box">
+                <div class="link-modal__form__button-box--left"></div>
+                <div class="link-modal__form__button-box--right">
+                  <button type="reset" class="btn-base bg-primary">취소</button>
+                  <button type="submit" class="btn-base bg-accent">저장</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

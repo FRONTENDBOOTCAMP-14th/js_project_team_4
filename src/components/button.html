@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../src/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <title>버튼</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <style>
+      body {
+        margin: var(--spacing-lg);
+        display: flex;
+        flex-flow: column nowrap;
+        gap: var(--spacing-sm);
+        background-color: var(--primary-color);
+      }
+
+      h1 {
+        font-size: var(--font-lg);
+        font-weight: 700;
+        color: var(--third-color);
+      }
+
+      h2 {
+        font-size: var(--font-md);
+        font-weight: 700;
+        color: var(--third-color);
+      }
+
+      .btn-container {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 16px;
+        max-width: 512px;
+      }
+
+      .list-button-container {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 16px;
+        max-width: 512px;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--third-color);
+      }
+    </style>
+  </head>
+  <body>
+    <a class="btn-base bg-primary" href="../../index.html"
+      >메인페이지로 돌아가기</a
+    >
+    <h1>버튼</h1>
+
+    <h2>일반버튼</h2>
+    <div class="btn-container">
+      <button type="button" class="btn-base bg-primary">버튼</button>
+      <button type="button" class="btn-base bg-secondary">버튼</button>
+      <button type="button" class="btn-base bg-third">버튼</button>
+      <button type="button" class="btn-base bg-fourth">버튼</button>
+    </div>
+    <h2>bold 버튼</h2>
+    <div class="btn-container">
+      <button type="button" class="btn-base bg-primary font-bold">버튼</button>
+      <button type="button" class="btn-base bg-secondary font-bold">
+        버튼
+      </button>
+      <button type="button" class="btn-base bg-third font-bold">버튼</button>
+      <button type="button" class="btn-base bg-fourth font-bold">버튼</button>
+    </div>
+    <h2>아이콘과 함께있는 버튼</h2>
+    <div class="btn-container">
+      <button type="button" class="btn-base bg-primary font-bold">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/close.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img src="/img/icons/close-black.svg" class="btn-base__icon" alt="" />
+        </picture>
+        버튼
+      </button>
+      <button type="button" class="btn-base bg-secondary font-bold">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/close.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img src="/img/icons/close-black.svg" class="btn-base__icon" alt="" />
+        </picture>
+        버튼
+      </button>
+      <button type="button" class="btn-base bg-third font-bold">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/close-black.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img src="/img/icons/close.svg" class="btn-base__icon" alt="" />
+        </picture>
+        버튼
+      </button>
+      <button type="button" class="btn-base bg-fourth font-bold">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/close.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img src="/img/icons/close-black.svg" class="btn-base__icon" alt="" />
+        </picture>
+        버튼
+      </button>
+    </div>
+
+    <h2>아이콘 버튼</h2>
+    <div class="btn-container">
+      <button type="button" class="btn-base bg-primary">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/arrow-to-right-white.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/arrow-to-right-black.svg"
+            class="btn-base__icon"
+            alt=""
+          />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-secondary">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/arrow-to-right-white.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/arrow-to-right-black.svg"
+            class="btn-base__icon"
+            alt=""
+          />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-third">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/arrow-to-right-black.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/arrow-to-right-white.svg"
+            class="btn-base__icon"
+            alt=""
+          />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-fourth">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/arrow-to-right-white.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/arrow-to-right-black.svg"
+            class="btn-base__icon"
+            alt=""
+          />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-third btn-rounded">
+        <picture class="btn-base__icon">
+          <source
+            srcset="/img/icons/close-black.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img src="/img/icons/close.svg" class="btn-base__icon" alt="" />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-primary">
+        <picture class="btn-base__icon--large">
+          <source
+            srcset="/img/icons/close.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/close-black.svg"
+            class="btn-base__icon--large"
+            alt=""
+          />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-secondary">
+        <picture class="btn-base__icon--large">
+          <source
+            srcset="/img/icons/close-black.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/close.svg"
+            class="btn-base__icon--large"
+            alt=""
+          />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-third">
+        <picture class="btn-base__icon--large">
+          <source
+            srcset="/img/icons/close-black.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/close.svg"
+            class="btn-base__icon--large"
+            alt=""
+          />
+        </picture>
+      </button>
+      <button type="button" class="btn-base bg-fourth">
+        <picture class="btn-base__icon--large">
+          <source
+            srcset="/img/icons/close-black.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/close.svg"
+            class="btn-base__icon--large"
+            alt=""
+          />
+        </picture>
+      </button>
+
+      <button type="button" class="btn-base bg-third btn-rounded">
+        <picture class="btn-base__icon--large">
+          <source
+            srcset="/img/icons/close-black.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            src="/img/icons/close.svg"
+            class="btn-base__icon--large"
+            alt=""
+          />
+        </picture>
+      </button>
+    </div>
+
+    <h2>리스트 버튼 & 링크 버튼</h2>
+    <div class="list-button-container">
+      <button type="button" class="list-button btn-base bg-accent font-bold">
+        리스트 버튼
+        <svg width="14" height="24" viewBox="0 0 14 24" class="btn-base__icon">
+          <path
+            d="M2 4l8 8-8 8"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+      <button type="button" class="link-button btn-base bg-accent font-bold">
+        <img
+          aria-hidden="true"
+          class="btn-base__icon"
+          src="/img/icons/github-logo-black.svg"
+          alt=""
+        />
+        링크 버튼
+      </button>
+    </div>
+  </body>
+</html>

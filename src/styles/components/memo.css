@@ -1,0 +1,422 @@
+button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/** 메인 **/
+
+/* 메모 레이아웃 */
+.memo__wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+  padding: var(--spacing-sm);
+  border-radius: var(--card-radius);
+  background: var(--primary-color);
+  box-shadow: 0 0 1.5rem 0.25rem var(--shadow-color, rgba(18, 18, 18, 0.1));
+}
+
+/* 메모 상단 */
+.memo__header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline-start: var(--spacing-sm);
+  padding-inline-end: 10.9375rem;
+  padding-block: var(--spacing-sm);
+  color: var(--third-color);
+  font-size: var(--icon-xs);
+
+  .memo__title {
+    font-size: var(--font-md);
+    font-weight: 700;
+  }
+}
+
+/* 메모 버튼들 */
+.memo__actions {
+  position: absolute;
+  top: 1.875rem;
+  right: var(--spacing-lg);
+
+  .memo__actions-list {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    column-gap: 0.625rem;
+  }
+}
+
+/* 메모 내용 */
+.memo__body {
+  overflow-y: auto;
+  block-size: 100%;
+  padding-inline: var(--spacing-sm);
+  padding-block: var(--spacing-sm);
+
+  .memo__list {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: var(--spacing-sm);
+
+    .memo__item {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+
+      .memo-card__title {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
+    }
+  }
+}
+
+/* 메모 아이템 */
+.memo-card__button {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: 0.625rem;
+  inline-size: calc(100% - 2.5rem);
+  text-align: left;
+
+  .memo-card__time {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    column-gap: var(--spacing-xs);
+    font-size: var(--font-xs);
+
+    .memo-card__status-icon {
+      inline-size: 0.75rem;
+      block-size: 0.75rem;
+      background-color: var(--accent-color);
+      border-radius: 999px;
+    }
+
+    .memo-card__time-text {
+      color: var(--lifecord-grey);
+      line-height: 1;
+    }
+  }
+
+  .memo-card__desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--lifecord-grey);
+    word-break: break-all;
+  }
+}
+
+/* 높이에 맞춰 화면 대응 */
+@media screen and (max-height: 710px) {
+  .memo__body {
+    overflow-y: auto;
+  }
+}
+
+@media screen and (max-height: 768px) {
+  .memo-card__desc {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (min-height: 900px) {
+  .memo-card__button {
+    .memo-card__desc {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+/* 체크 박스 */
+.memo-card__checkbox {
+  flex-shrink: 0;
+  inline-size: var(--icon-sm);
+
+  input {
+    inline-size: var(--icon-sm);
+    block-size: var(--icon-sm);
+    margin: 0;
+    background: url("/img/icons/checkbox/checkbox-basic.png") no-repeat;
+    background-size: 100%;
+    appearance: none;
+
+    &:checked {
+      background: url("/img/icons/checkbox/checked.png") no-repeat;
+    }
+  }
+}
+
+/* 데이터 없을 경우 */
+.dialog__memo-empty,
+.memo__empty {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  block-size: 100%;
+  text-align: center;
+}
+
+/* 더보기 버튼 */
+.memo-card__button--more {
+  inline-size: 100%;
+}
+
+/* 높이에 맞춰 화면 대응 */
+@media screen and (max-height: 768px) {
+  .memo-card__button--more {
+    padding: var(--spacing-xs);
+  }
+}
+
+/** 팝업창(dialog) **/
+
+/* 팝업창 레이아웃 */
+.dialog[open] {
+  display: flex;
+  flex-flow: row nowrap;
+  inline-size: 90%;
+  block-size: 90%;
+  max-inline-size: 90rem;
+  max-block-size: 50rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--card-radius);
+
+  &::backdrop {
+    background-color: rgba(31, 31, 31, 0.5);
+  }
+
+  .dialog__container {
+    display: flex;
+    flex-flow: row nowrap;
+    inline-size: 100%;
+
+    .left-box {
+      width: 17.25rem;
+      flex-shrink: 0;
+      padding: var(--spacing-md);
+    }
+
+    .right-box {
+      flex: 1;
+      min-width: 0;
+      padding: var(--spacing-sm);
+    }
+  }
+}
+
+/* 메모 리스트 */
+.dialog__memo-list {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: var(--spacing-lg);
+
+  .dialog__title {
+    margin: var(--spacing-sm);
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  .dialog__memo-box {
+    overflow-y: auto;
+    block-size: 100%;
+    padding: var(--spacing-md);
+    background-color: var(--fourth-color);
+    border-radius: var(--card-radius);
+
+    .dialog__memo-items {
+      display: flex;
+      flex-flow: column nowrap;
+      row-gap: var(--spacing-sm);
+
+      .dialog__memo-button {
+        display: flex;
+        flex-flow: row nowrap;
+        inline-size: 100%;
+        padding: var(--spacing-sm);
+        padding-right: 2.3125rem;
+        border-radius: var(--inner-card-radius);
+        font-weight: 700;
+        background: url("/img/icons/arrow-to-right-black.svg") no-repeat;
+        background-position: right 1rem center;
+        background-size: 0.625rem 1.125rem;
+
+        &.on,
+        &:hover {
+          background: var(--accent-color)
+            url("/img/icons/arrow-to-right-white.svg") no-repeat;
+          background-position: right 1rem center;
+          background-size: 0.625rem 1.125rem;
+          color: var(--lifecord-white);
+        }
+
+        .dialog__memo-name {
+          text-align: left;
+          word-break: break-all;
+        }
+      }
+    }
+  }
+}
+
+/* 메모 내용 */
+.dialog__detail {
+  .dialog__editor {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: var(--spacing-sm);
+    block-size: 100%;
+  }
+
+  .dialog__date {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    block-size: 92px;
+    padding: var(--spacing-sm);
+    font-size: var(--font-sm);
+    font-weight: 700;
+  }
+
+  .dialog__form {
+    display: flex;
+    flex-flow: column nowrap;
+    row-gap: var(--spacing-sm);
+    block-size: inherit;
+
+    .dialog__input-title {
+      inline-size: 100%;
+      padding: var(--spacing-sm);
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1;
+
+      &::placeholder {
+        color: var(--lifecord-grey);
+      }
+    }
+
+    .dialog__textarea {
+      inline-size: 100%;
+      block-size: inherit;
+      padding: var(--spacing-sm);
+      border: 0;
+      resize: none;
+
+      &::placeholder {
+        color: var(--lifecord-grey);
+      }
+    }
+  }
+
+  .dialog__actions {
+    position: absolute;
+    top: 17px;
+    right: 0.9375rem;
+    display: inline-flex;
+    flex-flow: row nowrap;
+    column-gap: var(--spacing-sm);
+
+    .dialog__button--delete,
+    .dialog__button--add,
+    .dialog__button--save {
+      font-size: var(--font-sm);
+      font-weight: 700;
+    }
+
+    .dialog__close {
+      inline-size: var(--icon-lg);
+      aspect-ratio: 1;
+      background: url("/img/icons/dialog_close.svg") no-repeat;
+      background-size: var(--icon-lg);
+    }
+  }
+}
+
+/* 다크 모드 일 경우 */
+@media (prefers-color-scheme: dark) {
+  .memo-card__checkbox {
+    input {
+      background: url("/img/icons/checkbox/checkbox-basic-white.png") no-repeat;
+      background-size: 100%;
+
+      &:checked {
+        background: url("/img/icons/checkbox/checked-white.png") no-repeat;
+      }
+    }
+  }
+
+  .dialog__memo-empty,
+  .memo__empty,
+  .dialog__button--delete,
+  .dialog__button--add,
+  .dialog__button--save,
+  .dialog__date,
+  .dialog__title,
+  .memo-card__title,
+  .memo__button--all,
+  .memo__button--delete,
+  .memo__button--add {
+    color: var(--lifecord-white);
+  }
+
+  .dialog__memo-list {
+    & .dialog__memo-box {
+      background: var(--primary-color);
+
+      & .dialog__memo-items {
+        .dialog__memo-button {
+          background: url("/img/icons/arrow-right-white.svg") no-repeat;
+          background-position: right 1rem center;
+          background-size: 0.625rem 1.125rem;
+          color: var(--lifecord-white);
+        }
+      }
+    }
+  }
+
+  .dialog__input-title,
+  .dialog__textarea {
+    color: var(--lifecord-white);
+  }
+
+  .dialog__input-title,
+  .dialog__textarea,
+  .dialog[open] {
+    background-color: #2d2d2d;
+  }
+
+  .dialog__detail {
+    & .dialog__actions {
+      .dialog__close {
+        background: var(--third-color);
+        background: var(--lifecord-white) url("/img/icons/close-black.svg")
+          no-repeat;
+        background-size: var(--icon-sm);
+        border-radius: 999px;
+        background-position: center;
+      }
+    }
+  }
+}
