@@ -1,4 +1,27 @@
 /* global DOMPurify */
+
+/**
+ * 이 스크립트는 로컬 IndexedDB를 활용한 메모 주요 기능을 구현합니다.
+ *
+ * [핵심 기능]
+ * - 메모 데이터 로딩 및 저장 (IndexedDB)
+ * - 메인 화면에서 메모 리스트 출력 및 삭제 기능
+ * - 메인 화면에서 전체 선택 버튼으로 메모 일괄 선택/해제 기능
+ * - 팝업 다이얼로그를 통한 메모 추가, 저장, 수정, 삭제, 최신순 정렬, 메모 클릭시 내용 출력 기능
+ * - DOMPurify를 이용한 입력 보안 처리
+ *
+ * [UI 구성]
+ * - 메인 화면: 메모 리스트와 데이터 없음 메시지 표시, 등록 시간 표시, 전체 선택/해제, 삭제, 추가 버튼
+ * - 팝업 다이얼로그: 제목 입력, 내용 입력, 날짜 표시, 저장/추가/삭제 버튼
+ *
+ * [기술 스택]
+ * - JavaScript (ES6+)
+ * - IndexedDB (로컬 데이터베이스)
+ * - DOMPurify (XSS 방지)
+ *
+ * @author 성정은
+ */
+
 import { openDialog } from "./dialog.js";
 
 // --------------------------------------------------------------------------
@@ -37,7 +60,7 @@ const dialogDeleteMemoButton = document.querySelector(
 // 데이터베이스 관련 함수들
 // --------------------------------------------------------------------------
 
-// indexedDB 초기화
+// IndexedDB 초기화
 function initDB() {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, 1);
@@ -82,7 +105,7 @@ function initDB() {
   });
 }
 
-// indexedDB에서 모든 메모 로드
+// IndexedDB에서 모든 메모 로드
 function loadMemosFromDB() {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction("memos", "readonly");
@@ -104,7 +127,7 @@ function loadMemosFromDB() {
   });
 }
 
-// indexedDB에 메모 추가
+// IndexedDB에 메모 추가
 function addMemoToDB(memo) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction("memos", "readwrite");
@@ -124,7 +147,7 @@ function addMemoToDB(memo) {
   });
 }
 
-// indexedDB에서 메모 업데이트
+// IndexedDB에서 메모 업데이드
 function updateMemoInDB(memo) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction("memos", "readwrite");
@@ -142,7 +165,7 @@ function updateMemoInDB(memo) {
   });
 }
 
-// indexedDB에서 메모 삭제
+// IndexedDB에서 메모 삭제
 function deleteMemoFromDB(id) {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction("memos", "readwrite");
