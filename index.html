@@ -2,31 +2,648 @@
 <html lang="ko-KR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
       content="감성적인 배경화면과 할 일을 함께 관리할 수 있는 대시보드 앱입니다(실습용)"
     />
-    <link rel="stylesheet" href="./src/style.css" />
+    <link rel="stylesheet" href="/src/styles/app.css" />
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <title>라이프코드(lifecord)</title>
   </head>
   <body>
-    <h1>라이프코드(lifecord)</h1>
-    <a href="./src/pages/home.html">홈</a>
+    <div class="app">
+      <a href="/" class="btn-base bg-primary font-bold logo-link">
+        <img src="/favicon.png" class="btn-base__icon--large" alt="" />
+        Lifecord
+      </a>
+      <!-- 검색바 - 전체 박스 -->
+      <div class="search-bar">
+        <!-- 검색바 - 컨텐츠 영역 -->
+        <div class="search-bar__bar">
+          <!-- 검색바 - 검색엔진 변경 버튼  -->
+          <button
+            type="button"
+            aria-label="검색엔진 교체"
+            class="search-bar__popover__trigger btn-base"
+          >
+            <svg
+              class="search-bar__bar__change__google"
+              data-engine="google"
+              width="16"
+              height="13"
+              viewBox="0 0 16 17"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.11533 7.85129V10.038H13.342C13.182 11.2646 12.7733 12.1626 12.1507 12.7933C11.386 13.558 10.1953 14.3933 8.11533 14.3933C4.89733 14.3933 2.382 11.798 2.382 8.57996C2.382 5.36196 4.89733 2.76662 8.11533 2.76662C9.84867 2.76662 11.12 3.45129 12.0533 4.33129L13.5913 2.79329C12.2933 1.53129 10.5507 0.571289 8.11533 0.571289C3.70667 0.571289 0 4.16262 0 8.57129C0 12.98 3.70667 16.5713 8.11533 16.5713C10.4973 16.5713 12.2933 15.7893 13.6973 14.3313C15.1373 12.8913 15.5907 10.856 15.5907 9.21996C15.5907 8.71329 15.5553 8.24196 15.4753 7.85129H8.11533Z"
+                fill="currentColor"
+              />
+            </svg>
 
-    <h2>컴포넌트</h2>
-    <ul>
-      <li><a href="./src/components/weather-tab.html">날씨</a></li>
-      <li><a href="./src/components/button.html">버튼</a></li>
-      <li><a href="./src/components/link.html">링크</a></li>
-      <li><a href="./src/components/todolist.html">할 일</a></li>
-      <li><a href="./src/components/memo.html">메모</a></li>
-      <li><a href="./src/components/calendar.html">캘린더</a></li>
-      <li><a href="./src/components/searchbar.html">검색바</a></li>
-      <li><a href="./src/components/loading-spiner.html">로딩 스피너</a></li>
-      <li><a href="./src/components/login.html">로그인</a></li>
-      <li><a href="./src/components/dino.html">공룡게임</a></li>
-    </ul>
+            <svg
+              class="search-bar__bar__change__youtube"
+              data-engine="youtube"
+              width="16"
+              height="11"
+              viewBox="0 0 16 11"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.6653 1.71798C15.5749 1.38575 15.3967 1.08253 15.1484 0.838669C14.9001 0.594813 14.5905 0.418886 14.2507 0.328504C13.0033 7.7546e-08 8 0 8 0C8 0 2.99667 7.7546e-08 1.74867 0.328504C1.40894 0.419045 1.09953 0.595036 0.851385 0.838876C0.603241 1.08272 0.425061 1.38586 0.334667 1.71798C0 2.94352 0 5.5 0 5.5C0 5.5 0 8.05648 0.334667 9.28202C0.425057 9.61425 0.603317 9.91748 0.851594 10.1613C1.09987 10.4052 1.40945 10.5811 1.74933 10.6715C2.99667 11 8 11 8 11C8 11 13.0033 11 14.2513 10.6715C14.5912 10.5812 14.9009 10.4053 15.1491 10.1614C15.3974 9.91754 15.5757 9.61428 15.666 9.28202C16 8.05648 16 5.5 16 5.5C16 5.5 16 2.94352 15.6653 1.71798ZM6.36333 7.82099V3.17901L10.5453 5.5L6.36333 7.82099Z"
+                fill="currentColor"
+              />
+            </svg>
+
+            <svg
+              class="search-bar__bar__change__naver"
+              data-engine="naver"
+              width="16"
+              height="13"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.8487 8.56333L4.91733 0H0V16H5.15067V7.43733L11.0827 16H16V0H10.8487V8.56333Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+
+          <!-- 검색바 - 검색 form (default - google) -->
+          <form
+            action="https://www.google.com/search"
+            method="get"
+            class="search-bar__form"
+          >
+            <input
+              type="text"
+              name="q"
+              placeholder="구글에서 검색"
+              class="search-bar__input"
+            />
+            <button type="submit" class="search-bar_btn" aria-label="검색">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="currentColor"
+                class="btn-base__icon--small"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M5.45793 9.94865L1.77306 13.6914C1.37209 14.0985 0.71628 14.1034 0.308521 13.7027C-0.0982674 13.3015 -0.103607 12.6452 0.297356 12.2381L4.03563 8.44095C3.49292 7.58753 3.1774 6.57129 3.1774 5.48C3.1774 2.45087 5.60696 0 8.58894 0C11.5709 0 14 2.45087 14 5.48C14 8.50863 11.5709 10.96 8.58894 10.96C7.42343 10.96 6.34238 10.5853 5.45793 9.94865ZM8.58894 2.07075C6.74092 2.07124 5.24872 3.60298 5.24872 5.48C5.24872 7.35702 6.74092 8.88874 8.58894 8.88874C10.4365 8.88874 11.9287 7.35702 11.9287 5.48C11.9287 3.60298 10.4365 2.07124 8.58894 2.07075Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- 검색바 - 검색 엔진 변경 팝오버창 -->
+        <div class="search-bar__popover">
+          <button
+            type="button"
+            class="search-bar__popover__google__btn"
+            data-engine="google"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.4926 10.92V14.2H20.5384C20.2921 16.04 19.663 17.387 18.7045 18.333C17.5274 19.48 15.6945 20.733 12.4926 20.733C7.53887 20.733 3.66681 16.84 3.66681 12.013C3.66681 7.186 7.53887 3.293 12.4926 3.293C15.1609 3.293 17.1179 4.32 18.5547 5.64L20.9223 3.333C18.9241 1.44 16.2415 0 12.4926 0C5.70598 0 0 5.387 0 12C0 18.613 5.70598 24 12.4926 24C16.1594 24 18.9241 22.827 21.0854 20.64C23.3021 18.48 24 15.427 24 12.973C24 12.213 23.9456 11.506 23.8225 10.92H12.4926Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>구글</span>
+          </button>
+          <button
+            type="button"
+            class="search-bar__popover__youtube__btn"
+            data-engine="youtube"
+          >
+            <svg
+              width="24"
+              height="18"
+              viewBox="0 0 24 18"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M23.498 3.18604C23.3624 2.67532 23.095 2.20918 22.7226 1.83431C22.3502 1.45943 21.8858 1.18899 21.376 1.05004C19.505 0.545044 12 0.545044 12 0.545044C12 0.545044 4.495 0.545044 2.623 1.05004C2.11341 1.18923 1.64929 1.45978 1.27708 1.83463C0.904861 2.20947 0.637591 2.67548 0.502 3.18604C0 5.07004 0 9.00004 0 9.00004C0 9.00004 0 12.93 0.502 14.814C0.637586 15.3248 0.904975 15.7909 1.27739 16.1658C1.64981 16.5407 2.11418 16.8111 2.624 16.95C4.495 17.455 12 17.455 12 17.455C12 17.455 19.505 17.455 21.377 16.95C21.8869 16.8112 22.3513 16.5408 22.7237 16.1659C23.0961 15.791 23.3635 15.3248 23.499 14.814C24 12.93 24 9.00004 24 9.00004C24 9.00004 24 5.07004 23.498 3.18604ZM9.545 12.568V5.43204L15.818 9.00004L9.545 12.568Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>유튜브</span>
+          </button>
+          <button
+            type="button"
+            class="search-bar__popover__naver__btn"
+            data-engine="naver"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.273 12.845L7.376 0H0V24H7.726V11.156L16.624 24H24V0H16.273V12.845Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span>네이버</span>
+          </button>
+        </div>
+      </div>
+      <!-- 검색바 마크업 끝 -->
+
+      <!-- 로그인 버튼 시작 -->
+      <div class="login">
+        <button class="login-btn" aria-label="Google 계정으로 로그인"></button>
+      </div>
+      <!-- 로그인 버튼 끝 -->
+
+      <!-- 날씨 탭 마크업 시작 -->
+      <div class="weather-tab">
+        <div class="weather-tab__wrapper">
+          <div class="weather-tab__inner">
+            <p class="weather-tab__temp">30°</p>
+            <div class="weather-tab__info">
+              <div class="weather-tab__location-date">
+                <h1 class="weather-tab__location">서울</h1>
+                <p class="weather-tab__date">10:40 - 2025년 7월 22일 화요일</p>
+              </div>
+              <img
+                class="weather-tab__icon"
+                src="/img/icons/09d.svg"
+                alt="icon current weather"
+              />
+            </div>
+          </div>
+        </div>
+
+        <aside class="weather-tab__panel">
+          <form class="weather-tab__search-form">
+            <input
+              autofocus
+              name="location"
+              class="weather-tab__search-input"
+              type="text"
+              autocomplete="off"
+              required
+              minlength="1"
+              placeholder="위치 검색..."
+            />
+            <img
+              aria-hidden="true"
+              id="clear-btn"
+              class="weather-tab__search-icon"
+              src="/img/icons/close.svg"
+              alt=""
+            />
+            <img
+              aria-hidden="false"
+              id="search-img"
+              class="weather-tab__search-icon"
+              src="/img/icons/search.svg"
+              alt=""
+            />
+          </form>
+
+          <div class="weather-tab__details">
+            <div>
+              <h2 class="weather-tab__title">날씨 상세 정보</h2>
+            </div>
+            <div class="weather-tab__cards">
+              <div class="weather-tab__desc">
+                <p class="weather-tab__desc-text">OVERCAST CLOUDS</p>
+              </div>
+              <div class="weather-tab__card">
+                <p>최고 온도</p>
+                <p>19°</p>
+                <img
+                  class="weather-tab__icon-small"
+                  src="/img/icons/temp-max.svg"
+                  alt=""
+                />
+              </div>
+              <div class="weather-tab__card">
+                <p>최저 온도</p>
+                <p>15°</p>
+                <img
+                  class="weather-tab__icon-small"
+                  src="/img/icons/temp-min.svg"
+                  alt=""
+                />
+              </div>
+              <div class="weather-tab__card">
+                <p>습도</p>
+                <p>58%</p>
+                <img
+                  class="weather-tab__icon-small"
+                  src="/img/icons/humadity.svg"
+                  alt=""
+                />
+              </div>
+              <div class="weather-tab__card">
+                <p>구름</p>
+                <p>86%</p>
+                <img
+                  class="weather-tab__icon-small"
+                  src="/img/icons/cloudy.svg"
+                  alt=""
+                />
+              </div>
+              <div class="weather-tab__card">
+                <p>바람</p>
+                <p>5km/h</p>
+                <img
+                  class="weather-tab__icon-small"
+                  src="/img/icons/wind.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="weather-tab__forecast">
+            <div>
+              <h2 class="weather-tab__title">일기 예보</h2>
+            </div>
+            <div class="weather-tab__cards-forecast">
+              <div class="weather-tab__forecast-card">
+                <img
+                  class="weather-tab__icon-medium"
+                  src="/img/icons/03d.svg"
+                  alt="forecast"
+                />
+                <div class="weather-tab__forecast-desc">
+                  <p>09:00</p>
+                  <p>Clouds</p>
+                </div>
+                <p class="weather-tab__forecast-temp">19°</p>
+              </div>
+              <div class="weather-tab__forecast-card">
+                <img
+                  class="weather-tab__icon-medium"
+                  src="/img/icons/03d.svg"
+                  alt="forecast"
+                />
+                <div class="weather-tab__forecast-desc">
+                  <p>12:00</p>
+                  <p>Clouds</p>
+                </div>
+                <p class="weather-tab__forecast-temp">20°</p>
+              </div>
+              <div class="weather-tab__forecast-card">
+                <img
+                  class="weather-tab__icon-medium"
+                  src="/img/icons/03d.svg"
+                  alt="forecast"
+                />
+                <div class="weather-tab__forecast-desc">
+                  <p>15:00</p>
+                  <p>Clouds</p>
+                </div>
+                <p class="weather-tab__forecast-temp">17°</p>
+              </div>
+              <div class="weather-tab__forecast-card">
+                <img
+                  class="weather-tab__icon-medium"
+                  src="/img/icons/03d.svg"
+                  alt="forecast"
+                />
+                <div class="weather-tab__forecast-desc">
+                  <p>18:00</p>
+                  <p>Clouds</p>
+                </div>
+                <p class="weather-tab__forecast-temp">16°</p>
+              </div>
+              <div class="weather-tab__forecast-card">
+                <img
+                  class="weather-tab__icon-medium"
+                  src="/img/icons/03d.svg"
+                  alt="forecast"
+                />
+                <div class="weather-tab__forecast-desc">
+                  <p>21:00</p>
+                  <p>Clouds</p>
+                </div>
+                <p class="weather-tab__forecast-temp">15°</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <!-- 링크카드 -->
+      <section class="link-card">
+        <h2 class="link-card__title font-bold">즐겨찾기</h2>
+        <ul class="link-card__list">
+          <!-- 동적으로 생성될 즐겨찾기 링크들 -->
+        </ul>
+        <button
+          type="button"
+          class="link-card__button--more btn-base bg-primary font-bold"
+        >
+          링크 관리
+        </button>
+      </section>
+      <form class="todo-list">
+        <div class="todo-list__header">
+          <p class="todo-list__title">할 일</p>
+          <button
+            type="button"
+            class="todo-list__popover-trigger"
+            aria-label="할 일 관리"
+          >
+            <svg
+              width="20"
+              height="22"
+              viewBox="0 0 20 30"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 16.7083C3.10457 16.7083 4 15.8128 4 14.7083C4 13.6037 3.10457 12.7083 2 12.7083C0.895429 12.7083 0 13.6037 0 14.7083C0 15.8128 0.895429 16.7083 2 16.7083Z"
+                fill="currentColor"
+              />
+              <path
+                d="M10 16.7083C11.1046 16.7083 12 15.8128 12 14.7083C12 13.6037 11.1046 12.7083 10 12.7083C8.89543 12.7083 8 13.6037 8 14.7083C8 15.8128 8.89543 16.7083 10 16.7083Z"
+                fill="currentColor"
+              />
+              <path
+                d="M18 16.7083C19.1046 16.7083 20 15.8128 20 14.7083C20 13.6037 19.1046 12.7083 18 12.7083C16.8954 12.7083 16 13.6037 16 14.7083C16 15.8128 16.8954 16.7083 18 16.7083Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+          <div class="todo-list__popover">
+            <button
+              type="button"
+              class="todo-list__reset btn-base bg-primary list-button"
+              aria-label="초기화"
+            >
+              초기화
+            </button>
+            <button
+              type="button"
+              class="todo-list__remove btn-base bg-primary list-button"
+              aria-label="할 일 삭제"
+            >
+              할 일 삭제
+            </button>
+          </div>
+        </div>
+
+        <ul class="todo-list__item"></ul>
+        <div class="new-todo">
+          <input
+            type="text"
+            id="new-task"
+            name="new-task"
+            placeholder="새 할 일"
+          />
+        </div>
+      </form>
+      <!-- 메모 리스트 영역 시작 -->
+      <div class="memo__wrapper">
+        <div class="memo__header">
+          <h2 class="memo__title">메모</h2>
+        </div>
+
+        <div class="memo__body">
+          <ul class="memo__list">
+            <!-- 메인 메모 아이템 동적 생성 -->
+          </ul>
+          <!-- 메모가 없을 때 메시지 -->
+          <div class="memo__empty">내용이 없습니다.</div>
+        </div>
+        <button
+          type="button"
+          class="memo-card__button--more btn-base bg-primary font-bold show-dialog"
+        >
+          메모 관리
+        </button>
+
+        <div class="memo__actions">
+          <ul class="memo__actions-list">
+            <li>
+              <button type="button" class="memo__button--all">전체 선택</button>
+            </li>
+            <li>
+              <button type="button" class="memo__button--delete">삭제</button>
+            </li>
+            <li>
+              <button type="button" class="memo__button--add show-dialog">
+                추가
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 메모 리스트 영역 끝 -->
+
+      <!-- 공룡게임 카드 컴포넌트 -->
+      <div class="dino-game__card">
+        <button type="button" class="modal-start__btn">
+          <img
+            class="dino-game__card__img"
+            src="/img/dinosour/gamestart-black.svg"
+            alt="공룡게임 카드"
+          />
+        </button>
+      </div>
+      <!-- 공룡게임 카드 컴포넌트 끝-->
+    </div>
+
+    <!-- 앱 영역 끝 -->
+    <!-- 메모 팝업(Dialog) 시작 -->
+    <dialog
+      class="dialog"
+      data-type="memo"
+      aria-labelledby="memo-popup"
+      aria-describedby="memo-details"
+    >
+      <div class="dialog__container">
+        <!-- 메모 리스트 영역 -->
+        <section class="left-box dialog__memo-list">
+          <h2 id="memo-popup" class="dialog__title">메모</h2>
+          <h3 class="dialog__memo-list-title sr-only">메모 목록</h3>
+          <div class="dialog__memo-box">
+            <ul class="dialog__memo-items">
+              <!-- 팝업 메모 아이템 동적 생성 -->
+            </ul>
+            <!-- 메모가 없을 때 메시지 -->
+            <div class="dialog__memo-empty">메모 목록이 없습니다.</div>
+          </div>
+        </section>
+
+        <!-- 메모 상세 -->
+        <section class="right-box dialog__detail" id="memo-details">
+          <h3 class="dialog__detail-title sr-only">메모 상세</h3>
+          <div class="dialog__editor" data-id="">
+            <p class="dialog__date">2025.07.22</p>
+            <div class="dialog__form">
+              <label for="inp-title" class="sr-only">메모장 제목</label>
+              <input
+                type="text"
+                id="inp-title"
+                class="dialog__input-title"
+                placeholder="메모 제목을 입력하세요."
+              />
+              <label for="inp-text-area" class="sr-only">메모장 내용</label>
+              <textarea
+                id="inp-text-area"
+                class="dialog__textarea"
+                placeholder="메모 내용을 입력하세요."
+              ></textarea>
+            </div>
+
+            <div class="dialog__actions">
+              <button type="button" class="dialog__button--save">저장</button>
+              <button type="button" class="dialog__button--add">추가</button>
+              <button type="button" class="dialog__button--delete">삭제</button>
+              <button type="button" class="dialog__close">
+                <span class="sr-only">닫기</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </dialog>
+    <!-- 메모 팝업(Dialog) 끝 -->
+    <!-- 링크 모달 -->
+    <div class="link-modal-overlay" id="linkModalOverlay">
+      <div class="link-modal">
+        <!-- 모달 사이드바 -->
+        <section class="link-modal__sidebar">
+          <h2 class="link-modal__title font-bold">링크</h2>
+          <div class="link-modal__list">
+            <ul>
+              <li>
+                <!-- 동적으로 생성될 링크들 -->
+              </li>
+            </ul>
+            <div class="link-modal__list__button-box">
+              <button type="button" class="btn-base bg-primary">추가</button>
+              <button type="button" class="btn-base bg-primary">제거</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 모달 입력 폼 -->
+        <div class="link-modal__main">
+          <div class="link-modal__header">
+            <div class="link-modal__header__name-icon-box">
+              <a href="#" class="btn-base bg-primary">
+                <img
+                  aria-label="링크로 가기"
+                  class="btn-base__icon--large"
+                  src="/favicon.png"
+                  alt=""
+                />
+              </a>
+              <input
+                type="text"
+                value=""
+                name="link-modal__header__name"
+                id="link-modal__header__name"
+                placeholder="이름 입력"
+                class="link-modal__header__name font-bold"
+              />
+              <div class="form-checkbox-favorite--bg-icon">
+                <input id="favorite-link" type="checkbox" />
+                <label for="favorite-link"></label>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="link-modal__close btn-base bg-third btn-rounded"
+            >
+              <picture class="btn-base__icon">
+                <source
+                  srcset="/img/icons/close-black.svg"
+                  media="(prefers-color-scheme: dark)"
+                />
+                <img
+                  src="/img/icons/close.svg"
+                  class="btn-base__icon"
+                  alt="닫기 버튼"
+                />
+              </picture>
+            </button>
+          </div>
+
+          <form class="link-modal__form">
+            <div>
+              <label for="link-modal__form__url">링크 URL</label>
+              <input
+                type="text"
+                name="link-modal__form__url"
+                id="link-modal__form__url"
+                value=""
+                placeholder="링크 URL을 입력해주세요."
+                required
+              />
+            </div>
+            <div class="link-modal__form__description-container">
+              <label for="link-modal__form__description">링크 설명</label>
+              <textarea
+                name="link-modal__form__description"
+                id="link-modal__form__description"
+                placeholder="링크 설명을 입력해주세요.(선택)"
+                rows="4"
+              ></textarea>
+            </div>
+            <div class="link-modal__form__button-box">
+              <div class="link-modal__form__button-box--left"></div>
+              <div class="link-modal__form__button-box--right">
+                <button type="reset" class="btn-base bg-primary">취소</button>
+                <button type="submit" class="btn-base bg-accent">저장</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공룡게임 모달 컴포넌트 -->
+    <div class="dino-game__modal">
+      <dialog class="dino-game__modal__canvas">
+        <div class="dino-game__modal__canvas__container">
+          <canvas id="canvas"></canvas>
+          <div class="controls">
+            <button type="button" id="start-btn">게임 시작</button>
+            <button type="button" id="pause-btn" disabled>일시 정지</button>
+            <button type="button" id="restart-btn" disabled>다시 시작</button>
+          </div>
+
+          <button type="button" class="modal-end__btn">게임닫기</button>
+        </div>
+      </dialog>
+    </div>
+    <!-- 공룡게임 모달 컴포넌트 끝-->
+
+    <script type="module" src="/src/scripts/searchbar.js"></script>
+    <script type="module" src="/src/scripts/weather-api.js"></script>
+    <script type="module" src="/src/scripts/weather-tab.js"></script>
+    <script type="module" src="/src/scripts/link.js"></script>
+    <script type="module" src="/src/scripts/memo.js"></script>
+    <script type="module" src="/src/scripts/todolist.js"></script>
+    <script type="module" src="/src/scripts/dino.js"></script>
+    <script type="module" src="/src/scripts/login.js"></script>
   </body>
 </html>
