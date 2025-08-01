@@ -1,3 +1,5 @@
+/* global google */
+
 // .env에서 설정한 Google OAuth 클라이언트 ID 가져오기
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
