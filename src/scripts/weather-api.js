@@ -137,6 +137,7 @@ const cityTranslations = {
   전주: "jeonju",
   천안: "cheonan",
   안성: "anseong",
+  용산: "yongsan",
 };
 
 // 도시명을 한글로 변환하는 함수
@@ -168,6 +169,7 @@ function translateCityToKorean(englishName) {
     jeonju: "전주",
     cheonan: "천안",
     anseong: "안성",
+    yongsan: "용산",
   };
 
   return cityMap[englishName.toLowerCase()] || englishName;
