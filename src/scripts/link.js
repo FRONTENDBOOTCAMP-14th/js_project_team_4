@@ -68,6 +68,7 @@ const CONSTANTS = {
     LINK_BUTTON: "link-button",
     FAVORITE_STAR: "favorite-star",
     EMPTY_STATE: "empty-state",
+    HOVER: "hover-fourth",
   },
 
   SELECTORS: {
@@ -1590,7 +1591,7 @@ function createUIEventHandlers() {
         a.href = link.url;
         a.target = "_blank";
         a.rel = "noopener noreferrer";
-        a.className = `link-card__link ${CONSTANTS.CSS.BTN_BASE} ${CONSTANTS.CSS.BG_PRIMARY}`;
+        a.className = `link-card__link ${CONSTANTS.CSS.BTN_BASE} ${CONSTANTS.CSS.BG_PRIMARY} ${CONSTANTS.CSS.HOVER}`;
 
         const img = document.createElement("img");
         img.className = "btn-base__icon";
@@ -1644,7 +1645,7 @@ function createUIEventHandlers() {
       links.forEach((link) => {
         const li = document.createElement("li");
         li.innerHTML = DOMPurify.sanitize(`
-          <button class="link-modal__link ${CONSTANTS.CSS.BTN_BASE} ${CONSTANTS.CSS.BG_PRIMARY} ${CONSTANTS.CSS.LINK_BUTTON}" type="button" data-id="${link.id}">
+          <button class="link-modal__link ${CONSTANTS.CSS.BTN_BASE} ${CONSTANTS.CSS.BG_PRIMARY} ${CONSTANTS.CSS.LINK_BUTTON} ${CONSTANTS.CSS.HOVER}" type="button" data-id="${link.id}">
             <img class="btn-base__icon" src="${link.favicon}" alt="" onerror="this.src='/favicon.png'">
             <span class="link-button__text">${link.title}</span>
             ${link.isFavorite ? `<span class="${CONSTANTS.CSS.FAVORITE_STAR}">★</span>` : ""}
