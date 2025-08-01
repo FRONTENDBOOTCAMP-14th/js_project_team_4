@@ -391,7 +391,6 @@ async function deleteButtonFn() {
     }
   } else {
     alert("삭제할 메모를 선택해주세요.");
-    deleteMode = !deleteMode;
   }
 }
 
@@ -513,6 +512,7 @@ async function handleDialogSaveMemo() {
 
       const newId = await addMemoToDB(newMemo);
       newMemo.id = newId;
+      checkAllButton.textContent = "전체 선택";
 
       memoData.unshift(newMemo);
       updateMainMemoListFn();

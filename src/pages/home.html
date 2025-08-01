@@ -434,6 +434,7 @@
         <button
           type="button"
           class="memo-card__button--more btn-base bg-primary font-bold show-dialog"
+          aria-label="팝업창 열기"
         >
           메모 관리
         </button>
@@ -447,7 +448,11 @@
               <button type="button" class="memo__button--delete">삭제</button>
             </li>
             <li>
-              <button type="button" class="memo__button--add show-dialog">
+              <button
+                type="button"
+                class="memo__button--add show-dialog"
+                aria-label="메모 관리 팝업창 열기"
+              >
                 추가
               </button>
             </li>
@@ -501,12 +506,14 @@
               <input
                 type="text"
                 id="inp-title"
+                name="inpTitle"
                 class="dialog__input-title"
                 placeholder="메모 제목을 입력하세요."
               />
               <label for="inp-text-area" class="sr-only">메모장 내용</label>
               <textarea
                 id="inp-text-area"
+                name="inpTextArea"
                 class="dialog__textarea"
                 placeholder="메모 내용을 입력하세요."
               ></textarea>
