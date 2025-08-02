@@ -1,3 +1,5 @@
+/* global exports process */
+
 exports.handler = async function (event) {
   // CORS 헤더 설정
   const headers = {
@@ -40,13 +42,13 @@ exports.handler = async function (event) {
   // URL 구성 - 기존 로직 그대로 유지
   if (type === "forecast" && lat && lon) {
     // 예보 데이터 (좌표 기반)
-    url = `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`;
+    url = `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=en`;
   } else if (lat && lon) {
     // 현재 날씨 (좌표 기반)
-    url = `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`;
+    url = `${BASE_URL}/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=en`;
   } else if (city) {
     // 현재 날씨 (도시명 기반)
-    url = `${BASE_URL}/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric&lang=kr`;
+    url = `${BASE_URL}/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric&lang=en`;
   } else {
     return {
       statusCode: 400,

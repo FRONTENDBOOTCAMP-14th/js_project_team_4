@@ -329,11 +329,11 @@ darkModeMediaQuery.addEventListener("change", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     dino.draw();
     drawScore();
-    drawGameOver(); 
+    drawGameOver();
   } else if (gamePaused) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     dino.draw();
     drawScore();
-    drawPaused(); 
+    drawPaused();
   }
 });

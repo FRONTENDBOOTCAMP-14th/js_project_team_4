@@ -59,12 +59,13 @@
   padding-top: var(--spacing-sm);
   padding-bottom: var(--spacing-sm);
   height: 100%;
+}
 
-  .task {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 var(--spacing-sm);
-  }
+.todo-list__item .task {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--spacing-sm);
+  gap: var(--spacing-xs);
 }
 
 .task-text {
