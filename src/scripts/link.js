@@ -977,13 +977,13 @@ function createUIEventHandlers() {
     alert(message);
   }
 
-  async function refreshUI(prevSelectedLinkId=null) {
+  async function refreshUI(prevSelectedLinkId = null) {
     await Promise.all([
       linkManager.getAllLinks(),
       linkManager.getFavoriteLinks(),
     ]);
 
-    if(prevSelectedLinkId) {
+    if (prevSelectedLinkId) {
       loadLinkToForm(prevSelectedLinkId);
     }
   }
@@ -1522,8 +1522,7 @@ async function handleFormSubmit(e) {
         favoriteButton?.checked || false
       );
     }
-  } catch {
-  }
+  } catch {}
 }
 
 /**
@@ -1625,7 +1624,6 @@ async function handleRemoveSelected() {
  * @function createAdvancedEventFeatures
  * @returns {Object} 고급 기능 제어 객체
  * @returns {Function} returns.setupKeyboardShortcuts - 키보드 단축키 설정
- * @returns {Function} returns.setupAutoSave - 자동 저장 기능 설정
  * @returns {Function} returns.setupRealTimeValidation - 실시간 검증 설정
  */
 function createAdvancedEventFeatures() {
@@ -1711,55 +1709,6 @@ function createAdvancedEventFeatures() {
     });
   }
 
-  function setupAutoSave() {
-    /** @type {number|null} 자동 저장 타이머 ID */
-    let autoSaveTimeout = null;
-
-    appState.on(CONSTANTS.EVENTS.FORM_DIRTY_CHANGED, ({ isDirty }) => {
-      if (isDirty && appState.selectedLinkId) {
-        clearTimeout(autoSaveTimeout);
-        autoSaveTimeout = setTimeout(async () => {
-          const form = document.querySelector(
-            CONSTANTS.SELECTORS.LINK_MODAL_FORM
-          );
-          if (form && appState.isFormDirty) {
-            console.log("자동 저장 실행...");
-            try {
-              const nameInput = document.querySelector(
-                CONSTANTS.SELECTORS.NAME_INPUT
-              );
-              const urlInput = document.querySelector(
-                CONSTANTS.SELECTORS.URL_INPUT
-              );
-              const descInput = document.querySelector(
-                CONSTANTS.SELECTORS.DESC_INPUT
-              );
-              const favoriteButton = document.querySelector(
-                CONSTANTS.SELECTORS.FAVORITE_CHECKBOX
-              );
-
-              const linkData = {
-                title: nameInput?.value.trim() || "",
-                url: urlInput?.value.trim() || "",
-                description: descInput?.value.trim() || "",
-                isFavorite: favoriteButton?.checked || false,
-              };
-
-              if (appState.selectedLinkId) {
-                await linkManager.updateLink(appState.selectedLinkId, linkData);
-                console.log("자동 저장 완료");
-              }
-            } catch (error) {
-              console.warn("자동 저장 실패:", error);
-            }
-          }
-        }, 3000);
-      } else {
-        clearTimeout(autoSaveTimeout);
-      }
-    });
-  }
-
   /**
    * 실시간 URL 검증 기능을 설정합니다.
    * URL 입력 시 0.5초 후 유효성을 검사하고 시각적 피드백을 제공합니다.
@@ -1806,7 +1755,6 @@ function createAdvancedEventFeatures() {
 
   return {
     setupKeyboardShortcuts,
-    setupAutoSave,
     setupRealTimeValidation,
   };
 }
@@ -1862,7 +1810,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const advancedFeatures = createAdvancedEventFeatures();
     if (advancedFeatures) {
       advancedFeatures.setupKeyboardShortcuts();
-      advancedFeatures.setupAutoSave();
       advancedFeatures.setupRealTimeValidation();
       console.log("✅ 고급 기능 초기화 완료");
     }
