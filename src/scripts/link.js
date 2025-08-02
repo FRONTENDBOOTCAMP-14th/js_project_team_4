@@ -519,6 +519,7 @@ function createLinkAppState() {
     on: eventPublisher.subscribe,
     once: eventPublisher.once,
     off: eventPublisher.unsubscribe,
+    publish: eventPublisher.publish,
   };
 }
 
@@ -2386,71 +2387,10 @@ function createAdvancedEventFeatures() {
     }
   }
 
-  /**
-   * 드래그 앤 드롭 기능을 설정합니다.
-   * 모달에 URL을 드래그하여 자동으로 입력 필드에 채워넣을 수 있습니다.
-   *
-   * @method setupDragAndDrop
-   *
-   * @example
-   * advancedFeatures.setupDragAndDrop();
-   * // 이제 URL을 모달에 드래그 앤 드롭할 수 있음
-   */
-  function setupDragAndDrop() {
-    const modal = document.querySelector(
-      CONSTANTS.SELECTORS.LINK_MODAL_OVERLAY
-    );
-    if (modal) {
-      /**
-       * 드래그 오버 이벤트 핸들러
-       *
-       * @param {DragEvent} e - 드래그 이벤트
-       */
-      modal.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        modal.classList.add("drag-over");
-      });
-
-      /**
-       * 드래그 리브 이벤트 핸들러
-       *
-       * @param {DragEvent} e - 드래그 이벤트
-       */
-      modal.addEventListener("dragleave", (e) => {
-        if (!modal.contains(e.relatedTarget)) {
-          modal.classList.remove("drag-over");
-        }
-      });
-
-      /**
-       * 드롭 이벤트 핸들러
-       *
-       * @param {DragEvent} e - 드래그 이벤트
-       */
-      modal.addEventListener("drop", (e) => {
-        e.preventDefault();
-        modal.classList.remove("drag-over");
-
-        const url = e.dataTransfer.getData("text/plain");
-        if (url) {
-          const urlInput = document.querySelector(
-            CONSTANTS.SELECTORS.URL_INPUT
-          );
-          if (urlInput) {
-            urlInput.value = url;
-            urlInput.dispatchEvent(new Event("input"));
-            urlInput.focus();
-          }
-        }
-      });
-    }
-  }
-
   return {
     setupKeyboardShortcuts,
     setupAutoSave,
     setupRealTimeValidation,
-    setupDragAndDrop,
   };
 }
 
@@ -2507,7 +2447,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       advancedFeatures.setupKeyboardShortcuts();
       advancedFeatures.setupAutoSave();
       advancedFeatures.setupRealTimeValidation();
-      advancedFeatures.setupDragAndDrop();
       console.log("✅ 고급 기능 초기화 완료");
     }
 
