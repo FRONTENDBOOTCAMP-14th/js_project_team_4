@@ -833,14 +833,6 @@ function createFocusTrap(element) {
   }
 
   return {
-    /**
-     * 포커스 트랩을 활성화합니다.
-     *
-     * @method activate
-     *
-     * @example
-     * focusTrap.activate();
-     */
     activate() {
       if (isActive) return;
 
@@ -851,14 +843,6 @@ function createFocusTrap(element) {
       console.log("포커스 트랩 활성화됨");
     },
 
-    /**
-     * 포커스 트랩을 비활성화합니다.
-     *
-     * @method deactivate
-     *
-     * @example
-     * focusTrap.deactivate();
-     */
     deactivate() {
       if (!isActive) return;
 
@@ -871,14 +855,6 @@ function createFocusTrap(element) {
       console.log("포커스 트랩 비활성화됨");
     },
 
-    /**
-     * 컨테이너 내 첫 번째 포커스 가능한 요소로 포커스를 이동합니다.
-     *
-     * @method focusFirstElement
-     *
-     * @example
-     * focusTrap.focusFirstElement();
-     */
     focusFirstElement() {
       const focusableElements = getFocusableElements();
       if (focusableElements.length > 0) {
@@ -886,12 +862,6 @@ function createFocusTrap(element) {
       }
     },
 
-    /**
-     * 현재 포커스 트랩 활성화 상태를 반환합니다.
-     *
-     * @method isActive
-     * @returns {boolean} 활성화 상태
-     */
     isActive() {
       return isActive;
     },
@@ -945,7 +915,7 @@ function createUIEventHandlers() {
   }
 
   function handleLinkUpdated() {
-    refreshUI();
+    refreshUI(appState.selectedLinkId);
   }
 
   function handleLinkDeleted({ id }) {
@@ -1008,11 +978,15 @@ function createUIEventHandlers() {
     alert(message);
   }
 
-  async function refreshUI() {
+  async function refreshUI(prevSelectedLinkId=null) {
     await Promise.all([
       linkManager.getAllLinks(),
       linkManager.getFavoriteLinks(),
     ]);
+
+    if(prevSelectedLinkId) {
+      loadLinkToForm(prevSelectedLinkId);
+    }
   }
 
   async function loadLinkToForm(linkId) {
@@ -1538,7 +1512,6 @@ async function handleFormSubmit(e) {
     const editingId = state.selectedLinkId;
 
     if (editingId) {
-      // 업데이트 - 이벤트를 통해 UI 자동 업데이트됨
       await linkManager.updateLink(parseInt(editingId), {
         title,
         url,
@@ -1546,7 +1519,6 @@ async function handleFormSubmit(e) {
         isFavorite: favoriteButton?.checked || false,
       });
     } else {
-      // 추가 - 이벤트를 통해 UI 자동 업데이트됨
       await linkManager.addLink(
         url,
         title,
@@ -1554,9 +1526,7 @@ async function handleFormSubmit(e) {
         favoriteButton?.checked || false
       );
     }
-    // 성공 처리는 이벤트 리스너에서 자동 처리됨
   } catch {
-    // 에러 처리는 이벤트 리스너에서 자동 처리됨
   }
 }
 
