@@ -1,5 +1,5 @@
 // 로딩 스피너
-import { showWeatherLoading, hideWeatherLoading } from "./loading-spiner.js";
+import { hideWeatherLoading, showWeatherLoading } from "./loading-spiner.js";
 
 // Netlify Functions 엔드포인트
 const WEATHER_API_ENDPOINT = "/.netlify/functions/weather";
@@ -129,18 +129,8 @@ const weatherTranslations = {
   clear: "맑음",
   clouds: "구름",
   rain: "비",
-  drizzle: "이슬비",
-  thunderstorm: "천둥번개",
-  snow: "눈",
-  mist: "안개",
-  smoke: "연기",
-  haze: "실안개",
-  dust: "황사",
-  fog: "짙은 안개",
-  sand: "모래바람",
   ash: "화산재",
   squall: "돌풍",
-  tornado: "토네이도",
   atmosphere: "대기현상",
 };
 

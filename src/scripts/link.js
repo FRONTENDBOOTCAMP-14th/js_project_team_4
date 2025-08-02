@@ -1522,7 +1522,9 @@ async function handleFormSubmit(e) {
         favoriteButton?.checked || false
       );
     }
-  } catch {}
+  } catch (error) {
+    console.error("링크 추가/수정 실패:", error);
+  }
 }
 
 /**
@@ -1627,7 +1629,6 @@ async function handleRemoveSelected() {
  * @returns {Function} returns.setupRealTimeValidation - 실시간 검증 설정
  */
 function createAdvancedEventFeatures() {
-  const linkManager = getLinkManager();
   const appState = getLinkAppState();
 
   function setupKeyboardShortcuts() {
