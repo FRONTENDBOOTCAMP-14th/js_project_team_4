@@ -20,16 +20,16 @@ document.addEventListener("click", (e) => {
 // ------------------------------------------------------------------------------
 // 검색 엔진 변경 및 로고 변경 통합
 
-// 팝오버의 검색엔진 변경 버튼
-const popoverChangeGoogle = document.querySelector(
-  ".search-bar__popover__google__btn"
-);
-const popoverChangeYoutube = document.querySelector(
-  ".search-bar__popover__youtube__btn"
-);
-const popoverChangeNaver = document.querySelector(
-  ".search-bar__popover__naver__btn"
-);
+// // 팝오버의 검색엔진 변경 버튼
+// const popoverChangeGoogle = document.querySelector(
+//   ".search-bar__popover__google__btn"
+// );
+// const popoverChangeYoutube = document.querySelector(
+//   ".search-bar__popover__youtube__btn"
+// );
+// const popoverChangeNaver = document.querySelector(
+//   ".search-bar__popover__naver__btn"
+// );
 
 // 검색바의 검색엔진 변경 버튼 (로고들)
 const searchbarChangeGoogle = document.querySelector(

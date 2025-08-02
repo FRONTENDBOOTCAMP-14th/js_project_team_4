@@ -96,12 +96,12 @@ todoList.addEventListener("change", (e) => {
   }
 });
 
-function deleteTodo(id) {
-  const tx = db.transaction("todos", "readwrite");
-  const store = tx.objectStore("todos");
-  store.delete(id);
-  tx.oncomplete = () => loadTodos();
-}
+// function deleteTodo(id) {
+//   const tx = db.transaction("todos", "readwrite");
+//   const store = tx.objectStore("todos");
+//   store.delete(id);
+//   tx.oncomplete = () => loadTodos();
+// }
 
 //  전체 삭제
 resetBtn.addEventListener("click", () => {

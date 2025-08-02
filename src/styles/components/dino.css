@@ -6,10 +6,10 @@
 }
 
 #start-btn {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
   border: 2px solid var(--primary-color);
-  box-shadow: 4px 4px #4CAF50;
+  box-shadow: 4px 4px #4caf50;
   border-radius: var(--full-radius);
 }
 
@@ -44,7 +44,7 @@
   transform: translate(4px, 4px);
 }
 
-.modal-end__btn{
+.modal-end__btn {
   inline-size: 300px;
   padding: 10px 20px;
   margin: 10px 10px;
@@ -112,15 +112,15 @@ button:disabled {
 
   display: flex;
   flex-flow: column;
-  justify-content: center; 
-  align-items: center;     
+  justify-content: center;
+  align-items: center;
   max-width: 100%;
-       
+
   .controls {
-     margin-top: 20px;
-     display: flex;
-     gap: 10px; 
-     padding-bottom: 20px;
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    padding-bottom: 20px;
   }
 }
 
