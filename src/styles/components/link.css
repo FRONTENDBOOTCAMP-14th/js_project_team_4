@@ -269,6 +269,11 @@
   border-radius: 2px;
 }
 
+#link-modal__form__url[aria-invalid="true"] {
+  border-color: red;
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
 .link-card__link {
   display: flex;
   align-items: center;
