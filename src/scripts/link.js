@@ -909,7 +909,7 @@ function createLinkManager() {
       const existing = await api.getById(id);
       if (!existing) throw new Error(CONSTANTS.ERRORS.LINK_NOT_FOUND);
 
-      if(existing.url && existing.url !== updates.url) {
+      if (existing.url && existing.url !== updates.url) {
         updates.favicon = getFaviconUrl(updates.url);
       }
 
@@ -1070,6 +1070,7 @@ function createLinkManager() {
     on: eventPublisher.subscribe,
     once: eventPublisher.once,
     off: eventPublisher.unsubscribe,
+    publish: eventPublisher.publish,
   };
 
   return api;
@@ -1477,7 +1478,9 @@ function createUIEventHandlers() {
     document.querySelectorAll(".link-modal__link").forEach((btn) => {
       btn.classList.remove(CONSTANTS.CSS.SELECTED);
     });
-    const selectedButton = document.querySelector(`[data-id="${link.id}"]`);
+    const selectedButton = document.querySelector(
+      `.link-modal__link[data-id="${link.id}"]`
+    );
     if (selectedButton) {
       selectedButton.classList.add(CONSTANTS.CSS.SELECTED);
     }
