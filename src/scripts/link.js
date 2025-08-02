@@ -62,7 +62,6 @@ const CONSTANTS = {
 
   CSS: {
     SHOW: "show",
-    SELECTED: "selected",
     BTN_BASE: "btn-base",
     BG_PRIMARY: "bg-primary",
     LINK_BUTTON: "link-button",
@@ -1011,14 +1010,12 @@ function createUIEventHandlers() {
 
   function updateSelectedLinkUI(link) {
     document.querySelectorAll(".link-modal__link").forEach((btn) => {
-      btn.classList.remove(CONSTANTS.CSS.SELECTED);
       btn.setAttribute("aria-pressed", false);
     });
     const selectedButton = document.querySelector(
       `.link-modal__link[data-id="${link.id}"]`
     );
     if (selectedButton) {
-      selectedButton.classList.add(CONSTANTS.CSS.SELECTED);
       selectedButton.setAttribute("aria-pressed", true);
     }
   }
@@ -1073,9 +1070,8 @@ function createUIEventHandlers() {
     if (favoriteButton) favoriteButton.checked = false;
 
     document
-      .querySelectorAll(`.link-modal__link.${CONSTANTS.CSS.SELECTED}`)
+      .querySelectorAll(`.link-modal__link[aria-pressed="true"]`)
       .forEach((btn) => {
-        btn.classList.remove(CONSTANTS.CSS.SELECTED);
         btn.setAttribute("aria-pressed", false);
       });
   }
@@ -1601,7 +1597,7 @@ async function handleFormReset(e) {
  */
 async function handleRemoveSelected() {
   const selectedButton = document.querySelector(
-    `.link-modal__link.${CONSTANTS.CSS.SELECTED}`
+    `.link-modal__link[aria-pressed="true"]`
   );
 
   if (!selectedButton) {

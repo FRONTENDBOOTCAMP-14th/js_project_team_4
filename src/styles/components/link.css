@@ -258,11 +258,6 @@
   z-index: 1;
 }
 
-.link-modal__link.selected {
-  background-color: var(--accent-color);
-  color: var(--lifecord-white);
-}
-
 .favorite-toggle:focus {
   outline: 2px solid var(--accent-color);
   outline-offset: 1px;
