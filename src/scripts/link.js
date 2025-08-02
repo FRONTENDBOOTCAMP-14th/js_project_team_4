@@ -5,7 +5,7 @@
  */
 
 /* global DOMPurify */
-import { showLinkSaveLoading, hideLinkSaveLoading } from "./loading-spiner.js";
+import { hideLinkSaveLoading, showLinkSaveLoading } from "./loading-spiner.js";
 
 const CONSTANTS = {
   ERRORS: {
@@ -62,7 +62,6 @@ const CONSTANTS = {
 
   CSS: {
     SHOW: "show",
-    SELECTED: "selected",
     BTN_BASE: "btn-base",
     BG_PRIMARY: "bg-primary",
     LINK_BUTTON: "link-button",
@@ -178,25 +177,10 @@ function createURLValidator() {
  * unsubscribe(); // 구독 해제
  */
 function createEventPublisher() {
-  /** @type {Map<string, Function[]>} 일반 이벤트 리스너들 */
   const listeners = new Map();
-  /** @type {Map<string, Function[]>} 일회성 이벤트 리스너들 */
   const onceListeners = new Map();
 
   return {
-    /**
-     * 이벤트를 구독합니다.
-     *
-     * @method subscribe
-     * @param {string} event - 구독할 이벤트 이름
-     * @param {Function} callback - 이벤트 발생시 실행될 콜백 함수
-     * @returns {Function} 구독 해제 함수
-     *
-     * @example
-     * const unsubscribe = publisher.subscribe('user-login', (user) => {
-     *   console.log(`User ${user.name} logged in`);
-     * });
-     */
     subscribe(event, callback) {
       if (!listeners.has(event)) {
         listeners.set(event, []);
@@ -205,18 +189,6 @@ function createEventPublisher() {
       return () => this.unsubscribe(event, callback);
     },
 
-    /**
-     * 일회성 이벤트를 구독합니다. 한 번 실행된 후 자동으로 해제됩니다.
-     *
-     * @method once
-     * @param {string} event - 구독할 이벤트 이름
-     * @param {Function} callback - 이벤트 발생시 실행될 콜백 함수
-     *
-     * @example
-     * publisher.once('app-ready', () => {
-     *   console.log('App is ready!'); // 한 번만 실행됨
-     * });
-     */
     once(event, callback) {
       if (!onceListeners.has(event)) {
         onceListeners.set(event, []);
@@ -224,18 +196,6 @@ function createEventPublisher() {
       onceListeners.get(event).push(callback);
     },
 
-    /**
-     * 이벤트 구독을 해제합니다.
-     *
-     * @method unsubscribe
-     * @param {string} event - 구독 해제할 이벤트 이름
-     * @param {Function} callback - 해제할 콜백 함수
-     *
-     * @example
-     * const callback = (data) => console.log(data);
-     * publisher.subscribe('test', callback);
-     * publisher.unsubscribe('test', callback);
-     */
     unsubscribe(event, callback) {
       if (listeners.has(event)) {
         const callbacks = listeners.get(event);
@@ -246,21 +206,7 @@ function createEventPublisher() {
       }
     },
 
-    /**
-     * 이벤트를 발행합니다. 등록된 모든 리스너가 실행됩니다.
-     *
-     * @method publish
-     * @param {string} event - 발행할 이벤트 이름
-     * @param {*} data - 리스너에게 전달할 데이터
-     *
-     * @example
-     * publisher.publish('user-action', {
-     *   action: 'click',
-     *   target: 'button'
-     * });
-     */
     publish(event, data) {
-      // 일반 리스너 실행
       if (listeners.has(event)) {
         listeners.get(event).forEach((callback) => {
           try {
@@ -271,7 +217,6 @@ function createEventPublisher() {
         });
       }
 
-      // 일회성 리스너 실행 후 제거
       if (onceListeners.has(event)) {
         const callbacks = onceListeners.get(event);
         callbacks.forEach((callback) => {
@@ -285,16 +230,6 @@ function createEventPublisher() {
       }
     },
 
-    /**
-     * 특정 이벤트 또는 모든 이벤트의 리스너를 초기화합니다.
-     *
-     * @method clear
-     * @param {string} [event] - 초기화할 이벤트 이름 (없으면 모든 이벤트 초기화)
-     *
-     * @example
-     * publisher.clear('specific-event'); // 특정 이벤트만 초기화
-     * publisher.clear(); // 모든 이벤트 초기화
-     */
     clear(event) {
       if (event) {
         listeners.delete(event);
@@ -342,38 +277,19 @@ function createEventPublisher() {
  * }
  */
 function createLinkAppState() {
-  /** @type {number|null} 현재 선택된 링크 ID */
   let selectedLinkId = null;
-  /** @type {boolean} 폼이 수정되었는지 여부 */
   let isFormDirty = false;
-  /** @type {Object} 원본 폼 데이터 */
   let originalFormData = {};
-  /** @type {boolean} 모달 열림 상태 */
   let isModalOpen = false;
-  /** @type {Element|null} 모달 열기 전 포커스된 요소 */
   let previousFocusedElement = null;
 
   const eventPublisher = createEventPublisher();
 
   return {
-    /**
-     * 현재 선택된 링크 ID를 반환합니다.
-     *
-     * @returns {number|null} 선택된 링크 ID
-     */
     get selectedLinkId() {
       return selectedLinkId;
     },
 
-    /**
-     * 링크를 선택하고 관련 이벤트를 발행합니다.
-     *
-     * @method setSelectedLink
-     * @param {number} linkId - 선택할 링크 ID
-     *
-     * @example
-     * appState.setSelectedLink(123);
-     */
     setSelectedLink(linkId) {
       const previousId = selectedLinkId;
       selectedLinkId = linkId;
@@ -383,14 +299,6 @@ function createLinkAppState() {
       });
     },
 
-    /**
-     * 링크 선택을 해제하고 관련 이벤트를 발행합니다.
-     *
-     * @method clearSelectedLink
-     *
-     * @example
-     * appState.clearSelectedLink();
-     */
     clearSelectedLink() {
       const previousId = selectedLinkId;
       selectedLinkId = null;
@@ -400,24 +308,10 @@ function createLinkAppState() {
       });
     },
 
-    /**
-     * 폼이 수정되었는지 여부를 반환합니다.
-     *
-     * @returns {boolean} 폼 수정 여부
-     */
     get isFormDirty() {
       return isFormDirty;
     },
 
-    /**
-     * 폼의 더티 상태를 설정하고 변경 시 이벤트를 발행합니다.
-     *
-     * @method setFormDirty
-     * @param {boolean} isDirty - 폼이 수정되었는지 여부
-     *
-     * @example
-     * appState.setFormDirty(true); // 폼이 수정됨을 표시
-     */
     setFormDirty(isDirty) {
       if (isFormDirty !== isDirty) {
         isFormDirty = isDirty;
@@ -428,77 +322,22 @@ function createLinkAppState() {
       }
     },
 
-    /**
-     * 원본 폼 데이터를 설정합니다.
-     *
-     * @method setOriginalFormData
-     * @param {Object} data - 원본 폼 데이터
-     * @param {string} [data.title] - 링크 제목
-     * @param {string} [data.url] - 링크 URL
-     * @param {string} [data.description] - 링크 설명
-     *
-     * @example
-     * appState.setOriginalFormData({
-     *   title: 'Google',
-     *   url: 'https://google.com',
-     *   description: '검색 엔진'
-     * });
-     */
     setOriginalFormData(data) {
       originalFormData = { ...data };
     },
 
-    /**
-     * 현재 폼 데이터와 원본 데이터를 비교하여 변경 여부를 확인합니다.
-     *
-     * @method hasFormChanges
-     * @param {Object} currentData - 현재 폼 데이터
-     * @param {string} [currentData.title] - 현재 링크 제목
-     * @param {string} [currentData.url] - 현재 링크 URL
-     * @param {string} [currentData.description] - 현재 링크 설명
-     * @returns {boolean} 변경 여부
-     *
-     * @example
-     * const hasChanges = appState.hasFormChanges({
-     *   title: 'New Title',
-     *   url: 'https://example.com',
-     *   description: 'New description'
-     * });
-     */
     hasFormChanges(currentData) {
       return JSON.stringify(originalFormData) !== JSON.stringify(currentData);
     },
 
-    /**
-     * 원본 폼 데이터의 복사본을 반환합니다.
-     *
-     * @method getOriginalFormData
-     * @returns {Object} 원본 폼 데이터의 복사본
-     *
-     * @example
-     * const originalData = appState.getOriginalFormData();
-     * console.log(originalData.title); // 원본 제목
-     */
     getOriginalFormData() {
       return { ...originalFormData };
     },
 
-    /**
-     * 모달 열림 상태를 반환합니다.
-     *
-     * @returns {boolean} 모달 열림 상태
-     */
     get isModalOpen() {
       return isModalOpen;
     },
 
-    /**
-     * 모달 상태 및 포커스 관리를 설정합니다.
-     *
-     * @method setModalState
-     * @param {boolean} open - 모달 열림 여부
-     * @param {Element} [focusElement] - 포커스할 요소 (모달 열 때만)
-     */
     setModalState(open, focusElement = null) {
       if (open && !isModalOpen) {
         // 모달 열기
@@ -515,10 +354,10 @@ function createLinkAppState() {
       }
     },
 
-    // 이벤트 구독 메서드
     on: eventPublisher.subscribe,
     once: eventPublisher.once,
     off: eventPublisher.unsubscribe,
+    publish: eventPublisher.publish,
   };
 }
 
@@ -539,26 +378,8 @@ function createLinkAppState() {
  * const { store } = await dbManager.getStore('links', 'readwrite');
  */
 function createDatabaseManager(dbName = "LinkDB", version = 1) {
-  /** @type {IDBDatabase|null} IndexedDB 데이터베이스 인스턴스 */
   let db = null;
 
-  /**
-   * 데이터베이스를 초기화하고 연결을 설정합니다.
-   * 스키마가 없는 경우 자동으로 생성합니다.
-   *
-   * @async
-   * @function init
-   * @returns {Promise<IDBDatabase>} 초기화된 데이터베이스 인스턴스
-   * @throws {Error} 데이터베이스 연결 실패 시
-   *
-   * @example
-   * try {
-   *   const database = await dbManager.init();
-   *   console.log('데이터베이스 연결 성공');
-   * } catch (error) {
-   *   console.error('데이터베이스 연결 실패:', error);
-   * }
-   */
   async function init() {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(dbName, version);
@@ -575,11 +396,6 @@ function createDatabaseManager(dbName = "LinkDB", version = 1) {
         resolve(db);
       };
 
-      /**
-       * 데이터베이스 스키마 업그레이드 핸들러
-       *
-       * @param {IDBVersionChangeEvent} event - 버전 변경 이벤트
-       */
       request.onupgradeneeded = (event) => {
         const dbInstance = event.target.result;
         console.log(
@@ -607,26 +423,6 @@ function createDatabaseManager(dbName = "LinkDB", version = 1) {
     });
   }
 
-  /**
-   * 지정된 객체 스토어와 트랜잭션을 반환합니다.
-   * 데이터베이스가 초기화되지 않은 경우 자동으로 초기화합니다.
-   *
-   * @async
-   * @function getStore
-   * @param {string} storeName - 스토어 이름
-   * @param {string} [mode="readonly"] - 트랜잭션 모드 ("readonly" | "readwrite")
-   * @returns {Promise<{transaction: IDBTransaction, store: IDBObjectStore}>} 트랜잭션과 스토어 객체
-   * @throws {Error} 스토어 접근 실패 시
-   *
-   * @example
-   * // 읽기 전용 접근
-   * const { store } = await dbManager.getStore('links');
-   * const allLinks = await store.getAll();
-   *
-   * // 읽기/쓰기 접근
-   * const { store, transaction } = await dbManager.getStore('links', 'readwrite');
-   * await store.add(newLink);
-   */
   async function getStore(storeName, mode = "readonly") {
     if (!db) {
       console.log("데이터베이스가 초기화되지 않음. 자동 초기화 중...");
@@ -645,29 +441,10 @@ function createDatabaseManager(dbName = "LinkDB", version = 1) {
     }
   }
 
-  /**
-   * 현재 데이터베이스 연결 상태를 반환합니다.
-   *
-   * @function isConnected
-   * @returns {boolean} 연결 상태
-   *
-   * @example
-   * if (dbManager.isConnected()) {
-   *   console.log('데이터베이스 연결됨');
-   * }
-   */
   function isConnected() {
     return db !== null;
   }
 
-  /**
-   * 데이터베이스 연결을 명시적으로 닫습니다.
-   *
-   * @function close
-   *
-   * @example
-   * dbManager.close();
-   */
   function close() {
     if (db) {
       db.close();
@@ -704,79 +481,17 @@ function createDatabaseManager(dbName = "LinkDB", version = 1) {
  * @returns {Function} returns.on - 이벤트 구독 함수
  * @returns {Function} returns.once - 일회성 이벤트 구독 함수
  * @returns {Function} returns.off - 이벤트 구독 해제 함수
- *
- * @example
- * const linkManager = createLinkManager();
- * await linkManager.init();
- *
- * // 이벤트 구독
- * linkManager.on('link-added', (link) => {
- *   console.log('새 링크 추가됨:', link);
- * });
- *
- * // 링크 추가
- * const newLink = await linkManager.addLink(
- *   'https://example.com',
- *   'Example Site',
- *   'An example website',
- *   true
- * );
+ * @returns {Function} returns.publish - 이벤트 발행 함수
  */
 function createLinkManager() {
   const dbManager = createDatabaseManager();
   const eventPublisher = createEventPublisher();
 
-  /**
-   * 링크 관리자를 초기화합니다.
-   *
-   * @async
-   * @function init
-   * @returns {Promise<Object>} 초기화된 API 객체
-   * @throws {Error} 초기화 실패 시
-   *
-   * @example
-   * try {
-   *   const manager = await linkManager.init();
-   *   console.log('링크 관리자 초기화 완료');
-   * } catch (error) {
-   *   console.error('초기화 실패:', error);
-   * }
-   */
   async function init() {
     await dbManager.init();
     return api;
   }
 
-  /**
-   * 새 링크를 추가합니다.
-   * URL 유효성 검증, 중복 확인, 메타데이터 생성을 포함합니다.
-   *
-   * @async
-   * @function addLink
-   * @param {string} url - 링크 URL
-   * @param {string} [title=""] - 링크 제목 (빈 값이면 도메인명 사용)
-   * @param {string} [description=""] - 링크 설명
-   * @param {boolean} [isFavorite=false] - 즐겨찾기 여부
-   * @returns {Promise<Object>} 생성된 링크 객체
-   * @throws {Error} URL이 유효하지 않거나 이미 존재하는 경우
-   *
-   * @example
-   * try {
-   *   const link = await linkManager.addLink(
-   *     'https://github.com',
-   *     'GitHub',
-   *     'Code hosting platform',
-   *     true
-   *   );
-   *   console.log('링크 추가됨:', link);
-   * } catch (error) {
-   *   if (error.message.includes('이미 존재')) {
-   *     console.warn('중복 링크입니다');
-   *   } else {
-   *     console.error('링크 추가 실패:', error);
-   *   }
-   * }
-   */
   async function addLink(
     url,
     title = "",
@@ -909,6 +624,10 @@ function createLinkManager() {
       const existing = await api.getById(id);
       if (!existing) throw new Error(CONSTANTS.ERRORS.LINK_NOT_FOUND);
 
+      if (existing.url && existing.url !== updates.url) {
+        updates.favicon = getFaviconUrl(updates.url);
+      }
+
       const { store } = await dbManager.getStore("links", "readwrite");
       const updated = {
         ...existing,
@@ -1005,19 +724,6 @@ function createLinkManager() {
     return api.updateLink(id, { isFavorite: !link.isFavorite });
   }
 
-  /**
-   * URL에서 도메인명을 추출합니다.
-   * www 접두사를 제거하고 깔끔한 도메인명을 반환합니다.
-   *
-   * @function extractDomainName
-   * @param {string} url - 대상 URL
-   * @returns {string} 추출된 도메인명
-   *
-   * @example
-   * extractDomainName('https://www.google.com/search') // 'google.com'
-   * extractDomainName('https://github.com') // 'github.com'
-   * extractDomainName('invalid-url') // 'Unknown'
-   */
   function extractDomainName(url) {
     try {
       const domain = new URL(url).hostname;
@@ -1027,18 +733,6 @@ function createLinkManager() {
     }
   }
 
-  /**
-   * URL에서 파비콘 URL을 생성합니다.
-   * Google의 favicon 서비스를 사용하여 third-party cookie 문제를 방지합니다.
-   *
-   * @function getFaviconUrl
-   * @param {string} url - 대상 URL
-   * @returns {string} 파비콘 URL
-   *
-   * @example
-   * getFaviconUrl('https://google.com') // Google favicon service URL
-   * getFaviconUrl('invalid-url') // '/favicon.png'
-   */
   function getFaviconUrl(url) {
     try {
       const urlObj = new URL(url);
@@ -1066,6 +760,7 @@ function createLinkManager() {
     on: eventPublisher.subscribe,
     once: eventPublisher.once,
     off: eventPublisher.unsubscribe,
+    publish: eventPublisher.publish,
   };
 
   return api;
@@ -1081,17 +776,6 @@ function createLinkManager() {
  * @returns {Function} returns.activate - 포커스 트랩 활성화
  * @returns {Function} returns.deactivate - 포커스 트랩 비활성화
  * @returns {Function} returns.focusFirstElement - 첫 번째 포커스 가능한 요소로 포커스 이동
- *
- * @example
- * const modal = document.querySelector('.modal');
- * const focusTrap = createFocusTrap(modal);
- *
- * // 모달 열 때
- * focusTrap.activate();
- * focusTrap.focusFirstElement();
- *
- * // 모달 닫을 때
- * focusTrap.deactivate();
  */
 function createFocusTrap(element) {
   /** @type {string} 포커스 가능한 요소들의 CSS 선택자 */
@@ -1148,14 +832,6 @@ function createFocusTrap(element) {
   }
 
   return {
-    /**
-     * 포커스 트랩을 활성화합니다.
-     *
-     * @method activate
-     *
-     * @example
-     * focusTrap.activate();
-     */
     activate() {
       if (isActive) return;
 
@@ -1166,14 +842,6 @@ function createFocusTrap(element) {
       console.log("포커스 트랩 활성화됨");
     },
 
-    /**
-     * 포커스 트랩을 비활성화합니다.
-     *
-     * @method deactivate
-     *
-     * @example
-     * focusTrap.deactivate();
-     */
     deactivate() {
       if (!isActive) return;
 
@@ -1186,14 +854,6 @@ function createFocusTrap(element) {
       console.log("포커스 트랩 비활성화됨");
     },
 
-    /**
-     * 컨테이너 내 첫 번째 포커스 가능한 요소로 포커스를 이동합니다.
-     *
-     * @method focusFirstElement
-     *
-     * @example
-     * focusTrap.focusFirstElement();
-     */
     focusFirstElement() {
       const focusableElements = getFocusableElements();
       if (focusableElements.length > 0) {
@@ -1201,12 +861,6 @@ function createFocusTrap(element) {
       }
     },
 
-    /**
-     * 현재 포커스 트랩 활성화 상태를 반환합니다.
-     *
-     * @method isActive
-     * @returns {boolean} 활성화 상태
-     */
     isActive() {
       return isActive;
     },
@@ -1222,39 +876,17 @@ function createFocusTrap(element) {
  * @returns {Function} returns.init - 초기화 함수
  * @returns {Function} returns.clearForm - 폼 초기화 함수
  * @returns {Function} returns.refreshUI - UI 새로고침 함수
- *
- * @example
- * const uiHandlers = createUIEventHandlers();
- * uiHandlers.init(linkManager, appState);
  */
 function createUIEventHandlers() {
-  /** @type {Object|null} 링크 매니저 인스턴스 */
   let linkManager = null;
-  /** @type {Object|null} 앱 상태 인스턴스 */
   let appState = null;
 
-  /**
-   * UI 이벤트 핸들러를 초기화합니다.
-   *
-   * @method init
-   * @param {Object} linkManagerInstance - 링크 매니저 인스턴스
-   * @param {Object} appStateInstance - 앱 상태 인스턴스
-   *
-   * @example
-   * uiHandlers.init(linkManager, appState);
-   */
   function init(linkManagerInstance, appStateInstance) {
     linkManager = linkManagerInstance;
     appState = appStateInstance;
     setupEventListeners();
   }
 
-  /**
-   * 모든 이벤트 리스너를 설정합니다.
-   *
-   * @private
-   * @method setupEventListeners
-   */
   function setupEventListeners() {
     // 링크 관련 이벤트 리스너
     linkManager.on(CONSTANTS.EVENTS.LINK_ADDED, handleLinkAdded);
@@ -1276,37 +908,15 @@ function createUIEventHandlers() {
     linkManager.on(CONSTANTS.EVENTS.SUCCESS_MESSAGE, handleSuccess);
   }
 
-  /**
-   * 링크 추가 완료 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleLinkAdded
-   * @param {Object} link - 추가된 링크 객체
-   */
   function handleLinkAdded() {
     refreshUI();
     clearForm();
   }
 
-  /**
-   * 링크 업데이트 완료 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleLinkUpdated
-   * @param {Object} link - 업데이트된 링크 객체
-   */
   function handleLinkUpdated() {
-    refreshUI();
+    refreshUI(appState.selectedLinkId);
   }
 
-  /**
-   * 링크 삭제 완료 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleLinkDeleted
-   * @param {Object} data - 삭제 정보 객체
-   * @param {number} data.id - 삭제된 링크 ID
-   */
   function handleLinkDeleted({ id }) {
     if (appState.selectedLinkId === id) {
       clearForm();
@@ -1314,36 +924,14 @@ function createUIEventHandlers() {
     refreshUI();
   }
 
-  /**
-   * 링크 목록 로드 완료 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleLinksLoaded
-   * @param {Array} links - 로드된 링크 배열
-   */
   function handleLinksLoaded(links) {
     renderLinksToModal(links);
   }
 
-  /**
-   * 즐겨찾기 링크 로드 완료 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleFavoritesLoaded
-   * @param {Array} favorites - 즐겨찾기 링크 배열
-   */
   function handleFavoritesLoaded(favorites) {
     renderFavoriteLinks(favorites);
   }
 
-  /**
-   * 링크 선택 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleLinkSelected
-   * @param {Object} data - 선택 정보 객체
-   * @param {number|null} data.linkId - 선택된 링크 ID
-   */
   function handleLinkSelected({ linkId }) {
     if (linkId) {
       loadLinkToForm(linkId);
@@ -1352,95 +940,54 @@ function createUIEventHandlers() {
     }
   }
 
-  /**
-   * 폼 더티 상태 변경 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleFormDirtyChanged
-   * @param {Object} data - 상태 변경 정보
-   * @param {boolean} data.isDirty - 폼 더티 상태
-   */
   function handleFormDirtyChanged({ isDirty }) {
     // 폼 상태에 따른 UI 업데이트 (예: 저장 버튼 활성화)
     console.log("Form dirty state changed:", isDirty);
   }
 
-  /**
-   * 로딩 시작 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleLoadingStarted
-   * @param {Object} data - 로딩 정보
-   * @param {string} data.operation - 수행 중인 작업
-   */
   function handleLoadingStarted({ operation }) {
-    if (operation === "add" || operation === "update") {
+    if (
+      operation === "add" ||
+      operation === "update" ||
+      operation === "delete" ||
+      operation === "loadAll" ||
+      operation === "loadFavorites"
+    ) {
       showLinkSaveLoading();
     }
   }
 
-  /**
-   * 로딩 종료 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleLoadingEnded
-   * @param {Object} data - 로딩 정보
-   * @param {string} data.operation - 완료된 작업
-   */
   function handleLoadingEnded({ operation }) {
-    if (operation === "add" || operation === "update") {
+    if (
+      operation === "add" ||
+      operation === "update" ||
+      operation === "delete" ||
+      operation === "loadAll" ||
+      operation === "loadFavorites"
+    ) {
       hideLinkSaveLoading();
     }
   }
 
-  /**
-   * 에러 발생 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleError
-   * @param {Error} error - 발생한 에러 객체
-   */
   function handleError(error) {
     alert(error.message);
   }
 
-  /**
-   * 성공 메시지 표시 시 호출되는 핸들러입니다.
-   *
-   * @private
-   * @method handleSuccess
-   * @param {string} message - 성공 메시지
-   */
   function handleSuccess(message) {
     alert(message);
   }
 
-  /**
-   * UI를 새로고침합니다. 링크 목록과 즐겨찾기를 다시 로드합니다.
-   *
-   * @async
-   * @method refreshUI
-   * @returns {Promise<void>}
-   *
-   * @example
-   * await uiHandlers.refreshUI();
-   */
-  async function refreshUI() {
+  async function refreshUI(prevSelectedLinkId=null) {
     await Promise.all([
       linkManager.getAllLinks(),
       linkManager.getFavoriteLinks(),
     ]);
+
+    if(prevSelectedLinkId) {
+      loadLinkToForm(prevSelectedLinkId);
+    }
   }
 
-  /**
-   * 지정된 링크를 폼에 로드합니다.
-   *
-   * @private
-   * @async
-   * @method loadLinkToForm
-   * @param {number} linkId - 로드할 링크 ID
-   * @returns {Promise<void>}
-   */
   async function loadLinkToForm(linkId) {
     try {
       const link = await linkManager.getById(linkId);
@@ -1461,36 +1008,18 @@ function createUIEventHandlers() {
     }
   }
 
-  /**
-   * 선택된 링크의 UI 상태를 업데이트합니다.
-   *
-   * @private
-   * @method updateSelectedLinkUI
-   * @param {Object} link - 선택된 링크 객체
-   * @param {number} link.id - 링크 ID
-   */
   function updateSelectedLinkUI(link) {
     document.querySelectorAll(".link-modal__link").forEach((btn) => {
-      btn.classList.remove(CONSTANTS.CSS.SELECTED);
+      btn.setAttribute("aria-pressed", false);
     });
-    const selectedButton = document.querySelector(`[data-id="${link.id}"]`);
+    const selectedButton = document.querySelector(
+      `.link-modal__link[data-id="${link.id}"]`
+    );
     if (selectedButton) {
-      selectedButton.classList.add(CONSTANTS.CSS.SELECTED);
+      selectedButton.setAttribute("aria-pressed", true);
     }
   }
 
-  /**
-   * 폼에 링크 데이터를 채워넣습니다.
-   *
-   * @private
-   * @method populateForm
-   * @param {Object} link - 채워넣을 링크 객체
-   * @param {string} link.title - 링크 제목
-   * @param {string} link.url - 링크 URL
-   * @param {string} link.description - 링크 설명
-   * @param {string} link.favicon - 파비콘 URL
-   * @param {boolean} link.isFavorite - 즐겨찾기 여부
-   */
   function populateForm(link) {
     const nameInput = document.querySelector(CONSTANTS.SELECTORS.NAME_INPUT);
     const urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
@@ -1517,26 +1046,12 @@ function createUIEventHandlers() {
     }
   }
 
-  /**
-   * 폼과 관련 상태를 초기화합니다.
-   *
-   * @method clearForm
-   *
-   * @example
-   * uiHandlers.clearForm();
-   */
   function clearForm() {
     appState.clearSelectedLink();
     appState.setFormDirty(false);
     appState.setOriginalFormData({});
   }
 
-  /**
-   * 폼 UI만 초기화합니다 (상태는 변경하지 않음).
-   *
-   * @private
-   * @method clearFormUI
-   */
   function clearFormUI() {
     const nameInput = document.querySelector(CONSTANTS.SELECTORS.NAME_INPUT);
     const urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
@@ -1555,17 +1070,12 @@ function createUIEventHandlers() {
     if (favoriteButton) favoriteButton.checked = false;
 
     document
-      .querySelectorAll(`.link-modal__link.${CONSTANTS.CSS.SELECTED}`)
-      .forEach((btn) => btn.classList.remove(CONSTANTS.CSS.SELECTED));
+      .querySelectorAll(`.link-modal__link[aria-pressed="true"]`)
+      .forEach((btn) => {
+        btn.setAttribute("aria-pressed", false);
+      });
   }
 
-  /**
-   * 즐겨찾기 링크들을 렌더링합니다.
-   *
-   * @private
-   * @method renderFavoriteLinks
-   * @param {Array} favorites - 즐겨찾기 링크 배열
-   */
   function renderFavoriteLinks(favorites) {
     const container = document.querySelector(
       CONSTANTS.SELECTORS.LINK_CARD_LIST
@@ -1618,13 +1128,6 @@ function createUIEventHandlers() {
     container.appendChild(fragment);
   }
 
-  /**
-   * 모든 링크들을 모달에 렌더링합니다.
-   *
-   * @private
-   * @method renderLinksToModal
-   * @param {Array} links - 링크 배열
-   */
   function renderLinksToModal(links) {
     const sidebar = document.querySelector(CONSTANTS.SELECTORS.LINK_MODAL_LIST);
     if (!sidebar) return;
@@ -1688,10 +1191,6 @@ let uiEventHandlers = null;
  * @async
  * @function initLinkManager
  * @returns {Promise<Object>} 초기화된 링크 매니저 인스턴스
- *
- * @example
- * const linkManager = await initLinkManager();
- * console.log('링크 매니저 초기화 완료');
  */
 async function initLinkManager() {
   if (!linkManagerInstance) {
@@ -1713,12 +1212,6 @@ async function initLinkManager() {
  *
  * @function getLinkManager
  * @returns {Object|null} 링크 매니저 인스턴스 (초기화되지 않은 경우 null)
- *
- * @example
- * const linkManager = getLinkManager();
- * if (linkManager) {
- *   console.log('링크 매니저 사용 가능');
- * }
  */
 function getLinkManager() {
   return linkManagerInstance;
@@ -1729,12 +1222,6 @@ function getLinkManager() {
  *
  * @function getLinkAppState
  * @returns {Object|null} 링크 앱 상태 인스턴스 (초기화되지 않은 경우 null)
- *
- * @example
- * const appState = getLinkAppState();
- * if (appState) {
- *   console.log('현재 선택된 링크:', appState.selectedLinkId);
- * }
  */
 function getLinkAppState() {
   return linkAppState;
@@ -1745,12 +1232,6 @@ function getLinkAppState() {
  *
  * @function getUIEventHandlers
  * @returns {Object|null} UI 이벤트 핸들러 인스턴스 (초기화되지 않은 경우 null)
- *
- * @example
- * const uiHandlers = getUIEventHandlers();
- * if (uiHandlers) {
- *   uiHandlers.refreshUI();
- * }
  */
 function getUIEventHandlers() {
   return uiEventHandlers;
@@ -1763,11 +1244,6 @@ function getUIEventHandlers() {
  * @function initLinkCard
  * @param {Element} linkCardElement - 링크 카드 요소
  * @param {Element} linkModalOverlay - 링크 모달 오버레이 요소
- *
- * @example
- * const linkCard = document.querySelector('.link-card');
- * const modal = document.getElementById('linkModalOverlay');
- * initLinkCard(linkCard, modal);
  */
 function initLinkCard(linkCardElement, linkModalOverlay) {
   const moreButton = linkCardElement.querySelector(
@@ -1776,12 +1252,7 @@ function initLinkCard(linkCardElement, linkModalOverlay) {
   const state = getLinkAppState();
 
   if (moreButton) {
-    /**
-     * 모달 열기 버튼 클릭 핸들러
-     * 접근성을 고려한 모달 열기 처리
-     */
     moreButton.addEventListener("click", () => {
-      // 모달 표시
       linkModalOverlay.classList.add(CONSTANTS.CSS.SHOW);
       document.body.style.overflow = "hidden";
 
@@ -1821,10 +1292,6 @@ function initLinkCard(linkCardElement, linkModalOverlay) {
  *
  * @function initLinkModal
  * @param {Element} linkModalOverlay - 링크 모달 오버레이 요소
- *
- * @example
- * const modal = document.getElementById('linkModalOverlay');
- * initLinkModal(modal);
  */
 function initLinkModal(linkModalOverlay) {
   const form = linkModalOverlay.querySelector(
@@ -2041,7 +1508,6 @@ async function handleFormSubmit(e) {
     const editingId = state.selectedLinkId;
 
     if (editingId) {
-      // 업데이트 - 이벤트를 통해 UI 자동 업데이트됨
       await linkManager.updateLink(parseInt(editingId), {
         title,
         url,
@@ -2049,7 +1515,6 @@ async function handleFormSubmit(e) {
         isFavorite: favoriteButton?.checked || false,
       });
     } else {
-      // 추가 - 이벤트를 통해 UI 자동 업데이트됨
       await linkManager.addLink(
         url,
         title,
@@ -2057,9 +1522,7 @@ async function handleFormSubmit(e) {
         favoriteButton?.checked || false
       );
     }
-    // 성공 처리는 이벤트 리스너에서 자동 처리됨
   } catch {
-    // 에러 처리는 이벤트 리스너에서 자동 처리됨
   }
 }
 
@@ -2134,7 +1597,7 @@ async function handleFormReset(e) {
  */
 async function handleRemoveSelected() {
   const selectedButton = document.querySelector(
-    `.link-modal__link.${CONSTANTS.CSS.SELECTED}`
+    `.link-modal__link[aria-pressed="true"]`
   );
 
   if (!selectedButton) {
@@ -2164,36 +1627,12 @@ async function handleRemoveSelected() {
  * @returns {Function} returns.setupKeyboardShortcuts - 키보드 단축키 설정
  * @returns {Function} returns.setupAutoSave - 자동 저장 기능 설정
  * @returns {Function} returns.setupRealTimeValidation - 실시간 검증 설정
- * @returns {Function} returns.setupDragAndDrop - 드래그 앤 드롭 설정
- *
- * @example
- * const advancedFeatures = createAdvancedEventFeatures();
- * advancedFeatures.setupKeyboardShortcuts();
- * advancedFeatures.setupAutoSave();
  */
 function createAdvancedEventFeatures() {
   const linkManager = getLinkManager();
   const appState = getLinkAppState();
 
-  /**
-   * 접근성을 고려한 키보드 단축키를 설정합니다.
-   *
-   * @method setupKeyboardShortcuts
-   *
-   * @example
-   * advancedFeatures.setupKeyboardShortcuts();
-   *
-   * // 사용 가능한 단축키:
-   * // - Ctrl+S: 폼 저장
-   * // - Escape: 모달 닫기
-   * // - Ctrl+Enter: 새 링크 추가 모드
-   */
   function setupKeyboardShortcuts() {
-    /**
-     * 전역 키보드 이벤트 핸들러
-     *
-     * @param {KeyboardEvent} e - 키보드 이벤트
-     */
     document.addEventListener("keydown", (e) => {
       // 모달이 열려있을 때만 모달 관련 단축키 처리
       if (appState.isModalOpen) {
@@ -2272,16 +1711,6 @@ function createAdvancedEventFeatures() {
     });
   }
 
-  /**
-   * 자동 저장 기능을 설정합니다.
-   * 폼이 수정된 후 3초간 추가 변경이 없으면 자동으로 저장합니다.
-   *
-   * @method setupAutoSave
-   *
-   * @example
-   * advancedFeatures.setupAutoSave();
-   * // 이제 폼 수정 후 3초 뒤 자동 저장됨
-   */
   function setupAutoSave() {
     /** @type {number|null} 자동 저장 타이머 ID */
     let autoSaveTimeout = null;
@@ -2336,10 +1765,6 @@ function createAdvancedEventFeatures() {
    * URL 입력 시 0.5초 후 유효성을 검사하고 시각적 피드백을 제공합니다.
    *
    * @method setupRealTimeValidation
-   *
-   * @example
-   * advancedFeatures.setupRealTimeValidation();
-   * // 이제 URL 입력 시 실시간으로 유효성 검사됨
    */
   function setupRealTimeValidation() {
     const urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
@@ -2379,71 +1804,10 @@ function createAdvancedEventFeatures() {
     }
   }
 
-  /**
-   * 드래그 앤 드롭 기능을 설정합니다.
-   * 모달에 URL을 드래그하여 자동으로 입력 필드에 채워넣을 수 있습니다.
-   *
-   * @method setupDragAndDrop
-   *
-   * @example
-   * advancedFeatures.setupDragAndDrop();
-   * // 이제 URL을 모달에 드래그 앤 드롭할 수 있음
-   */
-  function setupDragAndDrop() {
-    const modal = document.querySelector(
-      CONSTANTS.SELECTORS.LINK_MODAL_OVERLAY
-    );
-    if (modal) {
-      /**
-       * 드래그 오버 이벤트 핸들러
-       *
-       * @param {DragEvent} e - 드래그 이벤트
-       */
-      modal.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        modal.classList.add("drag-over");
-      });
-
-      /**
-       * 드래그 리브 이벤트 핸들러
-       *
-       * @param {DragEvent} e - 드래그 이벤트
-       */
-      modal.addEventListener("dragleave", (e) => {
-        if (!modal.contains(e.relatedTarget)) {
-          modal.classList.remove("drag-over");
-        }
-      });
-
-      /**
-       * 드롭 이벤트 핸들러
-       *
-       * @param {DragEvent} e - 드래그 이벤트
-       */
-      modal.addEventListener("drop", (e) => {
-        e.preventDefault();
-        modal.classList.remove("drag-over");
-
-        const url = e.dataTransfer.getData("text/plain");
-        if (url) {
-          const urlInput = document.querySelector(
-            CONSTANTS.SELECTORS.URL_INPUT
-          );
-          if (urlInput) {
-            urlInput.value = url;
-            urlInput.dispatchEvent(new Event("input"));
-            urlInput.focus();
-          }
-        }
-      });
-    }
-  }
-
   return {
     setupKeyboardShortcuts,
     setupAutoSave,
     setupRealTimeValidation,
-    setupDragAndDrop,
   };
 }
 
@@ -2500,7 +1864,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       advancedFeatures.setupKeyboardShortcuts();
       advancedFeatures.setupAutoSave();
       advancedFeatures.setupRealTimeValidation();
-      advancedFeatures.setupDragAndDrop();
       console.log("✅ 고급 기능 초기화 완료");
     }
 
@@ -2608,18 +1971,6 @@ if (typeof window !== "undefined") {
     getUIEventHandlers,
     EVENTS: CONSTANTS.EVENTS,
 
-    /**
-     * 모든 이벤트에 대한 로깅 리스너를 등록합니다.
-     * 각 이벤트가 발생할 때마다 콘솔에 이벤트 이름과 데이터를 출력합니다.
-     *
-     * @function logAllEvents
-     * @returns {void}
-     *
-     * @example
-     * // 개발자 콘솔에서:
-     * LinkManagerDebug.logAllEvents();
-     * // 이후 모든 이벤트가 콘솔에 기록됩니다.
-     */
     logAllEvents() {
       const manager = getLinkManager();
       Object.values(CONSTANTS.EVENTS).forEach((event) => {

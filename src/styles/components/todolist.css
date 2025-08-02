@@ -86,10 +86,11 @@
   color: var(--secondary-color);
   padding: var(--spacing-xs);
   width: 100%;
+}
 
-  input {
-    width: inherit;
-  }
+.new-todo input {
+  width: inherit;
+  color: var(--third-color);
 }
 
 .search-bar__popover__youtube__btn svg {
@@ -153,5 +154,17 @@
     align-content: center;
     background: url(/img/icons/checkbox/checkbox-basic.png) no-repeat;
     background-size: var(--icon-sm);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .form-checkbox_bg-icon {
+    input:checked + label {
+      background-image: url(/img/icons/checkbox/checked-white.png);
+    }
+  
+    label {
+      background: url(/img/icons/checkbox/checkbox-basic-white.png) no-repeat;
+    }
   }
 }
