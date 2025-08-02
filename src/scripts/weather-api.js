@@ -64,54 +64,84 @@ const iconMapping = {
 
 // 날씨 상태 한글 번역 매핑
 const weatherTranslations = {
-  // 기본 날씨 상태
+  "thunderstorm with light rain": "약한 비와 천둥번개",
+  "thunderstorm with rain": "비와 천둥번개",
+  "thunderstorm with heavy rain": "폭우와 천둥번개",
+  "light thunderstorm": "약한 천둥번개",
+  thunderstorm: "천둥번개",
+  "heavy thunderstorm": "강한 천둥번개",
+  "ragged thunderstorm": "불규칙한 천둥번개",
+  "thunderstorm with light drizzle": "약한 이슬비와 천둥번개",
+  "thunderstorm with drizzle": "이슬비와 천둥번개",
+  "thunderstorm with heavy drizzle": "강한 이슬비와 천둥번개",
+
+  "light intensity drizzle": "약한 이슬비",
+  drizzle: "이슬비",
+  "heavy intensity drizzle": "강한 이슬비",
+  "light intensity drizzle rain": "약한 이슬비",
+  "drizzle rain": "이슬비",
+  "heavy intensity drizzle rain": "강한 이슬비",
+  "shower rain and drizzle": "소나기와 이슬비",
+  "heavy shower rain and drizzle": "강한 소나기와 이슬비",
+  "shower drizzle": "이슬비 소나기",
+
+  "light rain": "약한 비",
+  "moderate rain": "비",
+  "heavy intensity rain": "강한 비",
+  "very heavy rain": "매우 강한 비",
+  "extreme rain": "폭우",
+  "freezing rain": "얼어붙는 비",
+  "light intensity shower rain": "약한 소나기",
+  "shower rain": "소나기",
+  "heavy intensity shower rain": "강한 소나기",
+  "ragged shower rain": "불규칙한 소나기",
+
+  "light snow": "약한 눈",
+  snow: "눈",
+  "heavy snow": "폭설",
+  sleet: "진눈깨비",
+  "light shower sleet": "약한 진눈깨비",
+  "shower sleet": "진눈깨비",
+  "light rain and snow": "비와 눈",
+  "rain and snow": "비와 눈",
+  "light shower snow": "약한 눈보라",
+  "shower snow": "눈보라",
+  "heavy shower snow": "강한 눈보라",
+
+  mist: "안개",
+  smoke: "연기",
+  haze: "실안개",
+  "sand/dust whirls": "모래먼지 회오리",
+  fog: "짙은 안개",
+  sand: "모래바람",
+  dust: "황사",
+  "volcanic ash": "화산재",
+  squalls: "돌풍",
+  tornado: "토네이도",
+
   "clear sky": "맑음",
   "few clouds": "구름 조금",
   "scattered clouds": "구름 많음",
   "broken clouds": "흐림",
-  "shower rain": "소나기",
-  rain: "비",
-  thunderstorm: "뇌우",
-  snow: "눈",
-  mist: "안개",
-  fog: "짙은 안개",
-  haze: "실안개",
-  dust: "황사",
-  sand: "모래바람",
-  smoke: "연기",
-  squalls: "돌풍",
-  tornado: "토네이도",
+  "overcast clouds": "흐림",
+  overcast: "흐림",
 
-  // 상세 날씨 설명
   clear: "맑음",
   clouds: "구름",
+  rain: "비",
   drizzle: "이슬비",
+  thunderstorm: "천둥번개",
+  snow: "눈",
+  mist: "안개",
+  smoke: "연기",
+  haze: "실안개",
+  dust: "황사",
+  fog: "짙은 안개",
+  sand: "모래바람",
+  ash: "화산재",
+  squall: "돌풍",
+  tornado: "토네이도",
   atmosphere: "대기현상",
-
-  // 더 상세한 설명들
-  "light rain": "가벼운 비",
-  "moderate rain": "보통 비",
-  "heavy intensity rain": "강한 비",
-  "very heavy rain": "매우 강한 비",
-  "extreme rain": "극심한 비",
-  "freezing rain": "얼어붙는 비",
-  "light intensity shower rain": "가벼운 소나기",
-  "heavy intensity shower rain": "강한 소나기",
-  "ragged shower rain": "불규칙한 소나기",
-
-  "light snow": "가벼운 눈",
-  "heavy snow": "폭설",
-  sleet: "진눈깨비",
-  "light shower sleet": "가벼운 진눈깨비",
-  "shower sleet": "진눈깨비",
-  "light rain and snow": "비와 눈",
-  "rain and snow": "비와 눈",
-  "light shower snow": "가벼운 눈보라",
-  "shower snow": "눈보라",
-  "heavy shower snow": "강한 눈보라",
-
-  "overcast clouds": "흐린 구름",
-  overcast: "흐림",
 };
 
 // 도시명 한글-영어 매핑 (검색 지원용)
@@ -170,6 +200,7 @@ function translateCityToKorean(englishName) {
     cheonan: "천안",
     anseong: "안성",
     yongsan: "용산",
+    "kwanghŭi-dong": "서울",
   };
 
   return cityMap[englishName.toLowerCase()] || englishName;
@@ -300,7 +331,7 @@ function displayCurrentWeather(data) {
     const translatedDesc = translateWeatherToKorean(
       data.weather[0].description
     );
-    weatherDesc.textContent = translatedDesc.toUpperCase();
+    weatherDesc.textContent = translatedDesc;
   }
 
   if (tempMaxElement) {
@@ -357,7 +388,7 @@ function displayForecast(data) {
       if (descElement) {
         // 날씨 설명 - 한글 번역
         const translatedDesc = translateWeatherToKorean(
-          forecast.weather[0].main
+          forecast.weather[0].description
         );
         descElement.textContent = translatedDesc;
       }
