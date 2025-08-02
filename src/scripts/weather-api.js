@@ -1,7 +1,7 @@
 // 로딩 스피너
 import { showWeatherLoading, hideWeatherLoading } from "./loading-spiner.js";
 
-// Netlify Functions 엔드포인트 (기존 API_KEY, BASE_URL 제거)
+// Netlify Functions 엔드포인트
 const WEATHER_API_ENDPOINT = "/.netlify/functions/weather";
 
 const weatherTemp = document.querySelector(".weather-tab__temp");
@@ -212,19 +212,23 @@ function translateWeatherToKorean(englishDescription) {
   return weatherTranslations[lowerDesc] || englishDescription;
 }
 
-// 시간대 오프셋을 고려한 현지 시간 계산
-function getLocalTime(timestamp, timezoneOffset) {
-  // timestamp는 UTC 기준, timezoneOffset은 UTC로부터의 초 단위 차이
-  // UTC 시간에 timezone offset을 더해서 현지 시간 계산
-  const utcTime = new Date(timestamp * 1000);
-  const localTime = new Date(utcTime.getTime() + timezoneOffset * 1000);
-  return localTime;
+// 실시간 현지 시간 계산 - OpenWeather 타임존 정보만 활용
+function getCurrentLocalTime(timezoneOffset) {
+  // 현재 UTC 시간을 초 단위로 구하기
+  const nowUTC = Math.floor(Date.now() / 1000);
+
+  // UTC 시간에 해당 지역의 타임존 오프셋을 더해서 현지 시간 계산
+  const localTimeSeconds = nowUTC + timezoneOffset;
+
+  // 밀리초로 변환하여 Date 객체 생성
+  return new Date(localTimeSeconds * 1000);
 }
 
-// 날짜 포맷팅 함수 - 현지 시간 기준
-function formatDate(timestamp, timezoneOffset) {
-  const localDate = getLocalTime(timestamp, timezoneOffset);
+// 실시간 기반 날짜 포맷팅 함수
+function formatCurrentDate(timezoneOffset) {
+  const localDate = getCurrentLocalTime(timezoneOffset);
 
+  // UTC 메서드를 사용하여 이미 현지 시간으로 계산된 값 추출
   const year = localDate.getUTCFullYear();
   const month = localDate.getUTCMonth() + 1;
   const day = localDate.getUTCDate();
@@ -262,18 +266,24 @@ function formatDate(timestamp, timezoneOffset) {
   return `${formattedTime} - ${formattedDate}`;
 }
 
-// 시간 포맷팅 함수 (예보용) - 현지 시간 기준
-function formatTime(timestamp, timezoneOffset) {
-  const localDate = getLocalTime(timestamp, timezoneOffset);
+// 예보용 시간 포맷팅 함수 - API 타임스탬프 사용
+function formatForecastTime(timestamp, timezoneOffset) {
+  // 예보 데이터는 API 타임스탬프를 그대로 사용
+  const utcTime = timestamp * 1000;
+  const localTime = utcTime + timezoneOffset * 1000;
+  const localDate = new Date(localTime);
+
   const hours = localDate.getUTCHours();
   const minutes = localDate.getUTCMinutes();
 
   return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 }
 
-// 배경이미지 변경 함수 - 시간대 고려
+// 배경이미지 변경 함수 - 아이콘 코드 기반 낮/밤 판단
 function updateBackground(weatherMain, iconCode) {
   const weatherType = weatherMain.toLowerCase();
+
+  // 아이콘 코드로 낮/밤 판단
   const isNight = iconCode && iconCode.endsWith("n");
 
   let backgroundImage;
@@ -298,21 +308,52 @@ function updateBackground(weatherMain, iconCode) {
   );
 }
 
-// 현재 날씨 데이터 표시
+// 실시간 시간 업데이트를 위한 전역 변수
+let currentTimezone = null;
+let realTimeInterval = null;
+
+// 실시간 시간 업데이트 시작 함수
+function startRealTimeUpdate() {
+  // 기존 인터벌이 있다면 정리
+  if (realTimeInterval) {
+    clearInterval(realTimeInterval);
+  }
+
+  // 1초마다 시간 업데이트
+  realTimeInterval = setInterval(() => {
+    if (currentTimezone !== null && weatherDate) {
+      weatherDate.textContent = formatCurrentDate(currentTimezone);
+    }
+  }, 1000);
+}
+
+// 실시간 시간 업데이트 중지 함수
+function stopRealTimeUpdate() {
+  if (realTimeInterval) {
+    clearInterval(realTimeInterval);
+    realTimeInterval = null;
+  }
+}
+
+// 현재 날씨 데이터 표시 - timezone 정보 저장 및 실시간 업데이트 시작
 function displayCurrentWeather(data) {
+  // timezone 정보 저장
+  currentTimezone = data.timezone;
+
   // 온도 (소수점 제거)
   if (weatherTemp) {
     weatherTemp.textContent = `${Math.round(data.main.temp)}°`;
   }
 
   // 위치 - 한글로 변환
+  const cityName = translateCityToKorean(data.name);
   if (weatherLocation) {
-    weatherLocation.textContent = translateCityToKorean(data.name);
+    weatherLocation.textContent = cityName;
   }
 
-  // 날짜 및 시간 - 현지 시간 기준
+  // 실시간 현재 시간 표시 - timezone 정보 활용
   if (weatherDate) {
-    weatherDate.textContent = formatDate(data.dt, data.timezone);
+    weatherDate.textContent = formatCurrentDate(data.timezone);
   }
 
   // 날씨 아이콘
@@ -323,7 +364,7 @@ function displayCurrentWeather(data) {
     weatherIcon.alt = data.weather[0].description;
   }
 
-  // 배경이미지 변경 (시간대 고려)
+  // 배경이미지 변경 - 아이콘 코드 기반 낮/밤 판단
   updateBackground(data.weather[0].main, iconCode);
 
   // Weather Details 업데이트 - 한글 번역
@@ -353,6 +394,9 @@ function displayCurrentWeather(data) {
   if (windElement) {
     windElement.textContent = `${Math.round(data.wind.speed * 3.6)}km/h`; // m/s를 km/h로 변환
   }
+
+  // 실시간 시간 업데이트 시작
+  startRealTimeUpdate();
 }
 
 // 예보 데이터 표시
@@ -381,8 +425,11 @@ function displayForecast(data) {
       }
 
       if (timeElement) {
-        // 시간 - 현지 시간 기준 (도시의 timezone 사용)
-        timeElement.textContent = formatTime(forecast.dt, data.city.timezone);
+        // 예보 시간 표시 - API 타임스탬프 사용
+        timeElement.textContent = formatForecastTime(
+          forecast.dt,
+          data.city.timezone
+        );
       }
 
       if (descElement) {
@@ -547,6 +594,11 @@ document.addEventListener("DOMContentLoaded", () => {
       fetchCurrentWeather(currentCity);
     }
   }, 600000);
+});
+
+// 페이지 언로드시 정리
+window.addEventListener("beforeunload", () => {
+  stopRealTimeUpdate();
 });
 
 // 전역에서 접근 가능하도록 함수 노출
