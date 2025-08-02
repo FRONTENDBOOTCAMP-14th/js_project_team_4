@@ -5,7 +5,7 @@
  */
 
 /* global DOMPurify */
-import { showLinkSaveLoading, hideLinkSaveLoading } from "./loading-spiner.js";
+import { hideLinkSaveLoading, showLinkSaveLoading } from "./loading-spiner.js";
 
 const CONSTANTS = {
   ERRORS: {
@@ -909,6 +909,10 @@ function createLinkManager() {
       const existing = await api.getById(id);
       if (!existing) throw new Error(CONSTANTS.ERRORS.LINK_NOT_FOUND);
 
+      if(existing.url && existing.url !== updates.url) {
+        updates.favicon = getFaviconUrl(updates.url);
+      }
+
       const { store } = await dbManager.getStore("links", "readwrite");
       const updated = {
         ...existing,
@@ -1290,7 +1294,7 @@ function createUIEventHandlers() {
 
   /**
    * 링크 업데이트 완료 시 호출되는 핸들러입니다.
-   *
+   
    * @private
    * @method handleLinkUpdated
    * @param {Object} link - 업데이트된 링크 객체
