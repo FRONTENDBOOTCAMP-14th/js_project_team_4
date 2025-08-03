@@ -33,7 +33,7 @@
 - 문서화: 노션, github wiki
 - 코드 관리: github
 
-## 구현 기능([docs/features.md](docs/features.md))
+## 구현 기능([노션](https://www.notion.so/23473873401a81b79472e16cc55784ac))
 
 - 날씨 기능
 - 깃 링크 및 노션 페이지 링크
@@ -41,8 +41,7 @@
 - 버튼 팝오버
 - 메모
 - TODO List
-- 캘린더 기능(추후 구현 예정)
 
-## 구현 요구사항([docs/implementaion_requirement.md](docs/implementaion_requirement.md))
+## 구현 요구사항([노션](https://www.notion.so/23473873401a813a94d6e91b3ad435b7#23a73873401a80fea47ec753bc65f7fc))
 
 사용자가 다양한 생산성 기능을 활용할 수 있는 대시보드 기반의 웹 애플리케이션. 디자인은 직관적으로 구성하며, 시각적 효과와 상호작용을 통해 몰입도를 높인다.
