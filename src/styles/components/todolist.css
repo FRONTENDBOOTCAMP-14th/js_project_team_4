@@ -162,7 +162,7 @@
     input:checked + label {
       background-image: url(/img/icons/checkbox/checked-white.png);
     }
-  
+
     label {
       background: url(/img/icons/checkbox/checkbox-basic-white.png) no-repeat;
     }
