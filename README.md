@@ -1,5 +1,7 @@
 # 라이프코드(lifecord)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ffe0d4c5-cde2-4c5e-abd2-a6b0d7a6b02d/deploy-status)](https://app.netlify.com/projects/vanilajs4/deploys)
+
 ## 프로젝트 소개
 
 모멘텀과 같이 브라우저에서 새탭을 열면 나타나는 대시보드 앱입니다(실습용).
