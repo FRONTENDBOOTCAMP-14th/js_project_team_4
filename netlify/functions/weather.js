@@ -1,6 +1,6 @@
-/* global exports process */
+/* global process */
 
-exports.handler = async function (event) {
+export const handler = async function (event) {
   // CORS 헤더 설정
   const headers = {
     "Access-Control-Allow-Origin": "*",
