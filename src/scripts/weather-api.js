@@ -202,6 +202,21 @@ function translateWeatherToKorean(englishDescription) {
   return weatherTranslations[lowerDesc] || englishDescription;
 }
 
+const localTimeFormatter = new Intl.DateTimeFormat("ko-KR", {
+  timeZone: "UTC",
+  hour: "2-digit",
+  minute: "2-digit",
+  hourCycle: "h23",
+});
+
+const localDateFormatter = new Intl.DateTimeFormat("ko-KR", {
+  timeZone: "UTC",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  weekday: "long",
+});
+
 // 실시간 현지 시간 계산 - OpenWeather 타임존 정보만 활용
 function getCurrentLocalTime(timezoneOffset) {
   return new Date(Date.now() + timezoneOffset * 1000);
@@ -210,43 +225,7 @@ function getCurrentLocalTime(timezoneOffset) {
 // 실시간 기반 날짜 포맷팅 함수
 function formatCurrentDate(timezoneOffset) {
   const localDate = getCurrentLocalTime(timezoneOffset);
-
-  // UTC 메서드를 사용하여 이미 현지 시간으로 계산된 값 추출
-  const year = localDate.getUTCFullYear();
-  const month = localDate.getUTCMonth() + 1;
-  const day = localDate.getUTCDate();
-  const hours = localDate.getUTCHours();
-  const minutes = localDate.getUTCMinutes();
-  const weekday = localDate.getUTCDay();
-
-  const weekdays = [
-    "일요일",
-    "월요일",
-    "화요일",
-    "수요일",
-    "목요일",
-    "금요일",
-    "토요일",
-  ];
-  const monthNames = [
-    "1월",
-    "2월",
-    "3월",
-    "4월",
-    "5월",
-    "6월",
-    "7월",
-    "8월",
-    "9월",
-    "10월",
-    "11월",
-    "12월",
-  ];
-
-  const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-  const formattedDate = `${year}년 ${monthNames[month - 1]} ${day}일 ${weekdays[weekday]}`;
-
-  return `${formattedTime} - ${formattedDate}`;
+  return `${localTimeFormatter.format(localDate)} - ${localDateFormatter.format(localDate)}`;
 }
 
 // 예보용 시간 포맷팅 함수 - API 타임스탬프 사용
