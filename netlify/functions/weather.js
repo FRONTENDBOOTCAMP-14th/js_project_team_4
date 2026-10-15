@@ -1,6 +1,6 @@
-/* global exports process */
+/* global process */
 
-exports.handler = async function (event) {
+export const handler = async function (event) {
   // CORS 헤더 설정
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -68,22 +68,23 @@ exports.handler = async function (event) {
       const errorText = await response.text();
       console.error(`OpenWeather API 에러: ${response.status} - ${errorText}`);
 
-      // OpenWeather API 에러 메시지 처리
+      let errorMessage = "날씨 정보를 가져오는데 실패했습니다";
       if (response.status === 404) {
-        return {
-          statusCode: 404,
-          headers,
-          body: JSON.stringify({ error: "도시를 찾을 수 없습니다" }),
-        };
+        errorMessage = "도시를 찾을 수 없습니다";
       } else if (response.status === 401) {
-        return {
-          statusCode: 401,
-          headers,
-          body: JSON.stringify({ error: "API Key가 유효하지 않습니다" }),
-        };
-      } else {
-        throw new Error(`API 응답 에러: ${response.status}`);
+        errorMessage = "API Key가 유효하지 않습니다";
+      } else if (response.status === 429) {
+        errorMessage = "API 요청 한도를 초과했습니다";
       }
+
+      return {
+        statusCode: response.status,
+        headers,
+        body: JSON.stringify({
+          error: errorMessage,
+          status: response.status,
+        }),
+      };
     }
 
     const data = await response.json();

@@ -1,5 +1,5 @@
 // 로딩 스피너
-import { showWeatherLoading, hideWeatherLoading } from "./loading-spiner.js";
+import { hideWeatherLoading, showWeatherLoading } from "./loading-spiner.js";
 
 // Netlify Functions 엔드포인트
 const WEATHER_API_ENDPOINT = "/.netlify/functions/weather";
@@ -129,18 +129,8 @@ const weatherTranslations = {
   clear: "맑음",
   clouds: "구름",
   rain: "비",
-  drizzle: "이슬비",
-  thunderstorm: "천둥번개",
-  snow: "눈",
-  mist: "안개",
-  smoke: "연기",
-  haze: "실안개",
-  dust: "황사",
-  fog: "짙은 안개",
-  sand: "모래바람",
   ash: "화산재",
   squall: "돌풍",
-  tornado: "토네이도",
   atmosphere: "대기현상",
 };
 
@@ -214,14 +204,7 @@ function translateWeatherToKorean(englishDescription) {
 
 // 실시간 현지 시간 계산 - OpenWeather 타임존 정보만 활용
 function getCurrentLocalTime(timezoneOffset) {
-  // 현재 UTC 시간을 초 단위로 구하기
-  const nowUTC = Math.floor(Date.now() / 1000);
-
-  // UTC 시간에 해당 지역의 타임존 오프셋을 더해서 현지 시간 계산
-  const localTimeSeconds = nowUTC + timezoneOffset;
-
-  // 밀리초로 변환하여 Date 객체 생성
-  return new Date(localTimeSeconds * 1000);
+  return new Date(Date.now() + timezoneOffset * 1000);
 }
 
 // 실시간 기반 날짜 포맷팅 함수
@@ -268,11 +251,7 @@ function formatCurrentDate(timezoneOffset) {
 
 // 예보용 시간 포맷팅 함수 - API 타임스탬프 사용
 function formatForecastTime(timestamp, timezoneOffset) {
-  // 예보 데이터는 API 타임스탬프를 그대로 사용
-  const utcTime = timestamp * 1000;
-  const localTime = utcTime + timezoneOffset * 1000;
-  const localDate = new Date(localTime);
-
+  const localDate = new Date((timestamp + timezoneOffset) * 1000);
   const hours = localDate.getUTCHours();
   const minutes = localDate.getUTCMinutes();
 
@@ -486,14 +465,11 @@ async function fetchCurrentWeather(city = "서울") {
     fetchForecast(data.coord.lat, data.coord.lon);
   } catch (error) {
     console.error("현재 날씨 데이터를 가져오는데 실패했습니다:", error);
-    alert("날씨 정보를 가져올 수 없습니다. 도시명을 확인해주세요.");
+    alert(error.message || "날씨 정보를 가져올 수 없습니다. 도시명을 확인해주세요.");
   } finally {
     hideWeatherLoading(); // 로딩 스피너 숨김
   }
 }
-
-// 로딩 스피너 호출
-fetchCurrentWeather();
 
 // 예보 데이터 가져오기 - Netlify Functions 사용
 async function fetchForecast(lat, lon) {
