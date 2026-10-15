@@ -38,15 +38,10 @@ export default defineConfig({
         index: path.resolve(__dirname, "index.html"),
         ...findAllHtmlFiles(path.resolve(__dirname, "src")),
       },
-      output: {
-        manualChunks: () => "main",
-      },
     },
   },
   appType: "spa", // fallback 사용안함
   server: {
-    server: {
-      https: true,
-    },
+    https: true,
   },
 });

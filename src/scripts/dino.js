@@ -1,8 +1,10 @@
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-const startBtn = document.getElementById("start-btn");
-const restartBtn = document.getElementById("restart-btn");
-const pauseBtn = document.getElementById("pause-btn");
+function initDino() {
+  const canvas = document.getElementById("canvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const startBtn = document.getElementById("start-btn");
+  const restartBtn = document.getElementById("restart-btn");
+  const pauseBtn = document.getElementById("pause-btn");
 
 // 캔버스 크기 설정
 canvas.width = 800;
@@ -324,16 +326,19 @@ if (modalEndBtn) {
 // 다크모드 감지
 const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-darkModeMediaQuery.addEventListener("change", () => {
-  if (gameOver) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    dino.draw();
-    drawScore();
-    drawGameOver();
-  } else if (gamePaused) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    dino.draw();
-    drawScore();
-    drawPaused();
-  }
-});
+  darkModeMediaQuery.addEventListener("change", () => {
+    if (gameOver) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dino.draw();
+      drawScore();
+      drawGameOver();
+    } else if (gamePaused) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dino.draw();
+      drawScore();
+      drawPaused();
+    }
+  });
+}
+
+initDino();

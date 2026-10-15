@@ -210,20 +210,20 @@ class LinkStore {
       updatedAt: new Date().toISOString(),
     };
 
-    const { store, tx } = await this.getStore("readwrite");
+    const { store } = await this.getStore("readwrite");
     return new Promise((resolve, reject) => {
-      store.put(updated);
-      tx.oncomplete = () => resolve(updated);
-      tx.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_UPDATE_FAILED));
+      const request = store.put(updated);
+      request.onsuccess = () => resolve(updated);
+      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_UPDATE_FAILED));
     });
   }
 
   async delete(id) {
-    const { store, tx } = await this.getStore("readwrite");
+    const { store } = await this.getStore("readwrite");
     return new Promise((resolve, reject) => {
-      store.delete(id);
-      tx.oncomplete = () => resolve(true);
-      tx.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_DELETE_FAILED));
+      const request = store.delete(id);
+      request.onsuccess = () => resolve(true);
+      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_DELETE_FAILED));
     });
   }
 }
