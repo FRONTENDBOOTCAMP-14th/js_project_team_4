@@ -37,7 +37,7 @@ const CONSTANTS = {
   DEFAULTS: {
     FAVICON: "/favicon.png",
     DB_NAME: "LinkDB",
-    DB_VERSION: 1,
+    DB_VERSION: 2,
   },
 };
 
@@ -82,7 +82,10 @@ function getFaviconUrl(url) {
 // 2. LinkStore (IndexedDB Promise-based CRUD)
 // -------------------------------------------------------------
 class LinkStore {
-  constructor(dbName = CONSTANTS.DEFAULTS.DB_NAME, version = CONSTANTS.DEFAULTS.DB_VERSION) {
+  constructor(
+    dbName = CONSTANTS.DEFAULTS.DB_NAME,
+    version = CONSTANTS.DEFAULTS.DB_VERSION
+  ) {
     this.dbName = dbName;
     this.version = version;
     this.dbPromise = this.openDB();
@@ -100,13 +103,20 @@ class LinkStore {
             autoIncrement: true,
           });
           store.createIndex("url", "url", { unique: true });
-          store.createIndex("isFavorite", "isFavorite", { unique: false });
-          store.createIndex("createdAt", "createdAt", { unique: false });
+        } else {
+          const store = event.target.transaction.objectStore("links");
+          if (store.indexNames.contains("isFavorite")) {
+            store.deleteIndex("isFavorite");
+          }
+          if (store.indexNames.contains("createdAt")) {
+            store.deleteIndex("createdAt");
+          }
         }
       };
 
       request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.DB_CONNECTION_FAILED));
+      request.onerror = () =>
+        reject(new Error(CONSTANTS.ERRORS.DB_CONNECTION_FAILED));
     });
   }
 
@@ -121,7 +131,8 @@ class LinkStore {
     return new Promise((resolve, reject) => {
       const request = store.getAll();
       request.onsuccess = () => resolve(request.result || []);
-      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINKS_LOAD_FAILED));
+      request.onerror = () =>
+        reject(new Error(CONSTANTS.ERRORS.LINKS_LOAD_FAILED));
     });
   }
 
@@ -135,7 +146,8 @@ class LinkStore {
     return new Promise((resolve, reject) => {
       const request = store.get(id);
       request.onsuccess = () => resolve(request.result || null);
-      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_NOT_FOUND));
+      request.onerror = () =>
+        reject(new Error(CONSTANTS.ERRORS.LINK_NOT_FOUND));
     });
   }
 
@@ -145,7 +157,8 @@ class LinkStore {
     return new Promise((resolve, reject) => {
       const request = index.get(url);
       request.onsuccess = () => resolve(request.result || null);
-      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_NOT_FOUND));
+      request.onerror = () =>
+        reject(new Error(CONSTANTS.ERRORS.LINK_NOT_FOUND));
     });
   }
 
@@ -164,7 +177,6 @@ class LinkStore {
       url: normalized,
       title: title?.trim() || extractDomainName(normalized),
       description: description?.trim() || "",
-      favicon: getFaviconUrl(normalized),
       isFavorite: Boolean(isFavorite),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -203,10 +215,18 @@ class LinkStore {
       ...existing,
       ...updates,
       url: normalized,
-      title: updates.title?.trim() || existing.title || extractDomainName(normalized),
-      description: updates.description !== undefined ? updates.description.trim() : existing.description,
-      favicon: getFaviconUrl(normalized),
-      isFavorite: updates.isFavorite !== undefined ? Boolean(updates.isFavorite) : existing.isFavorite,
+      title:
+        updates.title?.trim() ||
+        existing.title ||
+        extractDomainName(normalized),
+      description:
+        updates.description !== undefined
+          ? updates.description.trim()
+          : existing.description,
+      isFavorite:
+        updates.isFavorite !== undefined
+          ? Boolean(updates.isFavorite)
+          : existing.isFavorite,
       updatedAt: new Date().toISOString(),
     };
 
@@ -214,7 +234,8 @@ class LinkStore {
     return new Promise((resolve, reject) => {
       const request = store.put(updated);
       request.onsuccess = () => resolve(updated);
-      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_UPDATE_FAILED));
+      request.onerror = () =>
+        reject(new Error(CONSTANTS.ERRORS.LINK_UPDATE_FAILED));
     });
   }
 
@@ -223,7 +244,8 @@ class LinkStore {
     return new Promise((resolve, reject) => {
       const request = store.delete(id);
       request.onsuccess = () => resolve(true);
-      request.onerror = () => reject(new Error(CONSTANTS.ERRORS.LINK_DELETE_FAILED));
+      request.onerror = () =>
+        reject(new Error(CONSTANTS.ERRORS.LINK_DELETE_FAILED));
     });
   }
 }
@@ -284,28 +306,61 @@ class LinkUIController {
   constructor(store) {
     this.store = store;
     this.selectedLinkId = null;
-    this.isFormDirty = false;
-    this.originalFormData = { title: "", url: "", description: "" };
+    this.originalFormData = {
+      title: "",
+      url: "",
+      description: "",
+      isFavorite: false,
+    };
 
     // DOM Elements
     this.app = document.querySelector(CONSTANTS.SELECTORS.APP);
     this.linkCard = document.querySelector(CONSTANTS.SELECTORS.LINK_CARD);
-    this.linkCardList = document.querySelector(CONSTANTS.SELECTORS.LINK_CARD_LIST);
+    this.linkCardList = document.querySelector(
+      CONSTANTS.SELECTORS.LINK_CARD_LIST
+    );
     this.moreButton = document.querySelector(CONSTANTS.SELECTORS.MORE_BUTTON);
-    this.modalOverlay = document.querySelector(CONSTANTS.SELECTORS.MODAL_OVERLAY);
+    this.modalOverlay = document.querySelector(
+      CONSTANTS.SELECTORS.MODAL_OVERLAY
+    );
     this.modalList = document.querySelector(CONSTANTS.SELECTORS.MODAL_LIST);
     this.modalForm = document.querySelector(CONSTANTS.SELECTORS.MODAL_FORM);
     this.modalClose = document.querySelector(CONSTANTS.SELECTORS.MODAL_CLOSE);
     this.addButton = document.querySelector(CONSTANTS.SELECTORS.ADD_BUTTON);
-    this.removeButton = document.querySelector(CONSTANTS.SELECTORS.REMOVE_BUTTON);
+    this.removeButton = document.querySelector(
+      CONSTANTS.SELECTORS.REMOVE_BUTTON
+    );
     this.nameInput = document.querySelector(CONSTANTS.SELECTORS.NAME_INPUT);
     this.urlInput = document.querySelector(CONSTANTS.SELECTORS.URL_INPUT);
     this.descInput = document.querySelector(CONSTANTS.SELECTORS.DESC_INPUT);
-    this.favoriteCheckbox = document.querySelector(CONSTANTS.SELECTORS.FAVORITE_CHECKBOX);
+    this.favoriteCheckbox = document.querySelector(
+      CONSTANTS.SELECTORS.FAVORITE_CHECKBOX
+    );
     this.headerIcon = document.querySelector(CONSTANTS.SELECTORS.HEADER_ICON);
     this.headerLink = document.querySelector(CONSTANTS.SELECTORS.HEADER_LINK);
 
-    this.focusTrap = this.modalOverlay ? createFocusTrap(this.modalOverlay) : null;
+    this.focusTrap = this.modalOverlay
+      ? createFocusTrap(this.modalOverlay)
+      : null;
+  }
+
+  getFormData() {
+    return {
+      title: this.nameInput?.value.trim() || "",
+      url: this.urlInput?.value.trim() || "",
+      description: this.descInput?.value.trim() || "",
+      isFavorite: Boolean(this.favoriteCheckbox?.checked),
+    };
+  }
+
+  isDirty() {
+    const current = this.getFormData();
+    return (
+      current.title !== this.originalFormData.title ||
+      current.url !== this.originalFormData.url ||
+      current.description !== this.originalFormData.description ||
+      current.isFavorite !== this.originalFormData.isFavorite
+    );
   }
 
   init() {
@@ -348,14 +403,12 @@ class LinkUIController {
     this.modalForm?.addEventListener("submit", (e) => this.handleFormSubmit(e));
     this.modalForm?.addEventListener("reset", (e) => this.handleFormReset(e));
 
-    [this.nameInput, this.urlInput, this.descInput].forEach((input) => {
-      input?.addEventListener("input", () => this.handleFormInput());
-    });
-
     this.urlInput?.addEventListener("input", (e) => {
       const val = e.target.value.trim();
       if (this.headerIcon) {
-        this.headerIcon.src = val ? getFaviconUrl(val) : CONSTANTS.DEFAULTS.FAVICON;
+        this.headerIcon.src = val
+          ? getFaviconUrl(val)
+          : CONSTANTS.DEFAULTS.FAVICON;
       }
       if (this.headerLink) {
         this.headerLink.href = val ? normalizeUrl(val) : "#";
@@ -364,17 +417,21 @@ class LinkUIController {
 
     this.favoriteCheckbox?.addEventListener("change", (e) => {
       e.target.setAttribute("aria-checked", e.target.checked);
-      e.target.setAttribute("aria-label", e.target.checked ? "즐겨찾기 해제" : "즐겨찾기 추가");
-      this.isFormDirty = true;
+      e.target.setAttribute(
+        "aria-label",
+        e.target.checked ? "즐겨찾기 해제" : "즐겨찾기 추가"
+      );
     });
 
     this.addButton?.addEventListener("click", () => {
-      if (this.isFormDirty && !confirm(CONSTANTS.ERRORS.UNSAVED_CHANGES)) return;
+      if (this.isDirty() && !confirm(CONSTANTS.ERRORS.UNSAVED_CHANGES)) return;
       this.clearForm();
       this.urlInput?.focus();
     });
 
-    this.removeButton?.addEventListener("click", () => this.handleRemoveSelected());
+    this.removeButton?.addEventListener("click", () =>
+      this.handleRemoveSelected()
+    );
   }
 
   async refreshCards() {
@@ -421,9 +478,11 @@ class LinkUIController {
 
       const img = document.createElement("img");
       img.className = "btn-base__icon";
-      img.src = link.favicon;
+      img.src = getFaviconUrl(link.url);
       img.alt = "";
-      img.onerror = () => { img.src = CONSTANTS.DEFAULTS.FAVICON; };
+      img.onerror = () => {
+        img.src = CONSTANTS.DEFAULTS.FAVICON;
+      };
 
       const span = document.createElement("abbr");
       span.className = "link-button__text";
@@ -467,13 +526,15 @@ class LinkUIController {
           data-id="${link.id}"
           aria-pressed="${isSelected}"
         >
-          <img class="btn-base__icon" src="${link.favicon}" alt="" onerror="this.src='${CONSTANTS.DEFAULTS.FAVICON}'">
+          <img class="btn-base__icon" src="${getFaviconUrl(link.url)}" alt="" onerror="this.src='${CONSTANTS.DEFAULTS.FAVICON}'">
           <span class="link-button__text">${link.title}</span>
           ${link.isFavorite ? `<span class="favorite-star">★</span>` : ""}
         </button>
       `);
 
-      li.querySelector("button")?.addEventListener("click", () => this.selectLink(link.id));
+      li.querySelector("button")?.addEventListener("click", () =>
+        this.selectLink(link.id)
+      );
       fragment.appendChild(li);
     });
 
@@ -482,7 +543,7 @@ class LinkUIController {
   }
 
   async selectLink(linkId) {
-    if (this.isFormDirty && this.selectedLinkId !== linkId) {
+    if (this.isDirty() && this.selectedLinkId !== linkId) {
       if (!confirm(CONSTANTS.ERRORS.UNSAVED_CHANGES)) return;
     }
 
@@ -494,19 +555,22 @@ class LinkUIController {
       if (this.nameInput) this.nameInput.value = link.title;
       if (this.urlInput) this.urlInput.value = link.url;
       if (this.descInput) this.descInput.value = link.description || "";
-      if (this.headerIcon) this.headerIcon.src = link.favicon;
+      if (this.headerIcon) this.headerIcon.src = getFaviconUrl(link.url);
       if (this.headerLink) this.headerLink.href = link.url;
       if (this.favoriteCheckbox) {
         this.favoriteCheckbox.checked = Boolean(link.isFavorite);
-        this.favoriteCheckbox.setAttribute("aria-checked", this.favoriteCheckbox.checked);
+        this.favoriteCheckbox.setAttribute(
+          "aria-checked",
+          this.favoriteCheckbox.checked
+        );
       }
 
       this.originalFormData = {
         title: link.title,
         url: link.url,
         description: link.description || "",
+        isFavorite: Boolean(link.isFavorite),
       };
-      this.isFormDirty = false;
 
       this.modalList?.querySelectorAll(".link-modal__link").forEach((btn) => {
         btn.setAttribute("aria-pressed", Number(btn.dataset.id) === link.id);
@@ -518,8 +582,12 @@ class LinkUIController {
 
   clearForm() {
     this.selectedLinkId = null;
-    this.isFormDirty = false;
-    this.originalFormData = { title: "", url: "", description: "" };
+    this.originalFormData = {
+      title: "",
+      url: "",
+      description: "",
+      isFavorite: false,
+    };
 
     if (this.nameInput) this.nameInput.value = "";
     if (this.urlInput) this.urlInput.value = "";
@@ -534,18 +602,6 @@ class LinkUIController {
     this.modalList?.querySelectorAll(".link-modal__link").forEach((btn) => {
       btn.setAttribute("aria-pressed", "false");
     });
-  }
-
-  handleFormInput() {
-    const current = {
-      title: this.nameInput?.value.trim() || "",
-      url: this.urlInput?.value.trim() || "",
-      description: this.descInput?.value.trim() || "",
-    };
-    this.isFormDirty =
-      current.title !== this.originalFormData.title ||
-      current.url !== this.originalFormData.url ||
-      current.description !== this.originalFormData.description;
   }
 
   openModal() {
@@ -568,7 +624,7 @@ class LinkUIController {
   }
 
   closeModal() {
-    if (this.isFormDirty && !confirm(CONSTANTS.ERRORS.UNSAVED_CHANGES)) {
+    if (this.isDirty() && !confirm(CONSTANTS.ERRORS.UNSAVED_CHANGES)) {
       return;
     }
 
@@ -606,12 +662,21 @@ class LinkUIController {
     showLinkSaveLoading();
     try {
       if (this.selectedLinkId) {
-        await this.store.update(this.selectedLinkId, { url, title, description, isFavorite });
+        await this.store.update(this.selectedLinkId, {
+          url,
+          title,
+          description,
+          isFavorite,
+        });
       } else {
-        const created = await this.store.add({ url, title, description, isFavorite });
+        const created = await this.store.add({
+          url,
+          title,
+          description,
+          isFavorite,
+        });
         this.selectedLinkId = created.id;
       }
-      this.isFormDirty = false;
       await Promise.all([this.refreshModal(), this.refreshCards()]);
       if (this.selectedLinkId) {
         await this.selectLink(this.selectedLinkId);

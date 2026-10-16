@@ -1,21 +1,9 @@
+import { attachPopover } from "./popover.js";
+
 const popoverTrigger = document.querySelector(".search-bar__popover__trigger");
 const popover = document.querySelector(".search-bar__popover");
 
-popover.setAttribute("hidden", "true");
-
-popoverTrigger.addEventListener("click", () => {
-  if (popover.hasAttribute("hidden")) {
-    popover.removeAttribute("hidden");
-  } else {
-    popover.setAttribute("hidden", "true");
-  }
-});
-
-document.addEventListener("click", (e) => {
-  if (!popover.contains(e.target) && !popoverTrigger.contains(e.target)) {
-    popover.setAttribute("hidden", "true");
-  }
-});
+attachPopover(popoverTrigger, popover);
 
 // ------------------------------------------------------------------------------
 // 검색 엔진 변경 및 로고 변경 통합

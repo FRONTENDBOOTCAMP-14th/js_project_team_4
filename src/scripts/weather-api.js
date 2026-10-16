@@ -1,28 +1,5 @@
-// 로딩 스피너
-import { hideWeatherLoading, showWeatherLoading } from "./loading-spiner.js";
-
 // Netlify Functions 엔드포인트
 const WEATHER_API_ENDPOINT = "/.netlify/functions/weather";
-
-const weatherTemp = document.querySelector(".weather-tab__temp");
-const weatherLocation = document.querySelector(".weather-tab__location");
-const weatherDate = document.querySelector(".weather-tab__date");
-const weatherIcon = document.querySelector(".weather-tab__icon");
-const weatherContainer = document.querySelector(".weather-tab");
-const searchForm = document.querySelector(".weather-tab__search-form");
-const searchInput = document.querySelector(".weather-tab__search-input");
-
-const weatherDesc = document.querySelector(".weather-tab__desc-text");
-const weatherCards = document.querySelectorAll(".weather-tab__card");
-
-// 각 카드의 온도/데이터 요소들
-const tempMaxElement = weatherCards[0]?.querySelector("p:nth-child(2)");
-const tempMinElement = weatherCards[1]?.querySelector("p:nth-child(2)");
-const humidityElement = weatherCards[2]?.querySelector("p:nth-child(2)");
-const cloudyElement = weatherCards[3]?.querySelector("p:nth-child(2)");
-const windElement = weatherCards[4]?.querySelector("p:nth-child(2)");
-
-const forecastCards = document.querySelectorAll(".weather-tab__forecast-card");
 
 // 배경이미지 매핑
 const backgroundImages = {
@@ -38,28 +15,6 @@ const backgroundImages = {
   haze: "/img/bg/mist.jpg",
   night: "/img/bg/night.jpg",
   default: "/img/bg/clouds.jpg",
-};
-
-// 아이콘 매핑
-const iconMapping = {
-  "01d": "01d.svg",
-  "01n": "01n.svg",
-  "02d": "02d.svg",
-  "02n": "02n.svg",
-  "03d": "03d.svg",
-  "03n": "03n.svg",
-  "04d": "04d.svg",
-  "04n": "04n.svg",
-  "09d": "09d.svg",
-  "09n": "09n.svg",
-  "10d": "10d.svg",
-  "10n": "10n.svg",
-  "11d": "11d.svg",
-  "11n": "11n.svg",
-  "13d": "13d.svg",
-  "13n": "13n.svg",
-  "50d": "50d.svg",
-  "50n": "50n.svg",
 };
 
 // 날씨 상태 한글 번역 매핑
@@ -134,66 +89,43 @@ const weatherTranslations = {
   atmosphere: "대기현상",
 };
 
-// 도시명 한글-영어 매핑 (검색 지원용)
-const cityTranslations = {
-  서울: "seoul",
-  부산: "busan",
-  대구: "daegu",
-  인천: "incheon",
-  광주: "gwangju",
-  대전: "daejeon",
-  울산: "ulsan",
-  수원: "suwon",
-  창원: "changwon",
-  성남: "seongnam",
-  고양: "goyang",
-  용인: "yongin",
-  부천: "bucheon",
-  안산: "ansan",
-  안양: "anyang",
-  남양주: "namyangju",
-  제주: "jeju",
-  춘천: "chuncheon",
-  전주: "jeonju",
-  천안: "cheonan",
-  안성: "anseong",
-  용산: "yongsan",
-};
+// 도시명 [한글, 영문] 쌍 매핑 (단일 진실 원천)
+const CITY_PAIRS = [
+  ["서울", "seoul"],
+  ["부산", "busan"],
+  ["대구", "daegu"],
+  ["인천", "incheon"],
+  ["광주", "gwangju"],
+  ["대전", "daejeon"],
+  ["울산", "ulsan"],
+  ["수원", "suwon"],
+  ["창원", "changwon"],
+  ["성남", "seongnam"],
+  ["고양", "goyang"],
+  ["용인", "yongin"],
+  ["부천", "bucheon"],
+  ["안산", "ansan"],
+  ["안양", "anyang"],
+  ["남양주", "namyangju"],
+  ["제주", "jeju"],
+  ["춘천", "chuncheon"],
+  ["전주", "jeonju"],
+  ["천안", "cheonan"],
+  ["안성", "anseong"],
+  ["용산", "yongsan"],
+];
+
+const KOR_TO_ENG = new Map(CITY_PAIRS);
+const ENG_TO_KOR = new Map(CITY_PAIRS.map(([kor, eng]) => [eng, kor]));
+// OpenWeatherMap 중구 광희동 좌표 응답명 대응
+ENG_TO_KOR.set("kwanghŭi-dong", "서울");
+ENG_TO_KOR.set("kwanghui-dong", "서울");
 
 // 도시명을 한글로 변환하는 함수
 function translateCityToKorean(englishName) {
-  const cityMap = {
-    seoul: "서울",
-    busan: "부산",
-    daegu: "대구",
-    incheon: "인천",
-    gwangju: "광주",
-    daejeon: "대전",
-    ulsan: "울산",
-    "suwon-si": "수원",
-    suwon: "수원",
-    changwon: "창원",
-    "seongnam-si": "성남",
-    seongnam: "성남",
-    "goyang-si": "고양",
-    goyang: "고양",
-    yongin: "용인",
-    "bucheon-si": "부천",
-    bucheon: "부천",
-    "ansan-si": "안산",
-    ansan: "안산",
-    anyang: "안양",
-    namyangju: "남양주",
-    jeju: "제주",
-    chuncheon: "춘천",
-    jeonju: "전주",
-    cheonan: "천안",
-    anseong: "안성",
-    yongsan: "용산",
-    "kwanghŭi-dong": "서울",
-  };
-
-  return cityMap[englishName.toLowerCase()] || englishName;
+  if (!englishName) return "";
+  const normalized = englishName.toLowerCase().replace(/-si$/, "");
+  return ENG_TO_KOR.get(normalized) || englishName;
 }
 
 // 날씨 설명을 한글로 번역하는 함수
@@ -223,7 +155,7 @@ function getCurrentLocalTime(timezoneOffset) {
 }
 
 // 실시간 기반 날짜 포맷팅 함수
-function formatCurrentDate(timezoneOffset) {
+export function formatCurrentDate(timezoneOffset) {
   const localDate = getCurrentLocalTime(timezoneOffset);
   return `${localTimeFormatter.format(localDate)} - ${localDateFormatter.format(localDate)}`;
 }
@@ -237,328 +169,89 @@ function formatForecastTime(timestamp, timezoneOffset) {
   return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 }
 
-// 배경이미지 변경 함수 - 아이콘 코드 기반 낮/밤 판단
-function updateBackground(weatherMain, iconCode) {
+// 배경이미지 URL 결정 함수
+function getBackgroundImage(weatherMain, iconCode) {
   const weatherType = weatherMain.toLowerCase();
-
-  // 아이콘 코드로 낮/밤 판단
   const isNight = iconCode && iconCode.endsWith("n");
 
-  let backgroundImage;
-
-  // 밤시간대 처리
   if (isNight) {
     if (weatherType === "clouds") {
-      backgroundImage = backgroundImages["clouds-night"];
+      return backgroundImages["clouds-night"];
     } else if (weatherType === "clear") {
-      backgroundImage = backgroundImages["night"];
-    } else {
-      backgroundImage =
-        backgroundImages[weatherType] || backgroundImages.default;
+      return backgroundImages.night;
     }
-  } else {
-    backgroundImage = backgroundImages[weatherType] || backgroundImages.default;
   }
 
-  weatherContainer.style.setProperty(
-    "--background-image",
-    `url("${backgroundImage}")`
-  );
-}
-
-// 실시간 시간 업데이트를 위한 전역 변수
-let currentTimezone = null;
-let realTimeInterval = null;
-
-// 실시간 시간 업데이트 시작 함수
-function startRealTimeUpdate() {
-  // 기존 인터벌이 있다면 정리
-  if (realTimeInterval) {
-    clearInterval(realTimeInterval);
-  }
-
-  // 1초마다 시간 업데이트
-  realTimeInterval = setInterval(() => {
-    if (currentTimezone !== null && weatherDate) {
-      weatherDate.textContent = formatCurrentDate(currentTimezone);
-    }
-  }, 1000);
-}
-
-// 실시간 시간 업데이트 중지 함수
-function stopRealTimeUpdate() {
-  if (realTimeInterval) {
-    clearInterval(realTimeInterval);
-    realTimeInterval = null;
-  }
-}
-
-// 현재 날씨 데이터 표시 - timezone 정보 저장 및 실시간 업데이트 시작
-function displayCurrentWeather(data) {
-  // timezone 정보 저장
-  currentTimezone = data.timezone;
-
-  // 온도 (소수점 제거)
-  if (weatherTemp) {
-    weatherTemp.textContent = `${Math.round(data.main.temp)}°`;
-  }
-
-  // 위치 - 한글로 변환
-  const cityName = translateCityToKorean(data.name);
-  if (weatherLocation) {
-    weatherLocation.textContent = cityName;
-  }
-
-  // 실시간 현재 시간 표시 - timezone 정보 활용
-  if (weatherDate) {
-    weatherDate.textContent = formatCurrentDate(data.timezone);
-  }
-
-  // 날씨 아이콘
-  const iconCode = data.weather[0].icon;
-  const iconFile = iconMapping[iconCode] || "01d.svg";
-  if (weatherIcon) {
-    weatherIcon.src = `/img/icons/${iconFile}`;
-    weatherIcon.alt = data.weather[0].description;
-  }
-
-  // 배경이미지 변경 - 아이콘 코드 기반 낮/밤 판단
-  updateBackground(data.weather[0].main, iconCode);
-
-  // Weather Details 업데이트 - 한글 번역
-  if (weatherDesc) {
-    const translatedDesc = translateWeatherToKorean(
-      data.weather[0].description
-    );
-    weatherDesc.textContent = translatedDesc;
-  }
-
-  if (tempMaxElement) {
-    tempMaxElement.textContent = `${Math.round(data.main.temp_max)}°`;
-  }
-
-  if (tempMinElement) {
-    tempMinElement.textContent = `${Math.round(data.main.temp_min)}°`;
-  }
-
-  if (humidityElement) {
-    humidityElement.textContent = `${data.main.humidity}%`;
-  }
-
-  if (cloudyElement) {
-    cloudyElement.textContent = `${data.clouds.all}%`;
-  }
-
-  if (windElement) {
-    windElement.textContent = `${Math.round(data.wind.speed * 3.6)}km/h`; // m/s를 km/h로 변환
-  }
-
-  // 실시간 시간 업데이트 시작
-  startRealTimeUpdate();
-}
-
-// 예보 데이터 표시
-function displayForecast(data) {
-  // 5개의 예보만 표시 (3시간 간격)
-  const forecastList = data.list.slice(0, 5);
-
-  forecastList.forEach((forecast, index) => {
-    if (index < forecastCards.length) {
-      const card = forecastCards[index];
-      const img = card.querySelector(".weather-tab__icon-medium");
-      const timeElement = card.querySelector(
-        ".weather-tab__forecast-desc p:first-child"
-      );
-      const descElement = card.querySelector(
-        ".weather-tab__forecast-desc p:last-child"
-      );
-      const tempElement = card.querySelector(".weather-tab__forecast-temp");
-
-      if (img) {
-        // 아이콘
-        const iconCode = forecast.weather[0].icon;
-        const iconFile = iconMapping[iconCode] || "01d.svg";
-        img.src = `/img/icons/${iconFile}`;
-        img.alt = forecast.weather[0].description;
-      }
-
-      if (timeElement) {
-        // 예보 시간 표시 - API 타임스탬프 사용
-        timeElement.textContent = formatForecastTime(
-          forecast.dt,
-          data.city.timezone
-        );
-      }
-
-      if (descElement) {
-        // 날씨 설명 - 한글 번역
-        const translatedDesc = translateWeatherToKorean(
-          forecast.weather[0].description
-        );
-        descElement.textContent = translatedDesc;
-      }
-
-      if (tempElement) {
-        // 온도
-        tempElement.textContent = `${Math.round(forecast.main.temp)}°`;
-      }
-    }
-  });
+  return backgroundImages[weatherType] || backgroundImages.default;
 }
 
 // 검색어 처리 함수 (한글/영어 모두 지원)
 function processSearchQuery(query) {
-  const trimmedQuery = query.trim();
-
-  // 한글 도시명인 경우 영어로 변환
-  if (cityTranslations[trimmedQuery]) {
-    return cityTranslations[trimmedQuery];
-  }
-
-  return trimmedQuery;
+  const trimmed = query.trim();
+  return KOR_TO_ENG.get(trimmed) || trimmed;
 }
 
-// 현재 날씨 가져오기 - Netlify Functions 사용
-async function fetchCurrentWeather(city = "서울") {
-  showWeatherLoading(); // 로딩 스피너 표시
-  try {
-    // 검색어 처리 (한글->영어 변환)
-    const processedCity = processSearchQuery(city);
+// Netlify Functions 날씨 API 호출 공통 헬퍼
+async function callWeather(params) {
+  const query = new URLSearchParams(params).toString();
+  const response = await fetch(`${WEATHER_API_ENDPOINT}?${query}`);
 
-    // Netlify Functions 호출
-    const response = await fetch(
-      `${WEATHER_API_ENDPOINT}?city=${encodeURIComponent(processedCity)}&type=current`
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.error || `HTTP error! status: ${response.status}`
     );
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.error || `HTTP error! status: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-    displayCurrentWeather(data);
-
-    // 좌표를 이용해 예보 데이터도 가져오기
-    fetchForecast(data.coord.lat, data.coord.lon);
-  } catch (error) {
-    console.error("현재 날씨 데이터를 가져오는데 실패했습니다:", error);
-    alert(error.message || "날씨 정보를 가져올 수 없습니다. 도시명을 확인해주세요.");
-  } finally {
-    hideWeatherLoading(); // 로딩 스피너 숨김
   }
+
+  return response.json();
 }
 
-// 예보 데이터 가져오기 - Netlify Functions 사용
-async function fetchForecast(lat, lon) {
-  try {
-    // Netlify Functions 호출
-    const response = await fetch(
-      `${WEATHER_API_ENDPOINT}?lat=${lat}&lon=${lon}&type=forecast`
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.error || `HTTP error! status: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-    displayForecast(data);
-  } catch (error) {
-    console.error("예보 데이터를 가져오는데 실패했습니다:", error);
+/**
+ * 날씨 및 예보 데이터를 fetch하여 정제된 뷰 모델을 반환합니다.
+ * @param {{ city?: string, lat?: number, lon?: number }} params
+ * @returns {Promise<{ current: Object, forecast: Array }>}
+ */
+export async function fetchWeatherData(params = { city: "서울" }) {
+  const queryParams = { ...params, type: "current" };
+  if (queryParams.city) {
+    queryParams.city = processSearchQuery(queryParams.city);
   }
-}
 
-// 위치 기반 날씨 가져오기 - Netlify Functions 사용
-async function fetchWeatherByLocation(lat, lon) {
-  try {
-    // Netlify Functions 호출
-    const response = await fetch(
-      `${WEATHER_API_ENDPOINT}?lat=${lat}&lon=${lon}&type=current`
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.error || `HTTP error! status: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-    displayCurrentWeather(data);
-    fetchForecast(lat, lon);
-  } catch (error) {
-    console.error("위치 기반 날씨 데이터를 가져오는데 실패했습니다:", error);
-    // 실패시 기본 도시(서울)로 폴백
-    fetchCurrentWeather("서울");
-  }
-}
-
-// 사용자 위치 가져오기
-function getUserLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        fetchWeatherByLocation(latitude, longitude);
-      },
-      (error) => {
-        console.error("위치 정보를 가져올 수 없습니다:", error);
-        // 위치 정보 실패시 서울 날씨로 기본 설정
-        fetchCurrentWeather("서울");
-      }
-    );
-  } else {
-    console.error("이 브라우저는 위치 정보를 지원하지 않습니다.");
-    fetchCurrentWeather("서울");
-  }
-}
-
-// 검색 폼 이벤트 리스너
-if (searchForm) {
-  searchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const city = searchInput.value.trim();
-
-    if (city) {
-      fetchCurrentWeather(city);
-      // 검색 후 입력 초기화
-      searchInput.value = "";
-
-      // 검색 아이콘 상태 업데이트
-      const clearBtn = document.getElementById("clear-btn");
-      const searchIcon = document.getElementById("search-img");
-      if (clearBtn) clearBtn.style.display = "none";
-      if (searchIcon) searchIcon.style.display = "block";
-    }
+  const currentData = await callWeather(queryParams);
+  const forecastData = await callWeather({
+    lat: currentData.coord.lat,
+    lon: currentData.coord.lon,
+    type: "forecast",
   });
+
+  const iconCode = currentData.weather[0]?.icon || "01d";
+
+  const current = {
+    temp: `${Math.round(currentData.main.temp)}°`,
+    location: translateCityToKorean(currentData.name),
+    timezone: currentData.timezone,
+    formattedDate: formatCurrentDate(currentData.timezone),
+    iconUrl: `/img/icons/${iconCode}.svg`,
+    iconAlt: currentData.weather[0]?.description || "",
+    bgUrl: getBackgroundImage(currentData.weather[0]?.main || "", iconCode),
+    desc: translateWeatherToKorean(currentData.weather[0]?.description || ""),
+    tempMax: `${Math.round(currentData.main.temp_max)}°`,
+    tempMin: `${Math.round(currentData.main.temp_min)}°`,
+    humidity: `${currentData.main.humidity}%`,
+    cloudy: `${currentData.clouds.all}%`,
+    wind: `${Math.round(currentData.wind.speed * 3.6)}km/h`,
+  };
+
+  const forecast = forecastData.list.slice(0, 5).map((item) => {
+    const itemIcon = item.weather[0]?.icon || "01d";
+    return {
+      iconUrl: `/img/icons/${itemIcon}.svg`,
+      iconAlt: item.weather[0]?.description || "",
+      time: formatForecastTime(item.dt, forecastData.city.timezone),
+      desc: translateWeatherToKorean(item.weather[0]?.description || ""),
+      temp: `${Math.round(item.main.temp)}°`,
+    };
+  });
+
+  return { current, forecast };
 }
-
-// 페이지 로드시 초기화
-document.addEventListener("DOMContentLoaded", () => {
-  // 사용자 위치 기반으로 날씨 정보 가져오기 시도
-  getUserLocation();
-
-  // 10분마다 날씨 정보 업데이트
-  setInterval(() => {
-    const currentCity = weatherLocation?.textContent;
-    if (currentCity) {
-      fetchCurrentWeather(currentCity);
-    }
-  }, 600000);
-});
-
-// 페이지 언로드시 정리
-window.addEventListener("beforeunload", () => {
-  stopRealTimeUpdate();
-});
-
-// 전역에서 접근 가능하도록 함수 노출
-window.weatherAPI = {
-  fetchCurrentWeather,
-  fetchWeatherByLocation,
-  getUserLocation,
-};

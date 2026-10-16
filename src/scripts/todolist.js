@@ -1,4 +1,5 @@
 /* global DOMPurify */
+import { attachPopover } from "./popover.js";
 
 const todoListForm = document.querySelector(".todo-list");
 const todoList = document.querySelector(".todo-list__item");
@@ -141,18 +142,4 @@ removeSelectedBtn.addEventListener("click", async () => {
 const popoverTrigger = document.querySelector(".todo-list__popover-trigger");
 const popover = document.querySelector(".todo-list__popover");
 
-popover.setAttribute("hidden", "true");
-
-popoverTrigger.addEventListener("click", () => {
-  if (popover.hasAttribute("hidden")) {
-    popover.removeAttribute("hidden");
-  } else {
-    popover.setAttribute("hidden", "true");
-  }
-});
-
-document.addEventListener("click", (e) => {
-  if (!popover.contains(e.target) && !popoverTrigger.contains(e.target)) {
-    popover.setAttribute("hidden", "true");
-  }
-});
+attachPopover(popoverTrigger, popover);
